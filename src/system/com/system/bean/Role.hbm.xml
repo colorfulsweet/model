@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.system.bean">
+	<class name="Role" table="S_ROLE" >
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="roleName" type="string">
+			<column name="ROLE_NAME" length="255">
+				<comment>角色名称</comment>
+			</column>
+		</property>
+		<property name="createTime" type="date">
+			<column name="CREATE_TIME" >
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<set name="menus" table="S_ROLE_MENU" >
+			<key column="ROLE_ID"/>
+			<many-to-many class="Menu" column="MENU_ID" />
+		</set>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.system.bean">
+	<class name="User" table="S_USER" >
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="username" type="string">
+			<column name="USER_NAME" length="255">
+				<comment>用户名</comment>
+			</column>
+		</property>
+		<property name="realName" type="string">
+			<column name="REAL_NAME" length="255">
+				<comment>昵称</comment>
+			</column>
+		</property>
+		<property name="password" type="string">
+			<column name="PASSWORD" length="32">
+				<comment>密码(SHA-256加密)</comment>
+			</column>
+		</property>
+		<property name="createTime" type="timestamp">
+			<column name="CREATE_TIME" >
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="eMail" type="string">
+			<column name="E_MAIL" length="255">
+				<comment>电子邮箱</comment>
+			</column>
+		</property>
+		<property name="tel" type="string">
+			<column name="TEL" length="255">
+				<comment>电话号码</comment>
+			</column>
+		</property>
+		<property name="status" >
+			<column name="STATUS" length="1">
+				<comment>状态(0禁用 , 1可用)</comment>
+			</column>
+		</property>
+		<many-to-one name="role" column="ROLE_ID" />
+		<!-- 用户与角色的多对一关联映射 -->
+	</class>
+</hibernate-mapping>

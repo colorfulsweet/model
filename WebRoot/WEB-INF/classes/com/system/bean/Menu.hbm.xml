@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.system.bean">
+	<!-- 子菜单表 -->
+	<class name="Menu$Submenu" table="S_SUBMENU" >
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="submenuName" type="string">
+			<column name="SUBMENU_NAME" length="255">
+				<comment>子菜单名称</comment>
+			</column>
+		</property>
+		<property name="url" type="string">
+			<column name="URL" length="255">
+				<comment>URL地址</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" length="512">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+
+	<!-- 主菜单表 -->
+	<class name="Menu" table="S_MENU" >
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="menuName" type="string">
+			<column name="MENU_NAME" length="255">
+				<comment>菜单名称</comment>
+			</column>
+		</property>
+		<property name="url" type="string">
+			<column name="URL" length="255">
+				<comment>URL地址</comment>
+			</column>
+		</property>
+		<property name="icon" type="string">
+			<column name="ICON" length="50">
+				<comment>图标编码</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" length="512">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<list name="childrenMenu" lazy="false">
+			<key column="PARENT_MENU_ID"/>
+			<!-- index表示在list集合当中的排序依据 -->
+			<index column="INDEX_"/>
+			<one-to-many class="Menu$Submenu"/>
+		</list>
+		<set name="roles" table="S_ROLE_MENU" >
+			<key column="MENU_ID"/>
+			<many-to-many class="Role" column="ROLE_ID" />
+		</set>
+	</class>
+	
+</hibernate-mapping>

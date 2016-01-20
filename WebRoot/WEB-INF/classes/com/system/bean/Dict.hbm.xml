@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.system.bean">
+	<class name="Dict$DictClause" table="S_DICT_CLAUSE">
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="clauseCode" type="string">
+			<column name="CLAUSE_CODE" length="50">
+				<comment>字典条目编码</comment>
+			</column>
+		</property>
+		<property name="clauseName" type="string">
+			<column name="CLAUSE_NAME" length="255">
+				<comment>字典条目名称</comment>
+			</column>
+		</property>
+	</class>
+
+	<class name="Dict" table="S_DICT">
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="dictCode" type="string">
+			<column name="DICT_CODE" length="50">
+				<comment>字典编码</comment>
+			</column>
+		</property>
+		<property name="dictName" type="string">
+			<column name="DICT_NAME" length="255">
+				<comment>字典名称</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" length="512">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<list name="clauses">
+			<key column="DICT_ID"/>
+			<index column="INDEX_"/>
+			<one-to-many class="Dict$DictClause"/>
+		</list>
+	</class>
+		
+	
+</hibernate-mapping>
