@@ -3,11 +3,9 @@ $(function() {
 	var Accordion = function(el, multiple) {
 		this.el = el || {};
 		this.multiple = multiple || false;
-
 		var links = this.el.find('.link');
 		links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown);
 	};
-
 	Accordion.prototype.dropdown = function(e) {
 		var $el = e.data.el;
 			$this = $(this),
@@ -15,12 +13,10 @@ $(function() {
 
 		$next.slideToggle();
 		$this.parent().toggleClass('open');
-
 		if (!e.data.multiple) {
 			$el.find('.submenu').not($next).slideUp().parent().removeClass('open');
 		};
 	};
-
 	new Accordion($('#accordion'), false);
 });
 
@@ -58,7 +54,7 @@ function addTab(title,href,params){
 		data:params,
 		success: callback,
 		error:function(res){
-			$.messager.alert("提示","加载页面失败!");
+			$.messager.alert("提示","加载页面失败!","warning");
 		}
 	});
 }
@@ -83,10 +79,28 @@ function jumpPage(event){
  */
 function ajaxSubmit(form){
 	$.post($(form).attr("action"),$(form).serialize(),function(res){
-		alert("提交成功");
+		$.messager.alert("提示","操作成功","info",function(){
+			var $tab = $("#content-tab");
+			var selected = $tab.tabs("getSelected");
+			$tab.tabs("close",$tab.tabs('getTabIndex',selected));
+		});
 	});
-	var $tab = $("#content-tab");
-	var selected = $tab.tabs("getSelected");
-	$tab.tabs("close",$tab.tabs('getTabIndex',selected));
+	return false;
+}
+
+function delRecord(event){
+	var target = $(event.currentTarget);
+	var del = function(){
+		$.get(target.attr("href"),null,function(res){
+			$.messager.alert("提示","删除成功","info",function(){
+				$("#content-tab")
+				.tabs("getSelected")
+				.panel("refresh", event.data.url);
+			});
+		});
+	};
+	$.messager.confirm("操作确认","确认删除吗?",function(res){
+		if(res){del();}
+	});
 	return false;
 }

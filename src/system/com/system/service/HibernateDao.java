@@ -76,7 +76,6 @@ public class HibernateDao<T, PK extends Serializable>
 		} finally{
 			HibernateUtils.closeSession(session);
 		}
-		
 	}
 	@SuppressWarnings("unchecked")
 	@Override

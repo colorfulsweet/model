@@ -41,7 +41,7 @@
 			</c:forEach>
 		</ul>
 		
-		<div class="easyui-tabs" id="content-tab" style="width:85%;height:90%;">
+		<div class="easyui-tabs" id="content-tab" style="width:1200px;height:600px;">
 			<div title="欢迎页" >
 				<jsp:include page="../../page/welcome.html"/>
 			</div>
@@ -49,6 +49,6 @@
 	</div>
 	<script type="text/javascript" src="${basePath}js/jquery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="${basePath}js/easyUI/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="${basePath}js/explorer.js"></script>
+	<script type="text/javascript" src="${basePath}js/app.js"></script>
 </body>
 </html>

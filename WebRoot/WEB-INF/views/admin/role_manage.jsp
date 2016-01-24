@@ -8,7 +8,9 @@
 	<%=request.getScheme()+"://"+request.getServerName()+":"
 		+request.getServerPort()+request.getContextPath()+"/" %>
 </c:set>
-<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >创建角色</button>
+<div class="btn-header">
+	<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >创建角色</button>
+</div>
 <table class="bordered" >
 	<tr>
 		<th style="width:8%;">角色名称</th>

@@ -31,11 +31,10 @@
 		<td><fmt:formatDate value="${user.createTime}" type="date" pattern="yyyy年MM月dd日 HH:mm"/></td>
 		<td>${user.eMail}</td>
 		<td>${user.tel}</td>
-		<td id="status_${user.id}">
-			${user.status}
-		</td>
+		<td>${user.status}</td>
 		<td style="text-align:center;">
-			删除 禁用/启用
+			<a href="user/delete.html?id=${user.id}" class="delUser">删除</a>
+			禁用/启用
 		</td>
 	</tr>
 	</c:forEach>
@@ -46,7 +45,9 @@
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("#content-tab").tabs("getSelected").find("a.page").on("click",jumpPage);
+	$("a.page").on("click",jumpPage);
+	//给删除添加委托事件
+	$("table.bordered").on("click","a.delUser",{url:"admin/userManage.html"},delRecord);
 });
 function addUser() {
 	//打开新增用户页面
