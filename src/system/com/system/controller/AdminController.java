@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.system.bean.Dict;
 import com.system.bean.Role;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
@@ -43,8 +44,11 @@ public class AdminController {
 		return "/WEB-INF/views/admin/user_manage.jsp";
 	}
 	@RequestMapping(value="/dictManage.html")
-	public String dictManage(Model model){
-		
+	public String dictManage(Model model,Page page){
+		page.setLinkUrl("admin/dictManage.html");
+		List<?> dictList = hibernateDao.dir(Dict.class,page);
+		model.addAttribute("dicts",dictList);
+		model.addAttribute("page", page);
 		return "/WEB-INF/views/admin/dict_manage.jsp";
 	}
 	

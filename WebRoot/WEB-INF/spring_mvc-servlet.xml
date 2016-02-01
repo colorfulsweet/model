@@ -18,6 +18,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
    		<bean class="com.system.interceptor.LoginInterceptor" ></bean>
 	</mvc:interceptors>
 	
+	<!-- 加载SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocations">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
 	
 	<!-- 配置视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

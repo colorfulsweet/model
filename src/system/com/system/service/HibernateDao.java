@@ -6,7 +6,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.system.tags.Page;
 import com.system.util.HibernateUtils;
@@ -16,22 +17,25 @@ import com.system.util.HibernateUtils;
  * @author 41882
  *
  */
-@Component
+@Repository
 public class HibernateDao<T, PK extends Serializable> 
 			implements IHibernateDao<T, PK>{
-
+	
+	@Autowired(required=true)
+	private HibernateUtils hibernateUtils;
+	
 	@Override
 	public void save(T item) {
 		Session session = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			session.save(item);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		
 	}
@@ -39,42 +43,42 @@ public class HibernateDao<T, PK extends Serializable>
 	public void update(T item) {
 		Session session = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			session.update(item);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 	}
 	@Override
 	public void saveOrUpdate(T item) {
 		Session session = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			session.saveOrUpdate(item);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 	}
 	@Override
 	public void del(T item) {
 		Session session = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			session.delete(item);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 	}
 	@SuppressWarnings("unchecked")
@@ -83,14 +87,14 @@ public class HibernateDao<T, PK extends Serializable>
 		Session session = null;
 		List<T> result = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			result = session.createQuery("from " + cls.getSimpleName()).list();
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		return result;
 	}
@@ -101,7 +105,7 @@ public class HibernateDao<T, PK extends Serializable>
 		List<T> result = null;
 		long count = 0;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			count = (Long) session.createQuery("select count(*) from " + cls.getSimpleName())
 					.uniqueResult();
 			page.setRowCount(count);
@@ -115,7 +119,7 @@ public class HibernateDao<T, PK extends Serializable>
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		return result;
 	}
@@ -125,14 +129,14 @@ public class HibernateDao<T, PK extends Serializable>
 		Session session = null;
 		T item = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			item = (T) session.get(cls,id);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		return item;
 	}
@@ -141,7 +145,7 @@ public class HibernateDao<T, PK extends Serializable>
 		Session session = null;
 		List<?> result = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			Query query = session.createQuery(hql);
 			if(params != null){
 				for(int index=0 ; index<params.length ; index++){
@@ -154,7 +158,7 @@ public class HibernateDao<T, PK extends Serializable>
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		return result;
 	}
@@ -163,7 +167,7 @@ public class HibernateDao<T, PK extends Serializable>
 		Session session = null;
 		List<?> result = null;
 		try{
-			session = HibernateUtils.getSession();
+			session = hibernateUtils.getSession();
 			Query query = session.createSQLQuery(sql);
 			if(params != null){
 				for(int index=0 ; index<params.length ; index++){
@@ -176,7 +180,7 @@ public class HibernateDao<T, PK extends Serializable>
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		} finally{
-			HibernateUtils.closeSession(session);
+			hibernateUtils.closeSession(session);
 		}
 		return result;
 	}
