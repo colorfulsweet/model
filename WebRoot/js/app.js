@@ -104,3 +104,9 @@ function delRecord(event){
 	});
 	return false;
 }
+/**
+ * 显示/隐藏 超链接当中的文字
+ */
+function showText(e){
+	$(e.target).children("span").fadeToggle("fast");
+}

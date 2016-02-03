@@ -18,7 +18,7 @@ import com.system.tags.Page;
 public class AdminController {
 	
 	@Autowired
-	private IHibernateDao<?,String> hibernateDao;
+	private IHibernateDao<Object,String> hibernateDao;
 	
 	@RequestMapping(value="/menuManage.html")
 	public String menuManage(Model model){

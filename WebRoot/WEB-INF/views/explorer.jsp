@@ -32,9 +32,7 @@
 				<div class="link"><i class="fa ${menu.icon}"></i>${menu.menuName}<i class="fa fa-chevron-down"></i></div>
 				<ul class="submenu">
 					<c:forEach items="${menu.childrenMenu}" var="submenu">
-					<c:if test="${submenu!=null}">
 					<li><a href="${basePath}${submenu.url}" >${submenu.submenuName}</a></li>
-					</c:if>
 					</c:forEach>
 				</ul>
 			</li>

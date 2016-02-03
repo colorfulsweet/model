@@ -78,6 +78,9 @@ public class Menu implements Serializable {
 		this.icon = icon;
 	}
 	public List<Submenu> getChildrenMenu() {
+		if(childrenMenu != null){
+			childrenMenu.remove(null);
+		}
 		return childrenMenu;
 	}
 	public void setChildrenMenu(List<Submenu> childrenMenu) {

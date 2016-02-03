@@ -27,7 +27,7 @@
 		<td>${dict.dictName}</td>
 		<td>${dict.remark}</td>
 		<td style="text-align:center;">
-			
+			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')">字典项</a>
 		</td>
 	</tr>
 	</c:forEach>
@@ -35,6 +35,7 @@
 <div class="pageSplit">
 	<page:htmlPage page="${page}" />
 </div>
+<div id="DictClause" ></div>
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
@@ -46,5 +47,34 @@ function addDict() {
 	//打开新增用户页面
 	alert("aaa");
 // 	addTab("新增数据字典","${basePath}"+"page/addOrUpdateUser.html",null);
+}
+/**
+ * 打开配置字典项页面
+ */
+function openDictClause(dictId){
+	var save = function(e){
+		//e中的currentTarget对象是点击触发对象
+		alert("保存");
+	};
+	var cancel = function(e){
+		alert("取消");
+	};
+	$("#DictClause").dialog({    
+	    title: "配置字典项",
+		width: 400,
+		height: 300,
+		closed: false,
+		cache: false,
+		href: "dict/dictClause.html?id="+dictId,
+		buttons:[{
+			text:"保存",
+			handler:save,
+			iconCls:"icon-save"
+		},{
+			text:"取消",
+			handler:cancel,
+			iconCls:"icon-cancel"
+		}]
+	});
 }
 </script>
