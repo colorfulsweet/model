@@ -18,6 +18,7 @@
 				<comment>字典条目名称</comment>
 			</column>
 		</property>
+		<many-to-one name="dict" column="DICT_ID" />
 	</class>
 
 	<class name="Dict" table="S_DICT">
@@ -40,12 +41,10 @@
 				<comment>备注</comment>
 			</column>
 		</property>
-		<list name="clauses">
+		<list name="clauses" cascade="all,delete-orphan">
 			<key column="DICT_ID"/>
 			<index column="INDEX_"/>
 			<one-to-many class="Dict$DictClause"/>
 		</list>
 	</class>
-		
-	
 </hibernate-mapping>

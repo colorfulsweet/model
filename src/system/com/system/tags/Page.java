@@ -1,5 +1,7 @@
 package com.system.tags;
 
+import java.util.List;
+
 public class Page {
 	private int pageSize = 10;//每页的记录数量(默认值为10)
 	private int pageNow = 1;//当前页(默认值为1)
@@ -7,7 +9,7 @@ public class Page {
 	private int pageCount;//总页数
 	private int rowStart;//查询起始的行数
 	private String linkUrl;//跳转的URL地址
-	
+	private List<?> result;
 	public Page(){}
 	/**
 	 * 设置分页值,每页记录数10条,当前第1页
@@ -78,5 +80,10 @@ public class Page {
 	public void setLinkUrl(String linkUrl) {
 		this.linkUrl = linkUrl;
 	}
-
+	public List<?> getResult() {
+		return result;
+	}
+	public void setResult(List<?> result) {
+		this.result = result;
+	}
 }

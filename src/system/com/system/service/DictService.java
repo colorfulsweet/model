@@ -37,4 +37,22 @@ public class DictService implements IDictService {
 		return dictClauseList;
 	}
 
+	@Override
+	public void saveDictClause(DictClause dictClause) {
+		Session session = null;
+		try{
+			session = hibernateUtils.getSession();
+			Dict dict = (Dict) session.get(Dict.class, dictClause.getDict().getId());
+			if(dict != null){
+				dict.getClauses().add(dictClause);
+			}
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
+	}
+
 }

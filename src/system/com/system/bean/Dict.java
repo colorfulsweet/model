@@ -25,6 +25,7 @@ public class Dict implements Serializable {
 		private String id;
 		private String clauseCode;//字典条目编码
 		private String clauseName;//字典条目名称
+		private Dict dict;
 		public String getId() {
 			return id;
 		}
@@ -43,7 +44,12 @@ public class Dict implements Serializable {
 		public void setClauseName(String clauseName) {
 			this.clauseName = clauseName;
 		}
-		
+		public Dict getDict() {
+			return dict;
+		}
+		public void setDict(Dict dict) {
+			this.dict = dict;
+		}
 	}
 	public String getId() {
 		return id;

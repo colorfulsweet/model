@@ -23,7 +23,7 @@
 		<th style="width:10%;">操作</th>
 	</tr>
 	<% int i=0; %>
-	<c:forEach var="user" items="${users}" >
+	<c:forEach var="user" items="${page.result}" >
 	<tr>
 		<td><%=++i %></td>
 		<td>${user.username}</td>

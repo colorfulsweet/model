@@ -19,7 +19,9 @@ a.page:hover{background-color:rgb(254,222,179);}
 .btn-header > button{margin-right:5px;}
 
 a.fa{font-size:16px;}
-a.fa > span{display:none;font-size:14px;}
+/*a.fa + span{display:none;}*/
+span.comment{cursor:pointer;color:gray;}
+tr.newLine input[type=text]{width:100%;}
 /*----表格相关样式----*/
 table {
     *border-collapse: collapse; /* IE7 and lower */

@@ -27,6 +27,12 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 */
 	public void del(T item);
 	/**
+	 * 删除(可级联删除子表关联数据)
+	 * @param item
+	 * @param cascade 是否级联删除
+	 */
+	public void del(T item,boolean cascade);
+	/**
 	 * 查询全集
 	 * @param cls
 	 * @return
@@ -38,7 +44,7 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 * @param page
 	 * @return
 	 */
-	public List<T> dir(Class<?> cls,Page page);
+	public void dir(Class<?> cls,Page page);
 	/**
 	 * 获取单个实体类
 	 * @param id

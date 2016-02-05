@@ -11,7 +11,7 @@
 <div class="btn-header">
 	<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDict()">添加字典</button>
 </div>
-<table class="bordered" >
+<table class="bordered" id="dictList">
 	<tr>
 		<th style="width:5%">序号</th>
 		<th style="width:15%;">字典编码</th>
@@ -20,14 +20,17 @@
 		<th style="width:10%;">操作</th>
 	</tr>
 	<% int i=0; %>
-	<c:forEach var="dict" items="${dicts}" >
+	<c:forEach var="dict" items="${page.result}" >
 	<tr>
 		<td><%=++i %></td>
 		<td>${dict.dictCode}</td>
 		<td>${dict.dictName}</td>
 		<td>${dict.remark}</td>
-		<td style="text-align:center;">
-			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')">字典项</a>
+		<td >
+			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')" class="fa fa-book"></a>
+			<span>字典项</span>
+			<a href="dict/delDict.html?id=${dict.id}" class="delDict fa fa-trash" ></a>
+			<span>删除</span>
 		</td>
 	</tr>
 	</c:forEach>
@@ -41,7 +44,7 @@ $(function(){
 	//给分页按钮添加点击事件
 	$("a.page").on("click",jumpPage);
 	//给删除添加委托事件
-// 	$("table.bordered").on("click","a.delUser",{url:"admin/userManage.html"},delRecord);
+	$("#dictList").on("click","a.delDict",{url:"admin/dictManage.html"},delRecord);
 });
 function addDict() {
 	//打开新增用户页面
@@ -54,15 +57,25 @@ function addDict() {
 function openDictClause(dictId){
 	var save = function(e){
 		//e中的currentTarget对象是点击触发对象
-		alert("保存");
+		var $form = $("form#dictClause");
+		$.post($form.attr("action"),$form.serializeArray(),function(res){
+			var edit_tr = $form.find("tr:last");
+			var new_tr = edit_tr.clone();
+			new_tr.find(":input").each(function(index,element){
+				$(element).replaceWith(element.value);
+			});
+			edit_tr.before(new_tr);
+			addLine(edit_tr.find("span.comment"));
+		});
 	};
 	var cancel = function(e){
-		alert("取消");
+		var $form = $("form#dictClause");
+		addLine($form.find("tr:last span.comment"));
 	};
-	$("#DictClause").dialog({    
+	$("#DictClause").dialog({
 	    title: "配置字典项",
-		width: 400,
-		height: 300,
+		width: 600,
+		height: 400,
 		closed: false,
 		cache: false,
 		href: "dict/dictClause.html?id="+dictId,

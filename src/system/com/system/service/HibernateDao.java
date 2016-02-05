@@ -1,6 +1,7 @@
 package com.system.service;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -83,6 +84,28 @@ public class HibernateDao<T, PK extends Serializable>
 	}
 	@SuppressWarnings("unchecked")
 	@Override
+	public void del(T item,boolean cascade){
+		if(!cascade){
+			this.del(item);
+			return;
+		}
+		Session session = null;
+		try{
+			session = hibernateUtils.getSession();
+			item = (T) session.get(item.getClass(), getItemId(item));
+			session.delete(item);
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<T> dir(Class<?> cls) {
 		Session session = null;
 		List<T> result = null;
@@ -100,7 +123,7 @@ public class HibernateDao<T, PK extends Serializable>
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> dir(Class<?> cls,Page page){
+	public void dir(Class<?> cls,Page page){
 		Session session = null;
 		List<T> result = null;
 		long count = 0;
@@ -113,7 +136,7 @@ public class HibernateDao<T, PK extends Serializable>
 					.setFirstResult(page.getRowStart())
 					.setMaxResults(page.getPageSize())
 					.list();
-			
+			page.setResult(result);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -121,7 +144,6 @@ public class HibernateDao<T, PK extends Serializable>
 		} finally{
 			hibernateUtils.closeSession(session);
 		}
-		return result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -183,5 +205,17 @@ public class HibernateDao<T, PK extends Serializable>
 			hibernateUtils.closeSession(session);
 		}
 		return result;
+	}
+	
+	protected String getItemId(T item){
+		String id = null;
+		try{
+			Class<?> clz = item.getClass();
+			Method method = clz.getMethod("getId");
+			id = (String) method.invoke(item);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return id;
 	}
 }

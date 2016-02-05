@@ -32,10 +32,31 @@ public class DictController {
 		return "WEB-INF/views/dict/dict_clause.jsp";
 	}
 	
+	@RequestMapping(value="/saveDictClause.html")
+	@ResponseBody
+	public String saveDictClause(DictClause dictClause){
+		dictService.saveDictClause(dictClause);
+		return StatusText.SUCCESS;
+	}
+	
 	@RequestMapping(value="/delClause.html")
 	@ResponseBody
 	public String delClause(DictClause dictClause){
 		hibernateDao.del(dictClause);
+		return StatusText.SUCCESS;
+	}
+	
+	@RequestMapping(value="/saveDict.html")
+	@ResponseBody
+	public String saveDict(Dict dict){
+		hibernateDao.saveOrUpdate(dict);
+		return StatusText.SUCCESS;
+	}
+	
+	@RequestMapping(value="/delDict.html")
+	@ResponseBody
+	public String delDict(Dict dict){
+		hibernateDao.del(dict,true);
 		return StatusText.SUCCESS;
 	}
 }

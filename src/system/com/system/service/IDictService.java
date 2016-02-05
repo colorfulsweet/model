@@ -12,4 +12,9 @@ public interface IDictService {
 	 * @return
 	 */
 	public List<DictClause> getDictClauseList(Dict dict);
+	/**
+	 * 保存字典项(包含字典项序列)
+	 * @param dictClause
+	 */
+	public void saveDictClause(DictClause dictClause);
 }
