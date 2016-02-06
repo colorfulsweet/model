@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
+import com.system.util.ReflectUtils;
 import com.system.util.StatusText;
 
 @Controller
@@ -24,11 +25,23 @@ public class UserController {
 	 */
 	@RequestMapping(value="/save.html")
 	@ResponseBody
-	public String saveOrUpdateUser(User user){
+	public String saveUser(User user){
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
-		user.setCreateTime(new Date());
-		user.setStatus(true);
-		hibernateDao.saveOrUpdate(user);
+		if(user!=null && user.getId()!=null && user.getId().length()!=0){
+			//修改
+			User destUser = hibernateDao.get(User.class, user.getId());
+			try {
+				ReflectUtils.transferFields(user, destUser);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return StatusText.ERROR;
+			}
+			hibernateDao.update(destUser);
+		} else {
+			//新增
+			user.setCreateTime(new Date());
+			hibernateDao.save(user);
+		}
 		return StatusText.SUCCESS;
 	}
 	/**

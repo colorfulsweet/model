@@ -28,7 +28,7 @@
 				<comment>创建时间</comment>
 			</column>
 		</property>
-		<property name="eMail" type="string">
+		<property name="email" type="string">
 			<column name="E_MAIL" length="255">
 				<comment>电子邮箱</comment>
 			</column>

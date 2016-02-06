@@ -30,6 +30,9 @@ public class Dict implements Serializable {
 			return id;
 		}
 		public void setId(String id) {
+			if(id!=null && id.length()==0){
+				id = null;
+			}
 			this.id = id;
 		}
 		public String getClauseCode() {
@@ -55,6 +58,9 @@ public class Dict implements Serializable {
 		return id;
 	}
 	public void setId(String id) {
+		if(id!=null && id.length()==0){
+			id = null;
+		}
 		this.id = id;
 	}
 	public String getDictCode() {

@@ -34,7 +34,7 @@ public class SystemService implements ISystemService {
 			if(!result.isEmpty()){
 				user = (User) result.get(0);
 				for(Menu menu : user.getRole().getMenus()){
-					//溢出子菜单项目当中的null
+					//移除子菜单项目当中的null
 					menu.getChildrenMenu().remove(null);
 				}
 			} else {

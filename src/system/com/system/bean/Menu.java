@@ -32,6 +32,9 @@ public class Menu implements Serializable {
 			return id;
 		}
 		public void setId(String id) {
+			if(id!=null && id.length()==0){
+				id = null;
+			}
 			this.id = id;
 		}
 		public String getSubmenuName() {
@@ -57,6 +60,9 @@ public class Menu implements Serializable {
 		return id;
 	}
 	public void setId(String id) {
+		if(id!=null && id.length()==0){
+			id = null;
+		}
 		this.id = id;
 	}
 	public String getMenuName() {

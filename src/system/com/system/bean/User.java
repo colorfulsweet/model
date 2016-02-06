@@ -14,9 +14,9 @@ public class User implements Serializable {
 	private String realName;//昵称
 	private String password;//密码(MD5)
 	private Date createTime;//创建时间
-	private String eMail;//邮箱
+	private String email;//邮箱
 	private String tel;//电话
-	private boolean status;//状态
+	private Boolean status;//状态
 	private Role role;//用户角色
 	
 	public Role getRole() {
@@ -29,6 +29,9 @@ public class User implements Serializable {
 		return id;
 	}
 	public void setId(String id) {
+		if(id!=null && id.length()==0){
+			id = null;
+		}
 		this.id = id;
 	}
 	public String getUsername() {
@@ -55,11 +58,11 @@ public class User implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getTel() {
 		return tel;
@@ -67,10 +70,10 @@ public class User implements Serializable {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public boolean getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 }
