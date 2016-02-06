@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<form action="dict/saveDictClause.html" method="post" id="dictClause">
+<form action="dict/saveClause.html" method="post" id="dictClause">
 <input type="hidden" name="dict.id" value="${dict.id}" />
 <table class="bordered" id="clauseList" >
 	<tr>

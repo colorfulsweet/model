@@ -9,7 +9,7 @@
 		+request.getServerPort()+request.getContextPath()+"/" %>
 </c:set>
 <div class="btn-header">
-	<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addUser()">创建用户</button>
+	<a href="page/addOrUpdateUser.html" class="easyui-linkbutton addUser" data-options="iconCls:'icon-add'" >创建用户</a>
 </div>
 <table class="bordered" id="userList">
 	<tr>
@@ -33,9 +33,8 @@
 		<td>${user.tel}</td>
 		<td>${user.status}</td>
 		<td>
-			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" >
-				<span>删除</span>
-			</a>
+			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" ></a>
+			<span>删除</span>
 			禁/启
 		</td>
 	</tr>
@@ -44,16 +43,13 @@
 <div class="pageSplit">
 	<page:htmlPage page="${page}" />
 </div>
+<div id="userRole"></div>
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("a.page").on("click",jumpPage);
+	$("#userRole").prev(".pageSplit").find("a.page").on("click",jumpPage);
 	//给删除添加委托事件
 	$("#userList").on("click","a.delUser",{url:"admin/userManage.html"},delRecord);
-	$("#userList a.fa").on("mouseover mouseout",showText);
+	$("a.addUser").on("click",{tabName:"创建用户"},editRecord);
 });
-function addUser() {
-	//打开新增用户页面
-	addTab("新增用户","${basePath}"+"page/addOrUpdateUser.html",null);
-}
 </script>

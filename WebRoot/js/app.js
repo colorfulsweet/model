@@ -43,8 +43,6 @@ function addTab(title,href,params){
 		} else {
 			//如果不存在则新增一个选项卡
 			var body = $(res);
-			//给新添加的页面中的分页按钮绑定点击事件
-			body.find("a.page").on("click",jumpPage);
 			$tab.tabs('add',{"title":title,"content":body,"closable": true});
 		}
 	};
@@ -87,7 +85,11 @@ function ajaxSubmit(form){
 	});
 	return false;
 }
-
+/**
+ * 删除记录
+ * @param event
+ * @returns {Boolean}
+ */
 function delRecord(event){
 	var target = $(event.currentTarget);
 	var del = function(){
@@ -104,7 +106,21 @@ function delRecord(event){
 	});
 	return false;
 }
-
+/**
+ * 编辑记录
+ * @param event
+ * @returns {Boolean}
+ */
+function editRecord(event){
+	if(typeof event !== "undefined"){
+		addTab(event.data.tabName,$(event.currentTarget).attr("href"),null);
+	}
+	return false;
+}
+/**
+ * 添加一行记录(适用于无分页的页面)
+ * @param target
+ */
 function addLine(target){
 	$(target).toggle();
 	$(target).parents("tr:first").find(":input").toggle().val("");

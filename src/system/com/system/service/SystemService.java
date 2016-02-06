@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.system.bean.Menu;
 import com.system.bean.User;
 import com.system.util.HibernateUtils;
 
@@ -30,7 +31,15 @@ public class SystemService implements ISystemService {
 			result = session.createQuery(hql)
 					.setParameter(0, user.getUsername())
 					.setParameter(1, DigestUtils.sha256Hex(user.getPassword())).list();
-			
+			if(!result.isEmpty()){
+				user = (User) result.get(0);
+				for(Menu menu : user.getRole().getMenus()){
+					//溢出子菜单项目当中的null
+					menu.getChildrenMenu().remove(null);
+				}
+			} else {
+				user = null;
+			}
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -38,11 +47,7 @@ public class SystemService implements ISystemService {
 		} finally{
 			hibernateUtils.closeSession(session);
 		}
-		if(!result.isEmpty()){
-			return (User)result.get(0);
-		} else {
-			return null;
-		}
+		return user;
 	}
 
 }

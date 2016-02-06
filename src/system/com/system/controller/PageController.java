@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.system.bean.Dict;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
@@ -23,7 +24,7 @@ public class PageController {
 	private ISystemService systemService;
 	
 	@Autowired
-	private IHibernateDao<?,String> hibernateDao;
+	private IHibernateDao<Object,String> hibernateDao;
 	
 	@RequestMapping(value="/index.html")
 	public String toIndex() {
@@ -75,5 +76,14 @@ public class PageController {
 			model.addAttribute("user_", user);
 		}
 		return "WEB-INF/views/user/add_user.jsp";
+	}
+	
+	@RequestMapping(value="/addOrUpdateDict.html")
+	public String addOrUpdateDict(Dict dict,Model model){
+		if(dict.getId() != null){
+			dict = (Dict) hibernateDao.get(Dict.class, dict.getId());
+			model.addAttribute("dict", dict);
+		}
+		return "WEB-INF/views/dict/add_dict.jsp";
 	}
 }

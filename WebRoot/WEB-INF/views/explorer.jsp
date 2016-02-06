@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,com.system.bean.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="com.system.bean.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
 <c:set var="basePath" scope="page">

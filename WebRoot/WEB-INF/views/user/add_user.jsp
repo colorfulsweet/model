@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <div style="padding:10px;">
 	<form class="addUserForm" method="post" action="user/save.html" onSubmit="return ajaxSubmit(this)">
 		用户名<input type="text" name="username" />

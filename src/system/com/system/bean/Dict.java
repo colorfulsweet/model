@@ -76,9 +76,6 @@ public class Dict implements Serializable {
 		this.remark = remark;
 	}
 	public List<DictClause> getClauses() {
-		if(clauses != null){
-			clauses.remove(null);
-		}
 		return clauses;
 	}
 	public void setClauses(List<DictClause> clauses) {

@@ -26,6 +26,7 @@ public class DictService implements IDictService {
 			dict = (Dict) session.get(Dict.class, dict.getId());
 			if(dict != null){
 				dictClauseList = dict.getClauses();
+				dictClauseList.remove(null);
 			}
 			session.getTransaction().commit();
 		} catch (HibernateException e){

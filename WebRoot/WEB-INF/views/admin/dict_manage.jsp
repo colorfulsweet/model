@@ -9,15 +9,15 @@
 		+request.getServerPort()+request.getContextPath()+"/" %>
 </c:set>
 <div class="btn-header">
-	<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDict()">添加字典</button>
+	<a href="page/addOrUpdateDict.html" class="easyui-linkbutton addDict" data-options="iconCls:'icon-add'" >添加字典</a>
 </div>
 <table class="bordered" id="dictList">
 	<tr>
 		<th style="width:5%">序号</th>
-		<th style="width:15%;">字典编码</th>
+		<th style="width:12%;">字典编码</th>
 		<th style="width:15%;">字典名称</th>
-		<th style="width:30%;">备注</th>
-		<th style="width:10%;">操作</th>
+		<th style="width:25%;">备注</th>
+		<th style="width:12%;">操作</th>
 	</tr>
 	<% int i=0; %>
 	<c:forEach var="dict" items="${page.result}" >
@@ -27,9 +27,11 @@
 		<td>${dict.dictName}</td>
 		<td>${dict.remark}</td>
 		<td >
-			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')" class="fa fa-book"></a>
+			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')" class="fa fa-list"></a>
 			<span>字典项</span>
-			<a href="dict/delDict.html?id=${dict.id}" class="delDict fa fa-trash" ></a>
+			<a href="page/addOrUpdateDict.html?id=${dict.id}" class="editDict fa fa-edit"></a>
+			<span>编辑</span>
+			<a href="dict/delete.html?id=${dict.id}" class="delDict fa fa-trash" ></a>
 			<span>删除</span>
 		</td>
 	</tr>
@@ -42,15 +44,13 @@
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("a.page").on("click",jumpPage);
+	$("#DictClause").prev(".pageSplit").find("a.page").on("click",jumpPage);
 	//给删除添加委托事件
-	$("#dictList").on("click","a.delDict",{url:"admin/dictManage.html"},delRecord);
+	$("#dictList")
+	.on("click","a.delDict",{url:"admin/dictManage.html"},delRecord)
+	.on("click","a.editDict",{tabName:"编辑字典"},editRecord);
+	$("a.addDict").on("click",{tabName:"添加字典"},editRecord);
 });
-function addDict() {
-	//打开新增用户页面
-	alert("aaa");
-// 	addTab("新增数据字典","${basePath}"+"page/addOrUpdateUser.html",null);
-}
 /**
  * 打开配置字典项页面
  */

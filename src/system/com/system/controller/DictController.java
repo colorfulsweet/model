@@ -32,7 +32,7 @@ public class DictController {
 		return "WEB-INF/views/dict/dict_clause.jsp";
 	}
 	
-	@RequestMapping(value="/saveDictClause.html")
+	@RequestMapping(value="/saveClause.html")
 	@ResponseBody
 	public String saveDictClause(DictClause dictClause){
 		dictService.saveDictClause(dictClause);
@@ -46,14 +46,14 @@ public class DictController {
 		return StatusText.SUCCESS;
 	}
 	
-	@RequestMapping(value="/saveDict.html")
+	@RequestMapping(value="/save.html")
 	@ResponseBody
 	public String saveDict(Dict dict){
 		hibernateDao.saveOrUpdate(dict);
 		return StatusText.SUCCESS;
 	}
 	
-	@RequestMapping(value="/delDict.html")
+	@RequestMapping(value="/delete.html")
 	@ResponseBody
 	public String delDict(Dict dict){
 		hibernateDao.del(dict,true);
