@@ -1,5 +1,7 @@
 package com.system.util;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,12 @@ public class DictUtils {
 	 */
 	public String getDictClauseName(String dictCode,String clauseCode){
 		//TODO 查询字典项名称
-		
-		return null;
+		String hql = "select a.clauseName from DictClause a where a.dict.dictCode=? and a.clauseCode=?";
+		List<?> result = hibernateDao.excuteQuery(hql, new Object[]{dictCode,clauseCode});
+		if(result.isEmpty()){
+			return null;
+		} else {
+			return result.get(0).toString();
+		}
 	}
 }

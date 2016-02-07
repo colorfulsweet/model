@@ -15,7 +15,7 @@ a{text-decoration:none;color:blue;}
 a.page,span.page{border:1px black solid;padding:3px 5px;background-color:#EEE;}
 a.page:hover{background-color:rgb(254,222,179);}
 
-.btn-header{width:95%;padding:7px 0px;margin:0px auto;}
+.btn-header{width:97%;padding:7px 0px;margin:0px auto;}
 .btn-header > button{margin-right:5px;}
 
 a.fa{font-size:16px;}
@@ -26,12 +26,12 @@ tr.newLine input[type=text]{width:100%;}
 table {
     *border-collapse: collapse; /* IE7 and lower */
     border-spacing: 0;
-    width: 95%;
     font-size:14px;
     margin:0px auto;
 }
 
 .bordered {
+    width: 97%;
     border: solid #ccc 1px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
