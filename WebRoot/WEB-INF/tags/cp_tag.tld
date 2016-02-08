@@ -1,0 +1,33 @@
+<?xml version= "1.0" encoding ="UTF-8" ?>
+<taglib version= "2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>cp</short-name>
+	<uri>http://www.threebody.com/cp</uri>
+	<tag>
+		<name>pageSplit</name>
+		<tag-class>com.system.tags.PageSplitTag</tag-class>
+		<attribute>
+			<name>page</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>dictType</name>
+		<tag-class>com.system.tags.ClauseNameTag</tag-class>
+		<attribute>
+			<name>dictCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>clauseCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

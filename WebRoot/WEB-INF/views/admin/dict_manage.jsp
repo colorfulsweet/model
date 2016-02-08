@@ -1,7 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.threebody.com/page" prefix="page" %>
+<%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
 <c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
 <c:set var="basePath" scope="page">
@@ -38,7 +38,7 @@
 	</c:forEach>
 </table>
 <div class="pageSplit">
-	<page:htmlPage page="${page}" />
+	<cp:pageSplit page="${page}" />
 </div>
 <div id="DictClause" ></div>
 <script type="text/javascript" >

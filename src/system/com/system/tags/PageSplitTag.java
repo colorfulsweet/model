@@ -9,9 +9,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.log4j.Logger;
 
 
-public class PageTag extends TagSupport {
+public class PageSplitTag extends TagSupport {
 	private static final long serialVersionUID = 7708371317711245049L;
-	private static Logger log = Logger.getLogger(PageTag.class);
+	private static Logger log = Logger.getLogger(PageSplitTag.class);
 	private Page page;
 	@Override
 	public int doStartTag() throws JspException {

@@ -47,4 +47,7 @@
 			<one-to-many class="Dict$DictClause"/>
 		</list>
 	</class>
+	<query name="dictClauseList">
+		<![CDATA[from Dict$DictClause a where a.dict.dictCode=?]]>
+	</query>
 </hibernate-mapping>

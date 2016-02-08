@@ -57,12 +57,19 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 * @param params HQL语句当中的参数值
 	 * @return
 	 */
-	public List<?> excuteQuery(String hql,Object[] params);
+	public List<?> excuteQuery(String hql,Object... params);
 	/**
 	 * 使用原生SQL语句执行查询
 	 * @param sql SQL查询语句
 	 * @param params SQL语句当中的参数值
 	 * @return
 	 */
-	public List<?> excuteSQLQuery(String sql,Object[] params);
+	public List<?> excuteSQLQuery(String sql,Object... params);
+	/**
+	 * 使用外置命名查询
+	 * @param queryName 预定义的查询名称
+	 * @param params HQL语句当中的参数
+	 * @return
+	 */
+	public List<?> excuteQueryName(String queryName,Object... params);
 }

@@ -163,7 +163,7 @@ public class HibernateDao<T, PK extends Serializable>
 		return item;
 	}
 	@Override
-	public List<?> excuteQuery(String hql,Object[] params){
+	public List<?> excuteQuery(String hql,Object... params){
 		Session session = null;
 		List<?> result = null;
 		try{
@@ -185,7 +185,7 @@ public class HibernateDao<T, PK extends Serializable>
 		return result;
 	}
 	@Override
-	public List<?> excuteSQLQuery(String sql,Object[] params){
+	public List<?> excuteSQLQuery(String sql,Object... params){
 		Session session = null;
 		List<?> result = null;
 		try{
@@ -207,6 +207,34 @@ public class HibernateDao<T, PK extends Serializable>
 		return result;
 	}
 	
+	@Override
+	public List<?> excuteQueryName(String queryName, Object... params) {
+		Session session = null;
+		List<?> result = null;
+		try{
+			session = hibernateUtils.getSession();
+			Query query = session.getNamedQuery(queryName);
+			if(params != null){
+				for(int index=0 ; index<params.length ; index++){
+					query.setParameter(index, params[index]);
+				}
+			}
+			result = query.list();
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
+		return result;
+	}
+	/**
+	 * 获取实体对象的主键ID
+	 * (实体类当中该属性名为id)
+	 * @param item
+	 * @return
+	 */
 	protected String getItemId(T item){
 		String id = null;
 		try{
@@ -218,4 +246,5 @@ public class HibernateDao<T, PK extends Serializable>
 		}
 		return id;
 	}
+	
 }

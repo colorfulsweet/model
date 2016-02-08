@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.threebody.com/page" prefix="page" %>
+<%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
 <c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
 <c:set var="basePath" scope="page">
@@ -31,7 +31,7 @@
 		<td><fmt:formatDate value="${user.createTime}" type="date" pattern="yyyy年MM月dd日 HH:mm"/></td>
 		<td>${user.email}</td>
 		<td>${user.tel}</td>
-		<td>${user.status}</td>
+		<td><cp:dictType dictCode="d_userStatus" clauseCode="${user.status}"/></td>
 		<td>
 			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" ></a>
 			<span>删除</span>
@@ -42,7 +42,7 @@
 	</c:forEach>
 </table>
 <div class="pageSplit">
-	<page:htmlPage page="${page}" />
+	<cp:pageSplit page="${page}" />
 </div>
 <div id="userRole"></div>
 <script type="text/javascript" >
