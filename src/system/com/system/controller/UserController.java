@@ -1,11 +1,13 @@
 package com.system.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.User;
@@ -53,6 +55,22 @@ public class UserController {
 	@ResponseBody
 	public String delUser(User user){
 		hibernateDao.del(user);
+		return StatusText.SUCCESS;
+	}
+	
+	@RequestMapping(value="/deleteUsers.html")
+	@ResponseBody
+	public String delUsers(@RequestParam(value="userId")String[] ids){
+		if(ids.length == 0){
+			return StatusText.ERROR;
+		}
+		StringBuilder hql = new StringBuilder("delete User u where u.id in (");
+		for(int i=0 ; i<ids.length ; ++i){
+			hql.append("?,");
+		}
+		hql.setLength(hql.length() - 1);
+		hql.append(")");
+		hibernateDao.excuteUpdate(hql.toString(), Arrays.asList(ids).toArray());
 		return StatusText.SUCCESS;
 	}
 }

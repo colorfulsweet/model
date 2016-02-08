@@ -10,10 +10,12 @@
 </c:set>
 <div class="btn-header">
 	<a href="page/addOrUpdateUser.html" class="easyui-linkbutton addUser" data-options="iconCls:'icon-add'" >创建用户</a>
+	<a href="user/deleteUsers.html" class="easyui-linkbutton delUsers" data-options="iconCls:'icon-remove'" >批量删除</a>
 </div>
 <table class="bordered" id="userList">
 	<tr>
-		<th style="width:5%">序号</th>
+		<th style="width:3%;"><input type="checkbox" class="all"/></th>
+		<th style="width:5%;">序号</th>
 		<th style="width:8%;">用户名</th>
 		<th style="width:8%;">昵称</th>
 		<th style="width:18%;">创建时间</th>
@@ -25,6 +27,7 @@
 	<% int i=0; %>
 	<c:forEach var="user" items="${page.result}" >
 	<tr>
+		<td style="text-align:center;"><input type="checkbox" name="userId" value="${user.id}"/></td>
 		<td><%=++i %></td>
 		<td>${user.username}</td>
 		<td>${user.realName}</td>
@@ -52,7 +55,9 @@ $(function(){
 	//给删除添加委托事件
 	$("#userList")
 	.on("click","a.delUser",{url:"admin/userManage.html"},delRecord)
-	.on("click","a.editUser",{tabName:"编辑用户"},editRecord);
+	.on("click","a.editUser",{tabName:"编辑用户"},editRecord)
+	.on("change",".all:checkbox",selectAll);
 	$("a.addUser").on("click",{tabName:"创建用户"},editRecord);
+	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},delAllRecord);
 });
 </script>

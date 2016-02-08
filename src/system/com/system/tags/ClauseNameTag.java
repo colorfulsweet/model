@@ -44,7 +44,7 @@ public class ClauseNameTag extends TagSupport {
 	public int doEndTag() throws JspException {
 		JspWriter out = pageContext.getOut();
 		try {
-			out.print(dictMap.get(clauseCode));
+			out.print(dictMap.get(clauseCode)==null?"":dictMap.get(clauseCode));
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

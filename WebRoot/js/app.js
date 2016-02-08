@@ -125,3 +125,47 @@ function addLine(target){
 	$(target).toggle();
 	$(target).parents("tr:first").find(":input").toggle().val("");
 }
+/**
+ * 表格中的多选框 - 选中全部
+ * @param event
+ */
+function selectAll(event){
+	var checkboxs = $(event.currentTarget).parents("table:first").find("td>:checkbox");
+	if($(event.currentTarget).is(":checked")){
+		checkboxs.prop("checked",true);
+	} else {
+		checkboxs.removeAttr("checked");
+	}
+}
+/**
+ * 记录批量删除
+ * (事件传递两个参数
+ * 分别是表格的ID - tableId
+ * 和当前页面的URL地址 - url)
+ * @param event
+ * @returns {Boolean}
+ */
+function delAllRecord(event){
+	var tableId = event.data.tableId;
+	var url = event.data.url;
+	var checkedBox = $("#"+tableId).find(":checkbox:checked[class!=all]");
+	var $form = $("<form></form>");
+	$form.append(checkedBox.clone());
+	var del = function(){
+		$.post($(event.currentTarget).attr("href"),$form.serialize(),function(res){
+			if(res == "success"){
+				$.messager.alert("提示","删除成功","info",function(){
+					$("#content-tab")
+					.tabs("getSelected")
+					.panel("refresh", url);
+				});
+			} else {
+				$.messager.alert("提示","操作失败!","warning");
+			}
+		});
+	};
+	$.messager.confirm("操作确认","确认批量删除吗?",function(res){
+		if(res){del();}
+	});
+	return false;
+}

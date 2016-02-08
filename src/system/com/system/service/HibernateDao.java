@@ -229,6 +229,28 @@ public class HibernateDao<T, PK extends Serializable>
 		}
 		return result;
 	}
+	@Override
+	public int excuteUpdate(String hql, Object... params) {
+		Session session = null;
+		int lines = 0;
+		try{
+			session = hibernateUtils.getSession();
+			Query query = session.createQuery(hql);
+			if(params != null){
+				for(int index=0 ; index<params.length ; index++){
+					query.setParameter(index, params[index]);
+				}
+			}
+			lines = query.executeUpdate();
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
+		return lines;
+	}
 	/**
 	 * 获取实体对象的主键ID
 	 * (实体类当中该属性名为id)
@@ -246,5 +268,6 @@ public class HibernateDao<T, PK extends Serializable>
 		}
 		return id;
 	}
+	
 	
 }

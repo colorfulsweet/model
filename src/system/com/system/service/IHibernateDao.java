@@ -72,4 +72,11 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 * @return
 	 */
 	public List<?> excuteQueryName(String queryName,Object... params);
+	/**
+	 * 执行HQL的insert/update/delete语句
+	 * @param hql HQL增删改的语句
+	 * @param params 语句当中的参数
+	 * @return 受到影响的行数
+	 */
+	public int excuteUpdate(String hql,Object... params);
 }
