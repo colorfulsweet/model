@@ -3,11 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
-<c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
-<c:set var="basePath" scope="page">
-	<%=request.getScheme()+"://"+request.getServerName()+":"
-		+request.getServerPort()+request.getContextPath()+"/" %>
-</c:set>
 <div class="btn-header">
 	<a href="page/addOrUpdateDict.html" class="easyui-linkbutton addDict" data-options="iconCls:'icon-add'" >添加字典</a>
 </div>
@@ -27,7 +22,7 @@
 		<td>${dict.dictName}</td>
 		<td>${dict.remark}</td>
 		<td >
-			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')" class="fa fa-list"></a>
+			<a href="javascript:void(0);" onclick="openDictClause('${dict.id}')" class="fa fa-bars"></a>
 			<span>字典项</span>
 			<a href="page/addOrUpdateDict.html?id=${dict.id}" class="editDict fa fa-edit"></a>
 			<span>编辑</span>

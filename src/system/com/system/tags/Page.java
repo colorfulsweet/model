@@ -5,7 +5,7 @@ import java.util.List;
 public class Page {
 	private int pageSize = 10;//每页的记录数量(默认值为10)
 	private int pageNow = 1;//当前页(默认值为1)
-	private long rowCount;//总记录数
+	private int rowCount;//总记录数
 	private int pageCount;//总页数
 	private int rowStart;//查询起始的行数
 	private String linkUrl;//跳转的URL地址
@@ -50,13 +50,13 @@ public class Page {
 	public void setPageNow(int pageNow) {
 		this.pageNow = pageNow;
 	}
-	public long getRowCount() {
+	public int getRowCount() {
 		return rowCount;
 	}
-	public void setRowCount(long rowCount) {
+	public void setRowCount(int rowCount) {
 		this.rowCount = rowCount;
 		//根据总行数与每页的记录数 , 计算出总页数
-		pageCount = (int) ((rowCount%pageSize==0) ? (rowCount/pageSize) : (rowCount/pageSize+1));
+		pageCount = (rowCount%pageSize==0) ? (rowCount/pageSize) : (rowCount/pageSize+1);
 		//根据当前页数与每页的记录数, 计算出从第几条记录开始查询(第一条记录的索引是0)
 		rowStart = (pageNow - 1) * pageSize;
 	}

@@ -1,13 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
-<c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
-<c:set var="basePath" scope="page">
-	<%=request.getScheme()+"://"+request.getServerName()+":"
-		+request.getServerPort()+request.getContextPath()+"/" %>
-</c:set>
 <div class="btn-header">
 	<a href="page/addOrUpdateUser.html" class="easyui-linkbutton addUser" data-options="iconCls:'icon-add'" >创建用户</a>
 	<a href="user/deleteUsers.html" class="easyui-linkbutton delUsers" data-options="iconCls:'icon-remove'" >批量删除</a>

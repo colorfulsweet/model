@@ -3,11 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
-<c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
-<c:set var="basePath" scope="page">
-	<%=request.getScheme()+"://"+request.getServerName()+":"
-		+request.getServerPort()+request.getContextPath()+"/" %>
-</c:set>
 <div class="btn-header">
 	<button id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >创建角色</button>
 </div>

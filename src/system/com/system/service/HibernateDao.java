@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -111,7 +113,7 @@ public class HibernateDao<T, PK extends Serializable>
 		List<T> result = null;
 		try{
 			session = hibernateUtils.getSession();
-			result = session.createQuery("from " + cls.getSimpleName()).list();
+			result = session.createCriteria(cls).list();
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -126,17 +128,18 @@ public class HibernateDao<T, PK extends Serializable>
 	public void dir(Class<?> cls,Page page){
 		Session session = null;
 		List<T> result = null;
-		long count = 0;
+		int count = 0;
 		try{
 			session = hibernateUtils.getSession();
-			count = (Long) session.createQuery("select count(*) from " + cls.getSimpleName())
-					.uniqueResult();
-			page.setRowCount(count);
-			result = session.createQuery("from " + cls.getSimpleName())
-					.setFirstResult(page.getRowStart())
+			//聚合函数查询记录总数
+			Criteria criteria = session.createCriteria(cls)
+							.setProjection(Projections.rowCount());
+			count = (Integer) criteria.uniqueResult();
+			//查询当前页记录内容
+			criteria.setProjection(null);
+			result = criteria.setFirstResult(page.getRowStart())
 					.setMaxResults(page.getPageSize())
 					.list();
-			page.setResult(result);
 			session.getTransaction().commit();
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -144,6 +147,8 @@ public class HibernateDao<T, PK extends Serializable>
 		} finally{
 			hibernateUtils.closeSession(session);
 		}
+		page.setRowCount(count);
+		page.setResult(result);
 	}
 	@SuppressWarnings("unchecked")
 	@Override

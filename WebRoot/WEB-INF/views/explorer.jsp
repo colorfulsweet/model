@@ -29,7 +29,11 @@
 		<ul id="accordion" class="accordion">
 			<c:forEach items="${menuList}" var="menu">
 			<li>
-				<div class="link"><i class="fa ${menu.icon}"></i>${menu.menuName}<i class="fa fa-chevron-down"></i></div>
+				<div class="link">
+					<i class="fa fa-${menu.icon}"></i>
+					<a href="${menu.url}">${menu.menuName}</a>
+					<i class="fa fa-chevron-down"></i>
+				</div>
 				<ul class="submenu">
 					<c:forEach items="${menu.childrenMenu}" var="submenu">
 					<li><a href="${basePath}${submenu.url}" >${submenu.submenuName}</a></li>

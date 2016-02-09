@@ -42,7 +42,6 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 * 分页查询
 	 * @param cls
 	 * @param page
-	 * @return
 	 */
 	public void dir(Class<?> cls,Page page);
 	/**

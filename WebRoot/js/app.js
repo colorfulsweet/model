@@ -21,11 +21,14 @@ $(function() {
 });
 
 $(function(){
-	$(".submenu a").on("click",function(e){
-		e.preventDefault();
+	var openMenuTab = function(e){
+		e.preventDefault();//阻止默认事件
 		var target = $(e.target);
-		addTab(target.text(),target.attr("href"));
-	});
+		if(target.attr("href").length != 0){
+			addTab(target.text(),target.attr("href"));
+		}
+	};
+	$(".submenu a,.link a").on("click",openMenuTab);
 });
 /**
  * 新增页签

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.system.bean.Dict;
+import com.system.bean.Menu;
 import com.system.bean.Role;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
@@ -19,8 +20,10 @@ public class AdminController {
 	private IHibernateDao<Object,String> hibernateDao;
 	
 	@RequestMapping(value="/menuManage.html")
-	public String menuManage(Model model){
-		
+	public String menuManage(Model model,Page page){
+		page.setLinkUrl("admin/menuManage.html");
+		hibernateDao.dir(Menu.class, page);
+		model.addAttribute("page",page);
 		return "/WEB-INF/views/admin/menu_manage.jsp";
 	}
 	

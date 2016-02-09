@@ -52,7 +52,7 @@
 				<comment>备注</comment>
 			</column>
 		</property>
-		<list name="childrenMenu" lazy="false">
+		<list name="childrenMenu" >
 			<key column="PARENT_MENU_ID"/>
 			<!-- index表示在list集合当中的排序依据 -->
 			<index column="INDEX_"/>
