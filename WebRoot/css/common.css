@@ -27,10 +27,15 @@ table {
     *border-collapse: collapse; /* IE7 and lower */
     border-spacing: 0;
     font-size:14px;
-    margin:0px auto;
 }
-
+.iconList > ul {
+	margin:10px 5px;
+}
+.iconList > ul > li {
+	width:100px;
+}
 .bordered {
+    margin:0px auto;
     width: 97%;
     border: solid #ccc 1px;
     -moz-border-radius: 6px;

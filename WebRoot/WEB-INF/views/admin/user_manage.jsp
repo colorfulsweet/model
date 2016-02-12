@@ -31,10 +31,10 @@
 		<td>${user.tel}</td>
 		<td><cp:dictType dictCode="d_userStatus" clauseCode="${user.status}"/></td>
 		<td>
-			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" ></a>
-			<span>删除</span>
 			<a href="page/addOrUpdateUser.html?id=${user.id}" class="editUser fa fa-edit" ></a>
 			<span>编辑</span>
+			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" ></a>
+			<span>删除</span>
 		</td>
 	</tr>
 	</c:forEach>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.system.bean.Dict;
+import com.system.bean.Menu;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
@@ -85,5 +86,14 @@ public class PageController {
 			model.addAttribute("dict", dict);
 		}
 		return "WEB-INF/views/dict/add_dict.jsp";
+	}
+	
+	@RequestMapping(value="/addOrUpdateMenu.html")
+	public String addOrUpdateMenu(Menu menu,Model model){
+		if(menu.getId() != null){
+			menu = (Menu) hibernateDao.get(Menu.class,menu.getId());
+			model.addAttribute("menu", menu);
+		}
+		return "WEB-INF/views/menu/add_menu.jsp";
 	}
 }
