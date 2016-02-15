@@ -77,6 +77,7 @@ function jumpPage(event){
 /**
  * 表单ajax提交
  * @param form 表单DOM对象
+ * @returns {Boolean}
  */
 function ajaxSubmit(form){
 	$.post($(form).attr("action"),$(form).serialize(),function(res){
@@ -124,9 +125,11 @@ function editRecord(event){
  * 添加一行记录(适用于无分页的页面)
  * @param target
  */
+var newLineFlag = true;
 function addLine(target){
 	$(target).toggle();
 	$(target).parents("tr:first").find(":input").toggle().val("");
+	newLineFlag = !newLineFlag;
 }
 /**
  * 表格中的多选框 - 选中全部

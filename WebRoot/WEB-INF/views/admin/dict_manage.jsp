@@ -52,6 +52,10 @@ $(function(){
 function openDictClause(dictId){
 	var save = function(e){
 		//e中的currentTarget对象是点击触发对象
+		if(newLineFlag){
+			//只有在新增了一行以后,保存与编辑才有效
+			return;
+		}
 		var $form = $("form#dictClause");
 		$.post($form.attr("action"),$form.serializeArray(),function(res){
 			var edit_tr = $form.find("tr:last");
@@ -64,6 +68,10 @@ function openDictClause(dictId){
 		});
 	};
 	var cancel = function(e){
+		if(newLineFlag){
+			//只有在新增了一行以后,保存与编辑才有效
+			return;
+		}
 		var $form = $("form#dictClause");
 		addLine($form.find("tr:last span.comment"));
 	};
