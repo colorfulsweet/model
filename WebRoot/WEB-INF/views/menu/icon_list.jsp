@@ -2,15 +2,25 @@
 
 <div class="iconList">
 	<ul>
-		<li class="fa fa-adjust"><span>adjust</span></li>
-		<li class="fa fa-anchor"><span>anchor</span></li>
-		<li class="fa fa-archive"><span>archive</span></li>
-		<li class="fa fa-area-chart"><span>area-chart</span></li>
+		<li class="fa fa-adjust">adjust</li>
+		<li class="fa fa-anchor">anchor</li>
+		<li class="fa fa-archive">archive</li>
+		<li class="fa fa-area-chart">area-chart</li>
 	</ul>
 	<ul>
-		<li class="fa fa-arrows"><span>arrows</span></li>
-		<li class="fa fa-arrows-h"><span>arrows-h</span></li>
-		<li class="fa fa-arrows-v"><span>arrows-v</span></li>
-		<li class="fa fa-asterisk"><span>asterisk</span></li>
+		<li class="fa fa-arrows">arrows</li>
+		<li class="fa fa-arrows-h">arrows-h</li>
+		<li class="fa fa-arrows-v">arrows-v</li>
+		<li class="fa fa-asterisk">asterisk</li>
 	</ul>
 </div>
+<script type="text/javascript">
+$(function(){
+	var iconList = $(".iconList:last");
+	iconList.on("click",iconList.find("li.fa"),function(event){
+		var content = event.target.innerHTML;
+		iconList.prevAll("input[type=text]").val(content);
+		iconList.prevAll("span").removeClass().addClass("fa fa-"+content);
+	});
+});
+</script>
