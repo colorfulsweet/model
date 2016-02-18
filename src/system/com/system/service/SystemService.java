@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.system.bean.Menu;
+import com.system.bean.Menu.Submenu;
 import com.system.bean.User;
 import com.system.util.HibernateUtils;
 
@@ -48,6 +49,43 @@ public class SystemService implements ISystemService {
 			hibernateUtils.closeSession(session);
 		}
 		return user;
+	}
+
+	@Override
+	public List<Submenu> getSubmenuList(Menu menu) {
+		Session session = null;
+		List<Submenu> submenuList = null;
+		try{
+			session = hibernateUtils.getSession();
+			menu = (Menu) session.get(Menu.class, menu.getId());
+			submenuList = menu.getChildrenMenu();
+			submenuList.remove(null);
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
+		return submenuList;
+	}
+
+	@Override
+	public void saveSubmenu(Submenu submenu) {
+		Session session = null;
+		try{
+			session = hibernateUtils.getSession();
+			Menu menu = (Menu) session.get(Menu.class, submenu.getMenu().getId());
+			if(menu != null){
+				menu.getChildrenMenu().add(submenu);
+			}
+			session.getTransaction().commit();
+		} catch (HibernateException e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally{
+			hibernateUtils.closeSession(session);
+		}
 	}
 
 }

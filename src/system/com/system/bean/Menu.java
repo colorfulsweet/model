@@ -28,6 +28,7 @@ public class Menu implements Serializable {
 		private String submenuName;//子菜单名称
 		private String url;//URL地址
 		private String remark;//备注
+		private Menu menu;//父菜单对象
 		public String getId() {
 			return id;
 		}
@@ -54,6 +55,12 @@ public class Menu implements Serializable {
 		}
 		public void setRemark(String remark) {
 			this.remark = remark;
+		}
+		public Menu getMenu() {
+			return menu;
+		}
+		public void setMenu(Menu menu) {
+			this.menu = menu;
 		}
 	}
 	public String getId() {

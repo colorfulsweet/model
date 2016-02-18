@@ -24,6 +24,7 @@
 				<comment>备注</comment>
 			</column>
 		</property>
+		<many-to-one name="menu" column="PARENT_MENU_ID"/>
 	</class>
 
 	<!-- 主菜单表 -->
@@ -52,7 +53,7 @@
 				<comment>备注</comment>
 			</column>
 		</property>
-		<list name="childrenMenu" >
+		<list name="childrenMenu" cascade="all,delete-orphan" >
 			<key column="PARENT_MENU_ID"/>
 			<!-- index表示在list集合当中的排序依据 -->
 			<index column="INDEX_"/>
