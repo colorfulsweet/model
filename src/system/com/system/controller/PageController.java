@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.system.bean.Dict;
 import com.system.bean.Menu;
 import com.system.bean.User;
-import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
+import com.system.util.DataCache;
 
 @Controller
 @RequestMapping(value="/page")
@@ -25,7 +25,7 @@ public class PageController {
 	private ISystemService systemService;
 	
 	@Autowired
-	private IHibernateDao<Object,String> hibernateDao;
+	private DataCache dataCache;
 	
 	@RequestMapping(value="/index.html")
 	public String toIndex() {
@@ -73,7 +73,7 @@ public class PageController {
 	@RequestMapping(value="/addOrUpdateUser.html")
 	public String addOrUpdateUser(User user,Model model){
 		if(user.getId() != null){
-			user = (User) hibernateDao.get(User.class, user.getId());
+			user = dataCache.getObject(User.class, user.getId());
 			model.addAttribute("user_", user);
 		}
 		return "WEB-INF/views/user/add_user.jsp";
@@ -82,7 +82,7 @@ public class PageController {
 	@RequestMapping(value="/addOrUpdateDict.html")
 	public String addOrUpdateDict(Dict dict,Model model){
 		if(dict.getId() != null){
-			dict = (Dict) hibernateDao.get(Dict.class, dict.getId());
+			dict = dataCache.getObject(Dict.class, dict.getId());
 			model.addAttribute("dict", dict);
 		}
 		return "WEB-INF/views/dict/add_dict.jsp";
@@ -91,7 +91,7 @@ public class PageController {
 	@RequestMapping(value="/addOrUpdateMenu.html")
 	public String addOrUpdateMenu(Menu menu,Model model){
 		if(menu.getId() != null){
-			menu = (Menu) hibernateDao.get(Menu.class,menu.getId());
+			menu = dataCache.getObject(Menu.class,menu.getId());
 			model.addAttribute("menu", menu);
 		}
 		return "WEB-INF/views/menu/add_menu.jsp";

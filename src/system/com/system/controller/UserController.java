@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
+import com.system.util.DataCache;
 import com.system.util.ReflectUtils;
 import com.system.util.StatusText;
 
@@ -20,6 +21,9 @@ import com.system.util.StatusText;
 public class UserController {
 	@Autowired
 	private IHibernateDao<User,String> hibernateDao;
+	
+	@Autowired
+	private DataCache dataCache;
 	/**
 	 * 创建/修改 用户
 	 * @param user
@@ -31,7 +35,7 @@ public class UserController {
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
 		if(user!=null && user.getId()!=null && user.getId().length()!=0){
 			//修改
-			User destUser = hibernateDao.get(User.class, user.getId());
+			User destUser = dataCache.getObject(User.class, user.getId());
 			try {
 				ReflectUtils.transferFields(user, destUser);
 			} catch (Exception e) {
@@ -71,6 +75,7 @@ public class UserController {
 		hql.setLength(hql.length() - 1);
 		hql.append(")");
 		hibernateDao.excuteUpdate(hql.toString(), Arrays.asList(ids).toArray());
+		dataCache.removeObject(User.class, ids);
 		return StatusText.SUCCESS;
 	}
 }

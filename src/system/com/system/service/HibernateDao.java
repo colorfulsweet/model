@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.system.tags.Page;
+import com.system.util.DataCache;
 import com.system.util.HibernateUtils;
 
 /**
@@ -27,6 +28,9 @@ public class HibernateDao<T, PK extends Serializable>
 	@Autowired(required=true)
 	private HibernateUtils hibernateUtils;
 	
+	@Autowired(required=true)
+	private DataCache dataCache;
+	
 	@Override
 	public void save(T item) {
 		Session session = null;
@@ -34,6 +38,7 @@ public class HibernateDao<T, PK extends Serializable>
 			session = hibernateUtils.getSession();
 			session.save(item);
 			session.getTransaction().commit();
+			dataCache.cacheData(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -49,6 +54,7 @@ public class HibernateDao<T, PK extends Serializable>
 			session = hibernateUtils.getSession();
 			session.update(item);
 			session.getTransaction().commit();
+			dataCache.cacheData(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -63,6 +69,7 @@ public class HibernateDao<T, PK extends Serializable>
 			session = hibernateUtils.getSession();
 			session.saveOrUpdate(item);
 			session.getTransaction().commit();
+			dataCache.cacheData(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -77,6 +84,7 @@ public class HibernateDao<T, PK extends Serializable>
 			session = hibernateUtils.getSession();
 			session.delete(item);
 			session.getTransaction().commit();
+			dataCache.removeObject(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -97,6 +105,7 @@ public class HibernateDao<T, PK extends Serializable>
 			item = (T) session.get(item.getClass(), getItemId(item));
 			session.delete(item);
 			session.getTransaction().commit();
+			dataCache.removeObject(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();
