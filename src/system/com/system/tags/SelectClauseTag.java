@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import com.system.bean.Dict.DictClause;
@@ -20,28 +21,19 @@ import com.system.util.SpringUtils;
  *
  */
 public class SelectClauseTag extends TagSupport {
-	private static final long serialVersionUID = -975708524751949380L;
+	private static final long serialVersionUID = 8200571419076435613L;
 	private String name;
 	private String value;
 	private String dictCode;
 	private Map<String,String> dictMap;
 	
-	private IHibernateDao<Object,String> hibernateDao;
-	public SelectClauseTag(){
+	private static IHibernateDao<Object,String> hibernateDao;
+	static {
 		hibernateDao = SpringUtils.getBean("hibernateDao");
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public int doStartTag() throws JspException {
-		dictMap = (Map<String, String>) pageContext.getAttribute(dictCode+"_clause_map");
-		if(dictMap == null){
-			List<DictClause> result = (List<DictClause>) hibernateDao.excuteQueryName("dictClauseList", dictCode);
-			dictMap = new LinkedHashMap<String,String>();
-			for(DictClause dictClause : result){
-				dictMap.put(dictClause.getClauseCode(), dictClause.getClauseName());
-			}
-			pageContext.setAttribute(dictCode+"_clause_map", dictMap);
-		}
+		dictMap = bulidDictMap(pageContext,dictCode);
 		return SKIP_BODY;
 	}
 	@Override
@@ -80,5 +72,30 @@ public class SelectClauseTag extends TagSupport {
 	}
 	public void setDictCode(String dictCode) {
 		this.dictCode = dictCode;
+	}
+	/**
+	 * 创建Map结构的某个字典的字典项集合,并放入到pageContext当中
+	 * @param pageContext 当前页面上下文对象
+	 * @param dictCode 字典编码
+	 * @return Map类型的字典项集合
+	 */
+	@SuppressWarnings("unchecked")
+	static Map<String, String> bulidDictMap(
+				PageContext pageContext,
+				String dictCode){
+		//从pageConext当中获取这个字典的Map对象
+		Map<String, String> dictMap = (Map<String, String>) pageContext.getAttribute(dictCode+"_clause_map");
+		if(dictMap == null){
+			//如果pageContext当中没有这个字典的信息,就查询这个字典的信息
+			List<DictClause> result = (List<DictClause>) hibernateDao.excuteQueryName("dictClauseList", dictCode);
+			dictMap = new LinkedHashMap<String,String>();
+			for(DictClause dictClause : result){
+				dictMap.put(dictClause.getClauseCode(), dictClause.getClauseName());
+			}
+			//并以LinkedHashMap对象的形式放入到pageContext当中去
+			//避免同一个页面多次执行查询
+			pageContext.setAttribute(dictCode+"_clause_map", dictMap);
+		}
+		return dictMap;
 	}
 }

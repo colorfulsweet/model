@@ -163,12 +163,18 @@ public class HibernateDao<T, PK extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Override
 	public T get(Class<?> cls,PK id) {
+		//首先从缓存区进行查找
+		T item = (T) dataCache.getObject(cls, id.toString());
+		if(item != null){
+			return item;
+		}
+		//如果缓存区当中未找到,则进行数据库查询
 		Session session = null;
-		T item = null;
 		try{
 			session = hibernateUtils.getSession();
 			item = (T) session.get(cls,id);
 			session.getTransaction().commit();
+			dataCache.cacheData(item);
 		} catch (HibernateException e){
 			e.printStackTrace();
 			session.getTransaction().rollback();

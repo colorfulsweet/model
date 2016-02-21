@@ -35,7 +35,7 @@ public class UserController {
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
 		if(user!=null && user.getId()!=null && user.getId().length()!=0){
 			//修改
-			User destUser = dataCache.getObject(User.class, user.getId());
+			User destUser = hibernateDao.get(User.class, user.getId());
 			try {
 				ReflectUtils.transferFields(user, destUser);
 			} catch (Exception e) {

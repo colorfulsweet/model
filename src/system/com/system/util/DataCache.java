@@ -53,16 +53,14 @@ public class DataCache {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getObject(Class<T> clz,String id){
-		T obj = null;
-		//检查缓存中是否有该实例的软引用
-		if(dataRefs.containsKey(clz.getSimpleName() + id)){
-			//如果有则直接从缓存中取得
-			DataRef ref = dataRefs.get(clz.getSimpleName() + id);
-			obj = (T) ref.get();
+		//从缓存中获取该实例
+		DataRef ref = dataRefs.get(clz.getSimpleName() + id);
+		if(ref == null){
+			return null;
 		}
-		if(obj == null){
-			//如果没有则构建该实例
-			obj = (T) hibernateDao.get(clz, id);
+		T obj = (T) ref.get();
+		//如果成功获取到(结果不为null)
+		if(obj != null){
 			this.cacheData(obj);//将该实例加入到缓存区
 		}
 		return obj;
