@@ -2,7 +2,6 @@ package com.system.util;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
-import java.lang.reflect.Method;
 import java.util.Hashtable;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,16 @@ import com.system.service.IHibernateDao;
  */
 @Repository
 public class DataCache {
-	private Hashtable<String,DataRef> dataRefs = new Hashtable<String,DataRef>();
-	private ReferenceQueue<Object> queue = new ReferenceQueue<Object>();
+	private Hashtable<String,DataRef> dataRefs;
+	private ReferenceQueue<Object> queue;
 	
 	@Autowired(required=true)
 	private IHibernateDao<Object,String> hibernateDao;
+	
+	public DataCache() {
+		dataRefs = new Hashtable<String,DataRef>();
+		queue = new ReferenceQueue<Object>();
+	}
 	/**
 	 * 用于创建实例对象软引用的类
 	 * @author 41882
@@ -34,13 +38,9 @@ public class DataCache {
 	private class DataRef extends SoftReference<Object> {
 		public DataRef(Object obj,ReferenceQueue<Object> queue){
 			super(obj,queue);
-			try{
-				Method method = obj.getClass().getMethod("getId");
-				//缓存中的标识是该类名称与ID的组合
-				this._key = obj.getClass().getSimpleName()+(String) method.invoke(obj);
-			} catch (Exception e){
-				e.printStackTrace();
-			}
+			String id = (String) ReflectUtils.getItemField(obj, "id");
+			//缓存中的标识是该类名称与ID的组合
+			this._key = obj.getClass().getSimpleName()+id;
 		}
 		private String _key;
 	}
@@ -73,13 +73,8 @@ public class DataCache {
 	 * @param obj
 	 */
 	public void removeObject(Object obj){
-		try {
-			Method method = obj.getClass().getMethod("getId");
-			String id = (String) method.invoke(obj);
-			dataRefs.remove(obj.getClass().getSimpleName() + id);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		String id = (String) ReflectUtils.getItemField(obj, "id");
+		dataRefs.remove(obj.getClass().getSimpleName() + id);
 	}
 	/**
 	 * 从缓存区当中根据ID和类型移除多个对象
@@ -106,12 +101,7 @@ public class DataCache {
 	public void cacheData(Object obj) {
 		cleanQueue();
 		DataRef ref = new DataRef(obj,queue);
-		try{
-			Method method = obj.getClass().getMethod("getId");
-			dataRefs.put(obj.getClass().getSimpleName() + method.invoke(obj), ref);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		dataRefs.put(obj.getClass().getSimpleName() + ReflectUtils.getItemField(obj, "id"), ref);
 	}
 	
 	/**

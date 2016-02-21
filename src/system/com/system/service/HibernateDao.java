@@ -1,7 +1,6 @@
 package com.system.service;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.system.tags.Page;
 import com.system.util.DataCache;
 import com.system.util.HibernateUtils;
+import com.system.util.ReflectUtils;
 
 /**
  * 公共的增删改查方法
@@ -102,7 +102,8 @@ public class HibernateDao<T, PK extends Serializable>
 		Session session = null;
 		try{
 			session = hibernateUtils.getSession();
-			item = (T) session.get(item.getClass(), getItemId(item));
+			item = (T) session.get(item.getClass(),
+					ReflectUtils.getItemField(item, "id").toString());
 			session.delete(item);
 			session.getTransaction().commit();
 			dataCache.removeObject(item);
@@ -265,23 +266,4 @@ public class HibernateDao<T, PK extends Serializable>
 		}
 		return lines;
 	}
-	/**
-	 * 获取实体对象的主键ID
-	 * (实体类当中该属性名为id)
-	 * @param item
-	 * @return
-	 */
-	protected String getItemId(T item){
-		String id = null;
-		try{
-			Class<?> clz = item.getClass();
-			Method method = clz.getMethod("getId");
-			id = (String) method.invoke(item);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		return id;
-	}
-	
-	
 }

@@ -38,6 +38,23 @@ public class ReflectUtils {
 		}
 	}
 	/**
+	 * 获取对象中指定属性的值
+	 * @param item 对象
+	 * @param fieldName 属性名称
+	 * @return 属性的值
+	 */
+	public static Object getItemField(Object item,String fieldName){
+		Object value = null;
+		try{
+			Class<?> clz = item.getClass();
+			Method method = clz.getMethod("get" + firstCharToUpper(fieldName));
+			value = (String) method.invoke(item);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return value;
+	}
+	/**
 	 * 字符串首字母转换为大写
 	 * @param str
 	 * @return
