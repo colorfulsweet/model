@@ -4,15 +4,13 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Hashtable;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.system.service.IHibernateDao;
 /**
  * 数据库数据的高速缓存器
  * 使用软引用构成的集合实现
  * 在根据执行查询的时候,就把查询到的对象放入到缓存当中
- * 当该数据发生改变(被修改或删除),就从集合中移除该对象
+ * 当该数据被修改,就把该对象重新添加到集合当中
+ * 当该数据被删除,就从集合中移除该对象
  * 由于内存的限制,当集合中的数据过多时
  * 软引用对象会被垃圾回收器回收,避免内存溢出的情况
  * @author 41882
@@ -20,11 +18,8 @@ import com.system.service.IHibernateDao;
  */
 @Repository
 public class DataCache {
-	private Hashtable<String,DataRef> dataRefs;
-	private ReferenceQueue<Object> queue;
-	
-	@Autowired(required=true)
-	private IHibernateDao<Object,String> hibernateDao;
+	private Hashtable<String,DataRef> dataRefs;//缓存区
+	private ReferenceQueue<Object> queue;//引用队列
 	
 	public DataCache() {
 		dataRefs = new Hashtable<String,DataRef>();
@@ -53,17 +48,15 @@ public class DataCache {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getObject(Class<T> clz,String id){
-		//从缓存中获取该实例
+		//从缓存中获取该实例的软引用
 		DataRef ref = dataRefs.get(clz.getSimpleName() + id);
 		if(ref == null){
 			return null;
+		} else {
+			//由软引用获取强引用
+			//如果该软引用对象已被回收,返回null
+			return (T) ref.get();
 		}
-		T obj = (T) ref.get();
-		//如果成功获取到(结果不为null)
-		if(obj != null){
-			this.cacheData(obj);//将该实例加入到缓存区
-		}
-		return obj;
 	}
 	/**
 	 * 从缓存区当中移除一个对象

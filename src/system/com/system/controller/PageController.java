@@ -13,7 +13,6 @@ import com.system.bean.Menu;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
-import com.system.util.DataCache;
 
 @Controller
 @RequestMapping(value="/page")
