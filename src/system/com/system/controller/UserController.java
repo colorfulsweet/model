@@ -75,7 +75,7 @@ public class UserController {
 		hql.setLength(hql.length() - 1);
 		hql.append(")");
 		hibernateDao.excuteUpdate(hql.toString(), Arrays.asList(ids).toArray());
-		dataCache.removeObject(User.class, ids);
+		dataCache.removeAllObjects(User.class, ids);
 		return StatusText.SUCCESS;
 	}
 }

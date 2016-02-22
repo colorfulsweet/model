@@ -18,45 +18,65 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class DataCache {
-	private Hashtable<String,DataRef> dataRefs;//缓存区
+	private Hashtable<String,Hashtable<String,DataRef>> dataRefs;//缓存区
 	private ReferenceQueue<Object> queue;//引用队列
-	
-	public DataCache() {
-		dataRefs = new Hashtable<String,DataRef>();
+	/**
+	 * 该缓存区包含两层结构,第一层是以对象类型名称为键的哈希表
+	 * 这个哈希表的值是第二层哈希表结构
+	 * 其中以该对象的ID作为键,以软引用对象为值
+	 */
+	public DataCache(){
+		dataRefs = new Hashtable<String,Hashtable<String,DataRef>>();
 		queue = new ReferenceQueue<Object>();
 	}
 	/**
-	 * 用于创建实例对象软引用的类
-	 * @author 41882
-	 *
+	 * 用于缓存的软引用
+	 * @author Sookie
 	 */
 	private class DataRef extends SoftReference<Object> {
 		public DataRef(Object obj,ReferenceQueue<Object> queue){
 			super(obj,queue);
-			String id = (String) ReflectUtils.getItemField(obj, "id");
-			//缓存中的标识是该类名称与ID的组合
-			this._key = obj.getClass().getSimpleName()+id;
+			this.key = obj.getClass().getName();
+			this.id = (String) ReflectUtils.getItemField(obj, "id");
 		}
-		private String _key;
+		private String key;
+		private String id;
 	}
 	/**
-	 * 从缓存区获取一个对象(如果缓存区没有该对象,则执行查询获得该对象)
-	 * @param <T>
-	 * @param id
+	 * 从缓存区根据类型和ID获取一个对象
+	 * 如果缓存区没有该对象,则返回null
 	 * @param clz
+	 * @param id
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getObject(Class<T> clz,String id){
-		//从缓存中获取该实例的软引用
-		DataRef ref = dataRefs.get(clz.getSimpleName() + id);
-		if(ref == null){
+		Hashtable<String,DataRef> cacheTable = dataRefs.get(clz.getName());
+		if(cacheTable == null){
 			return null;
+		} 
+		DataRef ref = cacheTable.get(id);
+		if(ref != null){
+			return  (T) ref.get();
 		} else {
-			//由软引用获取强引用
-			//如果该软引用对象已被回收,返回null
-			return (T) ref.get();
+			return null;
 		}
+	}
+	/**
+	 * 将对象的软引用实例加入到缓存区
+	 * @param obj 强引用对象
+	 */
+	public void cacheData(Object obj){
+		cleanQueue();
+		Hashtable<String,DataRef> cacheTable = null;
+		cacheTable = dataRefs.get(obj.getClass().getName());
+		if(cacheTable == null) {
+			cacheTable = new Hashtable<String,DataRef>();
+			dataRefs.put(obj.getClass().getName(), cacheTable);
+		}
+		String id = (String) ReflectUtils.getItemField(obj, "id");
+		DataRef ref = new DataRef(obj,queue);
+		cacheTable.put(id, ref);
 	}
 	/**
 	 * 从缓存区当中移除一个对象
@@ -65,43 +85,42 @@ public class DataCache {
 	 */
 	public void removeObject(Object obj){
 		String id = (String) ReflectUtils.getItemField(obj, "id");
-		dataRefs.remove(obj.getClass().getSimpleName() + id);
+		Hashtable<String, DataRef> cacheTable = dataRefs.get(obj.getClass().getName());
+		if(cacheTable != null){
+			cacheTable.remove(id);
+		}
 	}
 	/**
 	 * 从缓存区当中根据ID和类型移除多个对象
 	 * @param clz
 	 * @param ids
 	 */
-	public void removeObject(Class<?> clz,String[] ids){
+	public void removeAllObjects(Class<?> clz,String... ids){
+		Hashtable<String, DataRef> cacheTable = dataRefs.get(clz.getName());
 		if(ids != null && ids.length>0){
 			for(String id : ids){
-				dataRefs.remove(clz.getSimpleName() + id);
+				cacheTable.remove(id);
 			}
 		}
 	}
 	/**
-	 * 清空缓存区
+	 * 清空整个缓存区
 	 */
 	public void clearCache(){
 		dataRefs.clear();
 	}
 	/**
-	 * 缓存数据
-	 * @param obj 需要执行缓存的对象
-	 */
-	public void cacheData(Object obj) {
-		cleanQueue();
-		DataRef ref = new DataRef(obj,queue);
-		dataRefs.put(obj.getClass().getSimpleName() + ReflectUtils.getItemField(obj, "id"), ref);
-	}
-	
-	/**
 	 * 清除已经被回收的软引用对象
+	 * (软引用对象被回收以后会加入到引用队列)
 	 */
 	private void cleanQueue(){
 		DataRef ref = null;
-		while((ref=(DataRef) queue.poll()) != null) {
-			dataRefs.remove(ref._key);
+		Hashtable<String, DataRef> cacheTable = null;
+		while((ref = (DataRef) queue.poll()) != null) {
+			cacheTable = dataRefs.get(ref.key);
+			if(cacheTable != null){
+				cacheTable.remove(ref.id);
+			}
 		}
 	}
 }
