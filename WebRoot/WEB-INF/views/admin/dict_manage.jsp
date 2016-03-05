@@ -39,12 +39,12 @@
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("#DictClause").prev(".pageSplit").find("a.page").on("click",jumpPage);
+	$("#DictClause").prev(".pageSplit").find("a.page").on("click",$css.jumpPage);
 	//给删除添加委托事件
 	$("#dictList")
-	.on("click","a.delDict",{url:"admin/dictManage.html"},delRecord)
-	.on("click","a.editDict",{tabName:"编辑字典"},editRecord);
-	$("a.addDict").on("click",{tabName:"添加字典"},editRecord);
+	.on("click","a.delDict",{url:"admin/dictManage.html"},$css.delRecord)
+	.on("click","a.editDict",{tabName:"编辑字典"},$css.editRecord);
+	$("a.addDict").on("click",{tabName:"添加字典"},$css.editRecord);
 });
 /**
  * 打开配置字典项页面
@@ -52,7 +52,7 @@ $(function(){
 function openDictClause(dictId){
 	var save = function(e){
 		//e中的currentTarget对象是点击触发对象
-		if(newLineFlag){
+		if($css.newLineFlag){
 			//只有在新增了一行以后,保存与编辑才有效
 			return;
 		}
@@ -64,16 +64,16 @@ function openDictClause(dictId){
 				$(element).replaceWith(element.value);
 			});
 			edit_tr.before(new_tr);
-			addLine(edit_tr.find("span.comment"));
+			$css.addLine(edit_tr.find("span.comment"));
 		});
 	};
 	var cancel = function(e){
-		if(newLineFlag){
+		if($css.newLineFlag){
 			//只有在新增了一行以后,保存与编辑才有效
 			return;
 		}
 		var $form = $("form#dictClause");
-		addLine($form.find("tr:last span.comment"));
+		$css.addLine($form.find("tr:last span.comment"));
 	};
 	$("#DictClause").dialog({
 	    title: "配置字典项",

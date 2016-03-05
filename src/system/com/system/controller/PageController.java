@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.system.bean.Dict;
 import com.system.bean.Menu;
+import com.system.bean.Role;
 import com.system.bean.User;
 import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
@@ -95,5 +96,14 @@ public class PageController {
 			model.addAttribute("menu", menu);
 		}
 		return "WEB-INF/views/menu/add_menu.jsp";
+	}
+	
+	@RequestMapping(value="/addOrUpdateRole.html")
+	public String addOrUpdateRole(Role role,Model model){
+		if(role.getId() != null){
+			role = (Role) hibernateDao.get(Role.class,role.getId());
+			model.addAttribute("role", role);
+		}
+		return "WEB-INF/views/role/add_role.jsp";
 	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div style="padding:10px;">
-	<form class="addUserForm" method="post" action="user/save.html" onSubmit="return ajaxSubmit(this)">
+	<form class="addUserForm" method="post" action="user/save.html" onSubmit="return $css.ajaxSubmit(this)">
 		<input type="hidden" name="id" value="${user_.id}" />
 		用户名<input type="text" name="username" value="${user_.username }"/>
 		<br/>

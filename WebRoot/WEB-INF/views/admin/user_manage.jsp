@@ -46,13 +46,13 @@
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("#userRole").prev(".pageSplit").find("a.page").on("click",jumpPage);
+	$("#userRole").prev(".pageSplit").find("a.page").on("click",$css.jumpPage);
 	//给删除添加委托事件
 	$("#userList")
-	.on("click","a.delUser",{url:"admin/userManage.html"},delRecord)
-	.on("click","a.editUser",{tabName:"编辑用户"},editRecord)
-	.on("change",".all:checkbox",selectAll);
-	$("a.addUser").on("click",{tabName:"创建用户"},editRecord);
-	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},delAllRecord);
+	.on("click","a.delUser",{url:"admin/userManage.html"},$css.delRecord)
+	.on("click","a.editUser",{tabName:"编辑用户"},$css.editRecord)
+	.on("change",".all:checkbox",$css.selectAll);
+	$("a.addUser").on("click",{tabName:"创建用户"},$css.editRecord);
+	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},$css.delAllRecord);
 });
 </script>

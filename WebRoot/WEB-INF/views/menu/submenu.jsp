@@ -23,7 +23,7 @@
 	</c:forEach>
 	<tr class="newLine">
 		<td>
-			<span class="comment" onclick="addLine(this)">点击添加</span>
+			<span class="comment" onclick="$css.addLine(this)">点击添加</span>
 			<input type="text" name="submenuName" style="display:none;"/>
 		</td>
 		<td>

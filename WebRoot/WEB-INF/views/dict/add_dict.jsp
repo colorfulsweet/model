@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 
 <div style="padding:10px;">
-	<form class="addDictForm" method="post" action="dict/save.html" onSubmit="return ajaxSubmit(this)">
+	<form class="addDictForm" method="post" action="dict/save.html" onSubmit="return $css.ajaxSubmit(this)">
 		<input type="hidden" name="id" value="${dict.id}" />
 		字典编码<input type="text" name="dictCode" value="${dict.dictCode}" />
 		<br/>

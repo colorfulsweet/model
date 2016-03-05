@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
 
 <div class="btn-header">
-	<a href="page/addOrUpdateMenu.html" id="btn" class="easyui-linkbutton addMenu" data-options="iconCls:'icon-add'" >添加菜单</a>
+	<a href="page/addOrUpdateMenu.html" class="easyui-linkbutton addMenu" data-options="iconCls:'icon-add'" >添加菜单</a>
 </div>
 <table class="bordered" id="menuList">
 	<tr>
@@ -39,16 +39,16 @@
 <div id="subMenu"></div>
 <script type="text/javascript">
 $(function(){
-	$("#subMenu").prev(".pageSplit").find("a.page").on("click",jumpPage);
+	$("#subMenu").prev(".pageSplit").find("a.page").on("click",$css.jumpPage);
 	$("#menuList")
-	.on("click","a.delMenu",{url:"admin/menuManage.html"},delRecord)
-	.on("click","a.editMneu",{tabName:"编辑菜单"},editRecord);
-	$("a.addMenu").on("click",{tabName:"添加菜单"},editRecord);
+	.on("click","a.delMenu",{url:"admin/menuManage.html"},$css.delRecord)
+	.on("click","a.editMneu",{tabName:"编辑菜单"},$css.editRecord);
+	$("a.addMenu").on("click",{tabName:"添加菜单"},$css.editRecord);
 });
 function openSubmenList(menuId){
 	var save = function(e){
 		//e中的currentTarget对象是点击触发对象
-		if(newLineFlag){
+		if($css.newLineFlag){
 			//只有在新增了一行以后,保存与编辑才有效
 			return;
 		}
@@ -60,16 +60,16 @@ function openSubmenList(menuId){
 				$(element).replaceWith(element.value);
 			});
 			edit_tr.before(new_tr);
-			addLine(edit_tr.find("span.comment"));
+			$css.addLine(edit_tr.find("span.comment"));
 		});
 	};
 	var cancel = function(e){
-		if(newLineFlag){
+		if($css.newLineFlag){
 			//只有在新增了一行以后,保存与编辑才有效
 			return;
 		}
-		var $form = $("form#submenuList");
-		addLine($form.find("tr:last span.comment"));
+		var $form = $("form#submenus");
+		$css.addLine($form.find("tr:last span.comment"));
 	};
 	$("#subMenu").dialog({
 	    title: "配置子菜单",
