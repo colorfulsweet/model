@@ -39,14 +39,7 @@
 <script type="text/javascript" >
 $(function(){
 	//给删除添加委托事件
-	$("#submenuList").on("click","a.delSubmenu",delSubmenu);
+	$("#submenuList").on("click","a.delSubmenu",$css.delLine);
 });
-function delSubmenu(event){
-	var link = $(event.currentTarget).attr("href");
-	$.get(link,null,function(res){
-		$(event.currentTarget).parents("tr:first").remove();
-	});
-	return false;
-}
 </script>
 

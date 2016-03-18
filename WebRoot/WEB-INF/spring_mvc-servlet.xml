@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -12,6 +14,7 @@
 	<!-- 注解驱动 -->
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com" />
+	<tx:annotation-driven  transaction-manager="transactionManager"/>
 
 	<!-- 验证登陆状态的拦截器 -->
 	<mvc:interceptors>
@@ -39,11 +42,11 @@
 	</bean>
 	
 	<aop:config>
-		<aop:pointcut expression="execution(* com.system.service.HibernateDao.*(..))"
-			id="businessService" />
-		<aop:advisor pointcut-ref="businessService" advice-ref="TestAdvice" />
+		<aop:pointcut expression="execution(* com.system.service.dao.HibernateDao.*(..))"
+			id="transactionPointCut" />
+		<aop:advisor pointcut-ref="transactionPointCut" advice-ref="txAdvice" />
 	</aop:config>
-	<tx:advice id="TestAdvice" transaction-manager="transactionManager">
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="del*" propagation="REQUIRED" />

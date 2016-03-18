@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.Menu;
 import com.system.bean.Menu.Submenu;
-import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
+import com.system.service.dao.IHibernateDao;
 import com.system.util.StatusText;
 
 @Controller

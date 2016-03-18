@@ -12,8 +12,8 @@ import com.system.bean.Dict;
 import com.system.bean.Menu;
 import com.system.bean.Role;
 import com.system.bean.User;
-import com.system.service.IHibernateDao;
 import com.system.service.ISystemService;
+import com.system.service.dao.IHibernateDao;
 
 @Controller
 @RequestMapping(value="/page")

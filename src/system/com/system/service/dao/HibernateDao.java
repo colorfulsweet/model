@@ -1,4 +1,4 @@
-package com.system.service;
+package com.system.service.dao;
 
 import java.io.Serializable;
 import java.util.List;

@@ -34,13 +34,6 @@
 <script type="text/javascript" >
 $(function(){
 	//给删除添加委托事件
-	$("#clauseList").on("click","a.delClause",delClause);
+	$("#clauseList").on("click","a.delClause",$css.delLine);
 });
-function delClause(event){
-	var link = $(event.currentTarget).attr("href");
-	$.get(link,null,function(res){
-		$(event.currentTarget).parents("tr:first").remove();
-	});
-	return false;
-}
 </script>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.Role;
-import com.system.service.IHibernateDao;
+import com.system.service.dao.IHibernateDao;
 import com.system.util.StatusText;
 
 @Controller

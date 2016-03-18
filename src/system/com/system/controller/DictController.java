@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.system.bean.Dict;
 import com.system.bean.Dict.DictClause;
 import com.system.service.IDictService;
-import com.system.service.IHibernateDao;
+import com.system.service.dao.IHibernateDao;
 import com.system.util.StatusText;
 
 @Controller

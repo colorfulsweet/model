@@ -13,7 +13,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import com.system.bean.Dict.DictClause;
-import com.system.service.IHibernateDao;
+import com.system.service.dao.IHibernateDao;
 import com.system.util.SpringUtils;
 /**
  * 根据字典项产生一个下拉框
