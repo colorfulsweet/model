@@ -46,7 +46,7 @@
 <script type="text/javascript" >
 $(function(){
 	//给分页按钮添加点击事件
-	$("#userRole").prev(".pageSplit").find("a.page").on("click",$css.jumpPage);
+	$("#userRole").prev(".pageSplit").find("a.page_btn").on("click",$css.jumpPage);
 	//给删除添加委托事件
 	$("#userList")
 	.on("click","a.delUser",{url:"admin/userManage.html"},$css.delRecord)

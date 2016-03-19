@@ -39,7 +39,7 @@
 <div id="subMenu"></div>
 <script type="text/javascript">
 $(function(){
-	$("#subMenu").prev(".pageSplit").find("a.page").on("click",$css.jumpPage);
+	$("#subMenu").prev(".pageSplit").find("a.page_btn").on("click",$css.jumpPage);
 	$("#menuList")
 	.on("click","a.delMenu",{url:"admin/menuManage.html"},$css.delRecord)
 	.on("click","a.editMneu",{tabName:"编辑菜单"},$css.editRecord);

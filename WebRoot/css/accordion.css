@@ -1,6 +1,5 @@
 /*
 =======================
-手风琴样式菜单栏
 =======================
 */
 ul {list-style-type: none;}
@@ -19,7 +18,7 @@ ul {list-style-type: none;}
 	transform: rotate(180deg);
 }
 
-/* 二级菜单  */
+/* 子菜单  */
 .submenu {display: none;background: #444359;font-size: 14px;}
 .submenu li {border-bottom: 1px solid #4b4a5e;}
 .submenu a {display: block;text-decoration: none;color: #d9d9d9;padding:10px;padding-left: 42px;-webkit-transition: all 0.25s ease;-o-transition: all 0.25s ease;transition: all 0.25s ease;}

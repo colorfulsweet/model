@@ -26,14 +26,14 @@ public class PageSplitTag extends TagSupport {
 			if(page.getPageNow() != 1){
 				//如果当前页不是第一页,则给"首页"添加超链接,并且添加"上一页"链接
 				out.println(
-						"<a class='page' href='" + page.getLinkUrl() + "' page='1''>首页</a>");
+						"<a class='page_btn' href='" + page.getLinkUrl() + "' page='1''>首页</a>");
 				out.println(
-						"<a class='page' href='" + page.getLinkUrl() + "' "
+						"<a class='page_btn back' href='" + page.getLinkUrl() + "' "
 						+ "page='" + (page.getPageNow()-1) + "'"
 						+ ">上一页</a>");
 			} else {
 				//如果当前页是首页 ,则只显示"首页"文字 ,且没有"上一页"按钮
-				out.println("<span class='page'>首页</span>");
+				out.println("<span class='page_btn'>首页</span>");
 			}
 			if(page.getPageNow() > 3){
 				out.println("<span>...</span>");
@@ -46,10 +46,10 @@ public class PageSplitTag extends TagSupport {
 				} 
 				if(i == page.getPageNow()){
 					//当前页添加超链接
-					out.println("<span class='page'>"+i+"</span>");
+					out.println("<span class='page_btn'>"+i+"</span>");
 				} else {
 					out.println(
-							"<a class='page' href='" + page.getLinkUrl() +"'"
+							"<a class='page_btn' href='" + page.getLinkUrl() +"'"
 							+ " page='" + i +"'"
 							+ ">"+i+"</a>");
 					
@@ -63,11 +63,11 @@ public class PageSplitTag extends TagSupport {
 				out.println("<span class='page'>尾页</span>");
 			} else {
 				out.println(
-						"<a class='page' href='" + page.getLinkUrl() +"' "
+						"<a class='page_btn next' href='" + page.getLinkUrl() +"' "
 						+ "page='" + (page.getPageNow()+1) + "'"
 						+ ">下一页</a>");
 				out.println(
-						"<a class='page' href='" + page.getLinkUrl() + "' page='" + page.getPageCount() + "'>尾页</a>");
+						"<a class='page_btn' href='" + page.getLinkUrl() + "' page='" + page.getPageCount() + "'>尾页</a>");
 			}
 			
 		} catch (IOException e){

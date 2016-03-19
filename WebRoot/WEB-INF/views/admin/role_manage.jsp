@@ -30,6 +30,7 @@
 </div>
 <script>
 $(function(){
+	$("#roleList").next(".pageSplit").find("a.page_btn").on("click",$css.jumpPage);
 	$("a.addRole").on("click",{tabName:"创建角色"},$css.editRecord);
 	$("#roleList")
 	.on("click","a.delRole",{url:"admin/roleManage.html"},$css.delRecord)
