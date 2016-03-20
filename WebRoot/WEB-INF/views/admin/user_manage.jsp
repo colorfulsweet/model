@@ -2,7 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
-
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div class="btn-header">
 	<a href="page/addOrUpdateUser.html" class="easyui-linkbutton addUser" data-options="iconCls:'icon-add'" >创建用户</a>
 	<a href="user/deleteUsers.html" class="easyui-linkbutton delUsers" data-options="iconCls:'icon-remove'" >批量删除</a>
@@ -56,3 +59,5 @@ $(function(){
 	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},$css.delAllRecord);
 });
 </script>
+</body>
+</html>

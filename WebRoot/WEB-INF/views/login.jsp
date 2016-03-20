@@ -5,7 +5,7 @@
 	<%=request.getScheme()+"://"+request.getServerName()+":"
 		+request.getServerPort()+request.getContextPath()+"/" %>
 </c:set>
-<!DOCTYPE >
+<!DOCTYPE HTML>
 <html>
 <head>
 	<title>欢迎登陆</title>

@@ -158,6 +158,26 @@ var FuncTools = function(){
 		});
 		event.preventDefault();
 	};
+	/**
+	 * ajax上传表单当中的文件
+	 */
+	this.uploadFile = function(form){
+		$.ajax({
+		    url: $(form).attr("action"),
+		    type: "POST",
+		    cache: false,
+		    data: new FormData(form),
+		    processData: false,
+		    contentType: false,
+		    success:function(){
+		    	$.messager.alert("提示","文件上传成功!","info");
+		    },
+		    error:function(){
+		    	$.messager.alert("错误","文件上传失败!","warn");
+		    }
+		});
+		return false;
+	};
 };
 window.$css = new FuncTools();
 $(function() {
@@ -186,10 +206,11 @@ $(function(){
 	var openMenuTab = function(e){
 		e.preventDefault();//阻止默认事件
 		var target = $(e.target);
-		if(target.attr("href").length != 0){
+		var href = target.attr("href");
+		if(href!==undefined && href.length != 0){
 			$css.addTab(target.text(),target.attr("href"));
 		}
 	};
-	$(".submenu a,.link a").on("click",openMenuTab);
+	$(".submenu a,.link a,.top>.nav").on("click",openMenuTab);
 });
 })();

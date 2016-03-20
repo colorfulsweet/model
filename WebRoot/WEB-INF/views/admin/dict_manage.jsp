@@ -2,7 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
-
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div class="btn-header">
 	<a href="page/addOrUpdateDict.html" class="easyui-linkbutton addDict" data-options="iconCls:'icon-add'" >添加字典</a>
 </div>
@@ -94,3 +97,5 @@ function openDictClause(dictId){
 	});
 }
 </script>
+</body>
+</html>

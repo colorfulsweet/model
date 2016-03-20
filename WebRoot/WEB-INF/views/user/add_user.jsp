@@ -1,4 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div style="padding:10px;">
 	<form class="addUserForm" method="post" action="user/save.html" onSubmit="return $css.ajaxSubmit(this)">
 		<input type="hidden" name="id" value="${user_.id}" />
@@ -15,3 +19,5 @@
 		<input type="submit" value="保存" />
 	</form>
 </div>
+</body>
+</html>

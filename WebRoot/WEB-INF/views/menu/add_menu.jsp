@@ -1,5 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div style="padding:10px;">
 	<form class="addMenuForm" method="post" action="menu/save.html" onSubmit="return $css.ajaxSubmit(this)">
 		<input type="hidden" name="id" value="${menu.id}" />
@@ -38,3 +41,4 @@ $(function(){
 	});
 });
 </script>
+</body>

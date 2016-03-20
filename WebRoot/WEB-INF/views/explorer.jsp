@@ -24,7 +24,9 @@
 	<div class="main">
 		<div class="top">
 			<a href="${basePath}page/logout.html" id="cancel">注销</a>
-			<a href="javascript:void(0);" >修改密码</a>
+			<a href="${basePath}page/personalConfig.html" class="nav">个人设置</a>
+			<span>欢迎你, ${user.realName}</span>
+			<img src="user/getIcon.html" width="50px" height="50px" />
 		</div>
 		<ul id="accordion" class="accordion">
 			<c:forEach items="${menuList}" var="menu">

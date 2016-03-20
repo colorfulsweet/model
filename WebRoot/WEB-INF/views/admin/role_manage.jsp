@@ -2,7 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
-
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div class="btn-header">
 	<a href="page/addOrUpdateRole.html" class="easyui-linkbutton addRole" data-options="iconCls:'icon-add'" >创建角色</a>
 </div>
@@ -37,3 +40,5 @@ $(function(){
 	.on("click","a.editRole",{tabName:"编辑角色"},$css.editRecord);
 });
 </script>
+</body>
+</html>

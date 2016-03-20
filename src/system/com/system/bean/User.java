@@ -1,6 +1,7 @@
 package com.system.bean;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 /**
  * 用户实体类
@@ -8,11 +9,13 @@ import java.util.Date;
  *
  */
 public class User implements Serializable {
-	private static final long serialVersionUID = 5930838851780880904L;
+	private static final long serialVersionUID = -6746111305410146991L;
+	
 	private String id;//主键
 	private String username;//用户名
 	private String realName;//昵称
-	private String password;//密码(MD5)
+	private Blob icon;//头像
+	private String password;//密码(SHA256)
 	private Date createTime;//创建时间
 	private String email;//邮箱
 	private String tel;//电话
@@ -75,5 +78,11 @@ public class User implements Serializable {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public Blob getIcon() {
+		return icon;
+	}
+	public void setIcon(Blob icon) {
+		this.icon = icon;
 	}
 }

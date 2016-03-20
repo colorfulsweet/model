@@ -18,10 +18,6 @@ import com.system.service.dao.IHibernateDao;
 @Controller
 @RequestMapping(value="/page")
 public class PageController {
-	
-	@Autowired
-	private HttpSession session;
-	
 	@Autowired
 	private ISystemService systemService;
 	
@@ -43,7 +39,7 @@ public class PageController {
 	 * @return
 	 */
 	@RequestMapping(value="/login.html",method=RequestMethod.POST)
-	public String login(User user,Model model){
+	public String login(User user,Model model,HttpSession session){
 		user = systemService.checkUser(user);
 		if(user != null && user.getStatus()){
 			session.setAttribute("user", user);
@@ -60,15 +56,18 @@ public class PageController {
 	}
 	/**
 	 * 注销请求
+	 * @param session
 	 * @return 重定向至首页
 	 */
 	@RequestMapping(value="/logout.html")
-	public String logout(){
+	public String logout(HttpSession session){
 		session.invalidate();
 		return "redirect:../index.jsp";
 	}
 	/**
 	 * 新增/编辑用户请求
+	 * @param user 只包含主键ID
+	 * @param model
 	 * @return 新增用户页面
 	 */
 	@RequestMapping(value="/addOrUpdateUser.html")
@@ -80,6 +79,12 @@ public class PageController {
 		return "WEB-INF/views/user/add_user.jsp";
 	}
 	
+	/**
+	 * 新增/编辑数据字典请求
+	 * @param dict 只包含主键ID
+	 * @param model
+	 * @return 新增字典界面
+	 */
 	@RequestMapping(value="/addOrUpdateDict.html")
 	public String addOrUpdateDict(Dict dict,Model model){
 		if(dict.getId() != null){
@@ -88,7 +93,12 @@ public class PageController {
 		}
 		return "WEB-INF/views/dict/add_dict.jsp";
 	}
-	
+	/**
+	 * 新增/编辑菜单请求
+	 * @param menu 只包含主键ID
+	 * @param model
+	 * @return 新增菜单界面
+	 */
 	@RequestMapping(value="/addOrUpdateMenu.html")
 	public String addOrUpdateMenu(Menu menu,Model model){
 		if(menu.getId() != null){
@@ -97,7 +107,12 @@ public class PageController {
 		}
 		return "WEB-INF/views/menu/add_menu.jsp";
 	}
-	
+	/**
+	 * 新增/编辑角色请求
+	 * @param role 只包含主键ID
+	 * @param model
+	 * @return 新增角色界面
+	 */
 	@RequestMapping(value="/addOrUpdateRole.html")
 	public String addOrUpdateRole(Role role,Model model){
 		if(role.getId() != null){
@@ -105,5 +120,10 @@ public class PageController {
 			model.addAttribute("role", role);
 		}
 		return "WEB-INF/views/role/add_role.jsp";
+	}
+	
+	@RequestMapping(value="/personalConfig.html")
+	public String userPersonalConfig(){
+		return "WEB-INF/views/user/user_config.jsp";
 	}
 }

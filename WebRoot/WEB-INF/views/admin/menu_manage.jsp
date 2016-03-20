@@ -1,7 +1,10 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.threebody.com/cp" prefix="cp" %>
-
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
 <div class="btn-header">
 	<a href="page/addOrUpdateMenu.html" class="easyui-linkbutton addMenu" data-options="iconCls:'icon-add'" >添加菜单</a>
 </div>
@@ -90,3 +93,5 @@ function openSubmenList(menuId){
 	});
 }
 </script>
+</body>
+</html>

@@ -80,7 +80,7 @@ public class DataCache {
 	}
 	/**
 	 * 从缓存区当中移除一个对象
-	 * (通常在该对象被修改或删除的时候,就从缓存区移除该对象)
+	 * (通常在该对象被删除的时候,就从缓存区移除该对象)
 	 * @param obj
 	 */
 	public void removeObject(Object obj){
@@ -97,7 +97,7 @@ public class DataCache {
 	 */
 	public void removeAllObjects(Class<?> clz,String... ids){
 		Hashtable<String, DataRef> cacheTable = dataRefs.get(clz.getName());
-		if(ids != null && ids.length>0){
+		if(cacheTable != null && ids != null && ids.length>0){
 			for(String id : ids){
 				cacheTable.remove(id);
 			}

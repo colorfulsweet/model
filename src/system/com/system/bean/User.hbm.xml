@@ -18,6 +18,11 @@
 				<comment>昵称</comment>
 			</column>
 		</property>
+		<property name="icon" type="blob">
+			<column name="ICON" >
+				<comment>头像</comment>
+			</column>
+		</property>
 		<property name="password" type="string">
 			<column name="PASSWORD" length="32">
 				<comment>密码(SHA-256加密)</comment>
