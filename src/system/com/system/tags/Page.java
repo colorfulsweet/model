@@ -57,8 +57,6 @@ public class Page {
 		this.rowCount = rowCount;
 		//根据总行数与每页的记录数 , 计算出总页数
 		pageCount = (rowCount%pageSize==0) ? (rowCount/pageSize) : (rowCount/pageSize+1);
-		//根据当前页数与每页的记录数, 计算出从第几条记录开始查询(第一条记录的索引是0)
-		rowStart = (pageNow - 1) * pageSize;
 	}
 	public int getPageCount() {
 		return pageCount;
@@ -68,6 +66,8 @@ public class Page {
 //		this.pageCount = pageCount;
 //	}
 	public int getRowStart() {
+		//根据当前页数与每页的记录数, 计算出从第几条记录开始查询(第一条记录的索引是0)
+		rowStart = (pageNow - 1) * pageSize;
 		return rowStart;
 	}
 	//查询起始的行数必须要通过计算获得 , 不可以直接设置

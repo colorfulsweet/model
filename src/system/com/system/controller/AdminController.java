@@ -18,7 +18,12 @@ public class AdminController {
 	
 	@Autowired
 	private IHibernateDao<Object,String> hibernateDao;
-	
+	/**
+	 * 菜单管理
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/menuManage.html")
 	public String menuManage(Model model,Page page){
 		page.setLinkUrl("admin/menuManage.html");
@@ -26,7 +31,12 @@ public class AdminController {
 		model.addAttribute("page",page);
 		return "/WEB-INF/views/admin/menu_manage.jsp";
 	}
-	
+	/**
+	 * 角色管理
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/roleManage.html")
 	public String roleManage(Model model,Page page){
 		page.setLinkUrl("admin/roleManage.html");
@@ -34,7 +44,12 @@ public class AdminController {
 		model.addAttribute("page", page);
 		return "/WEB-INF/views/admin/role_manage.jsp";
 	}
-	
+	/**
+	 * 用户管理
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/userManage.html")
 	public String userManage(Model model,Page page){
 		page.setLinkUrl("admin/userManage.html");
@@ -42,6 +57,12 @@ public class AdminController {
 		model.addAttribute("page", page);
 		return "/WEB-INF/views/admin/user_manage.jsp";
 	}
+	/**
+	 * 字典管理
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/dictManage.html")
 	public String dictManage(Model model,Page page){
 		page.setLinkUrl("admin/dictManage.html");

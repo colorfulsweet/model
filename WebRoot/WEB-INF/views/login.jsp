@@ -8,14 +8,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>欢迎登陆</title>
+	<title>统一权限管理系统-登陆</title>
 	<link rel="stylesheet" type="text/css" href="${basePath}css/login.css" />
 </head>
 <body>
 <div class="container">
 	<section id="content">
 		<form action="${basePath}page/login.html" method="post" >
-			<h1>XX管理系统</h1>
+			<h1>统一权限管理系统</h1>
 			<div>
 				<input type="text" placeholder="用户名" required="required" id="username" name="username" value="test" />
 			</div>
@@ -29,6 +29,5 @@
 		</form>
 	</section>
 </div>
-<script type="text/javascript" src="${basePath}js/jquery/jquery-1.11.3.min.js"></script>
 </body>
 </html>

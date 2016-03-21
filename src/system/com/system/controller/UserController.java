@@ -46,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	private ServletContext context;
+	
+	@Autowired
+	private DiskFileItemFactory factory;
 	/**
 	 * 创建/修改 用户
 	 * @param user
@@ -113,8 +116,6 @@ public class UserController {
 	@ResponseBody
 	public String uploadIcon(HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute("user");
-		// 为解析类提供配置信息
-		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// 创建解析类的实例
 		ServletFileUpload sfu = new ServletFileUpload(factory);
 		// 文件大小限制1M
@@ -126,8 +127,10 @@ public class UserController {
 			for (FileItem item : items) {
 				// isFormField为true，表示这不是文件上传表单域
 				if (!item.isFormField()) {
-					user.setIcon(Hibernate.createBlob(item.getInputStream()));
+					InputStream input = item.getInputStream();
+					user.setIcon(Hibernate.createBlob(input));
 					hibernateDao.update(user);
+					input.close();
 				}
 			}
 			return StatusText.SUCCESS;

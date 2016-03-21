@@ -27,6 +27,10 @@
 		<!-- 前缀 -->
 		<property name="prefix" value="/"></property>
 	</bean>
+	<!-- 文件上传 -->
+	<bean id="fileItemFactory" 
+		class="org.apache.commons.fileupload.disk.DiskFileItemFactory">
+	</bean>
 	
 	<!-- 加载SessionFactory -->
 	<bean id="sessionFactory"

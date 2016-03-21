@@ -8,7 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>XX管理系统</title>
+	<title>统一权限管理系统</title>
 
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -49,7 +49,7 @@
 			<div title="欢迎页" >
 				<jsp:include page="../../page/welcome.html"/>
 			</div>
-		</div>	
+		</div>
 	</div>
 	<script type="text/javascript" src="${basePath}js/jquery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="${basePath}js/easyUI/jquery.easyui.min.js"></script>
