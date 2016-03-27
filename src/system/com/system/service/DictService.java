@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ public class DictService extends HibernateDaoSupport implements IDictService {
 	@Override
 	public List<DictClause> getDictClauseList(Dict dict) {
 		List<DictClause> dictClauseList = null;
-		dict = (Dict) this.getSession().get(Dict.class, dict.getId());
+		dict = (Dict) this.getSessionFactory().getCurrentSession().get(Dict.class, dict.getId());
 		if(dict != null){
 			dictClauseList = dict.getClauses();
 			dictClauseList.remove(null);
@@ -34,7 +34,7 @@ public class DictService extends HibernateDaoSupport implements IDictService {
 	@Transactional
 	@Override
 	public void saveDictClause(DictClause dictClause) {
-		Dict dict = (Dict) this.getSession().get(Dict.class, dictClause.getDict().getId());
+		Dict dict = (Dict) this.getSessionFactory().getCurrentSession().get(Dict.class, dictClause.getDict().getId());
 		if(dict != null){
 			dict.getClauses().add(dictClause);
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +24,12 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@Transactional
 	@Override
 	public User checkUser(User user) {
+		
 		String hql = "from User u "
 				+ "join fetch u.role "
 				+ "join fetch u.role.menus "
 				+ "where u.username=? and u.password=? ";
-		List<?> result = this.getSession().createQuery(hql)
+		List<?> result = this.getSessionFactory().getCurrentSession().createQuery(hql)
 				.setParameter(0, user.getUsername())
 				.setParameter(1, DigestUtils.sha256Hex(user.getPassword())).list();
 		if(!result.isEmpty()){
@@ -46,7 +47,7 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@Transactional
 	@Override
 	public List<Submenu> getSubmenuList(Menu menu) {
-		menu = (Menu) this.getSession().get(Menu.class, menu.getId());
+		menu = (Menu) this.getSessionFactory().getCurrentSession().get(Menu.class, menu.getId());
 		List<Submenu> submenuList = menu.getChildrenMenu();
 		submenuList.remove(null);
 		return submenuList;
@@ -55,7 +56,7 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@Transactional
 	@Override
 	public void saveSubmenu(Submenu submenu) {
-		Menu menu = (Menu) this.getSession().get(Menu.class, submenu.getMenu().getId());
+		Menu menu = (Menu) this.getSessionFactory().getCurrentSession().get(Menu.class, submenu.getMenu().getId());
 		if(menu != null){
 			menu.getChildrenMenu().add(submenu);
 		}

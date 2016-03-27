@@ -12,10 +12,10 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd ">
 
 	<!-- 注解驱动 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven/>
 	<context:component-scan base-package="com" />
 	<tx:annotation-driven  transaction-manager="transactionManager"/>
-
+	
 	<!-- 验证登陆状态的拦截器 -->
 	<mvc:interceptors>
 		<bean class="com.system.interceptor.LoginInterceptor"></bean>
@@ -27,36 +27,18 @@
 		<!-- 前缀 -->
 		<property name="prefix" value="/"></property>
 	</bean>
-	<!-- 文件上传 -->
-	<bean id="fileItemFactory" 
-		class="org.apache.commons.fileupload.disk.DiskFileItemFactory">
-	</bean>
 	
 	<!-- 加载SessionFactory -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="configLocations">
 			<value>classpath:hibernate.cfg.xml</value>
 		</property>
 	</bean>
+	
 	<!-- 事务管理器 -->
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
-	<aop:config>
-		<aop:pointcut expression="execution(* com.system.service.dao.HibernateDao.*(..))"
-			id="transactionPointCut" />
-		<aop:advisor pointcut-ref="transactionPointCut" advice-ref="txAdvice" />
-	</aop:config>
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="del*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="get*" propagation="REQUIRED" />
-			<tx:method name="excute*" propagation="REQUIRED" />
-		</tx:attributes>
-	</tx:advice>
 </beans>

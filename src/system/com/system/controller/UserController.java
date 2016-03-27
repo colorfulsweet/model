@@ -21,7 +21,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.hibernate.Hibernate;
+import org.hibernate.LobHelper;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,8 @@ import com.system.bean.User;
 import com.system.service.dao.IHibernateDao;
 import com.system.util.DataCache;
 import com.system.util.ReflectUtils;
-import com.system.util.StatusText;
+import com.system.util.SpringUtils;
+import com.system.util.SystemMessage;
 
 @Controller
 @RequestMapping(value="/user")
@@ -47,14 +50,13 @@ public class UserController {
 	@Autowired
 	private ServletContext context;
 	
-	@Autowired
 	private DiskFileItemFactory factory;
 	/**
 	 * 创建/修改 用户
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value="/save.html")
+	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveUser(User user){
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
@@ -65,7 +67,7 @@ public class UserController {
 				ReflectUtils.transferFields(user, destUser);
 			} catch (Exception e) {
 				e.printStackTrace();
-				return StatusText.ERROR;
+				return SystemMessage.getMessage("failed");
 			}
 			hibernateDao.update(destUser);
 		} else {
@@ -73,29 +75,29 @@ public class UserController {
 			user.setCreateTime(new Date());
 			hibernateDao.save(user);
 		}
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	/**
 	 * 删除用户
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value="/delete.html")
+	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delUser(User user){
 		hibernateDao.del(user);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 	/**
 	 * 批量删除用户
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value="/deleteUsers.html")
+	@RequestMapping(value="/deleteUsers.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delUsers(@RequestParam(value="userId")String[] ids){
 		if(ids.length == 0){
-			return StatusText.ERROR;
+			return SystemMessage.getMessage("failed");
 		}
 		StringBuilder hql = new StringBuilder("delete User u where u.id in (");
 		for(int i=0 ; i<ids.length ; ++i){
@@ -105,17 +107,23 @@ public class UserController {
 		hql.append(")");
 		hibernateDao.excuteUpdate(hql.toString(), Arrays.asList(ids).toArray());
 		dataCache.removeAllObjects(User.class, ids);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	/**
 	 * 上传头像
 	 * @param request
 	 * @return "success"
 	 */
-	@RequestMapping(value="/uploadIcon.html",method=RequestMethod.POST)
+	@RequestMapping(value="/uploadIcon.html",method=RequestMethod.POST,produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String uploadIcon(HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute("user");
+		if(factory == null){
+			factory = SpringUtils.getBean(DiskFileItemFactory.class);
+		}
+		SessionFactory sessionFactory = SpringUtils.getSpringMVCBean(context, "sessionFactory");
+		Session session = sessionFactory.openSession();
+		LobHelper lobHelper = session.getLobHelper();
 		// 创建解析类的实例
 		ServletFileUpload sfu = new ServletFileUpload(factory);
 		// 文件大小限制1M
@@ -128,15 +136,17 @@ public class UserController {
 				// isFormField为true，表示这不是文件上传表单域
 				if (!item.isFormField()) {
 					InputStream input = item.getInputStream();
-					user.setIcon(Hibernate.createBlob(input));
+					user.setIcon(lobHelper.createBlob(input,0));
 					hibernateDao.update(user);
 					input.close();
 				}
 			}
-			return StatusText.SUCCESS;
+			return SystemMessage.getMessage("uploadSuccess");
 		} catch (FileUploadException | IOException e) {
 			e.printStackTrace();
-			return StatusText.ERROR;
+			return SystemMessage.getMessage("uploadFailed");
+		} finally {
+			session.close();
 		}
 	}
 	/**

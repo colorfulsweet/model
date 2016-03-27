@@ -12,7 +12,7 @@ import com.system.bean.Menu;
 import com.system.bean.Menu.Submenu;
 import com.system.service.ISystemService;
 import com.system.service.dao.IHibernateDao;
-import com.system.util.StatusText;
+import com.system.util.SystemMessage;
 
 @Controller
 @RequestMapping(value="/menu")
@@ -24,18 +24,18 @@ public class MenuController {
 	@Autowired
 	private ISystemService systemService;
 	
-	@RequestMapping(value="/save.html")
+	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveOrUpdate(Menu menu){
 		hibernateDao.saveOrUpdate(menu);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	
-	@RequestMapping(value="/delete.html")
+	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delMenu(Menu menu){
 		hibernateDao.del(menu, true);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 	
 	@RequestMapping(value="/submenuList.html")
@@ -46,17 +46,17 @@ public class MenuController {
 		return "WEB-INF/views/menu/submenu.jsp";
 	}
 	
-	@RequestMapping(value="/saveSubmenu.html")
+	@RequestMapping(value="/saveSubmenu.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveSubmenu(Submenu submenu){
 		systemService.saveSubmenu(submenu);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	
-	@RequestMapping(value="/delSubmenu.html")
+	@RequestMapping(value="/delSubmenu.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delSubmenu(Submenu submenu){
 		hibernateDao.del(submenu);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 }

@@ -51,11 +51,12 @@ var FuncTools = function(){
 	 */
 	this.ajaxSubmit = function(form){
 		$.post($(form).attr("action"),$(form).serialize(),function(res){
-			$.messager.alert("提示","操作成功","info",function(){
+			var info = JSON.parse(res);
+			$.messager.alert("提示",info["msg"],info["type"],function(){
 				var $tab = $("#content-tab");
 				var selected = $tab.tabs("getSelected");
 				$tab.tabs("close",$tab.tabs('getTabIndex',selected));
-			});
+			},"json");
 		});
 		return false;
 	};
@@ -67,15 +68,16 @@ var FuncTools = function(){
 	this.delRecord = function(event){
 		var del = function(){
 			$.get($(event.currentTarget).attr("href"),null,function(res){
-				$.messager.alert("提示","删除成功","info",function(){
+				var info = JSON.parse(res);
+				$.messager.alert("提示",info["msg"],info["type"],function(){
 					$("#content-tab")
 					.tabs("getSelected")
 					.panel("refresh", event.data.url);
 				});
-			});
+			},"json");
 		};
-		$.messager.confirm("操作确认","确认删除吗?",function(res){
-			if(res){del();}
+		$.messager.confirm("操作确认","确认删除吗?",function(result){
+			if(result){del();}
 		});
 		return false;
 	};
@@ -118,19 +120,16 @@ var FuncTools = function(){
 		$form.append(checkedBox.clone());
 		var del = function(){
 			$.post($(event.currentTarget).attr("href"),$form.serialize(),function(res){
-				if(res == "success"){
-					$.messager.alert("提示","删除成功","info",function(){
-						$("#content-tab")
-						.tabs("getSelected")
-						.panel("refresh", event.data.url);
-					});
-				} else {
-					$.messager.alert("提示","操作失败!","warning");
-				}
-			});
+				var info = JSON.parse(res);
+				$.messager.alert("提示",info["msg"],info["type"],function(){
+					$("#content-tab")
+					.tabs("getSelected")
+					.panel("refresh", event.data.url);
+				});
+			},"json");
 		};
-		$.messager.confirm("操作确认","确认批量删除吗?",function(res){
-			if(res){del();}
+		$.messager.confirm("操作确认","确认批量删除吗?",function(result){
+			if(result){del();}
 		});
 		return false;
 	};
@@ -169,12 +168,10 @@ var FuncTools = function(){
 		    data: new FormData(form),
 		    processData: false,
 		    contentType: false,
-		    success:function(){
-		    	$.messager.alert("提示","文件上传成功!","info");
+		    complete:function(res){
+		    	var info = JSON.parse(res);
+		    	$.messager.alert("提示",info["msg"],info["type"]);
 		    },
-		    error:function(){
-		    	$.messager.alert("错误","文件上传失败!","warn");
-		    }
 		});
 		return false;
 	};
@@ -201,7 +198,6 @@ $(function() {
 	};
 	new Accordion($('#accordion'), false);
 });
-
 $(function(){
 	var openMenuTab = function(e){
 		e.preventDefault();//阻止默认事件

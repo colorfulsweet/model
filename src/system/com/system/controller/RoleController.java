@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.bean.Role;
 import com.system.service.dao.IHibernateDao;
-import com.system.util.StatusText;
+import com.system.util.SystemMessage;
 
 @Controller
 @RequestMapping(value="/role")
@@ -15,17 +15,17 @@ public class RoleController {
 	@Autowired
 	private IHibernateDao<Object,String> hibernateDao;
 	
-	@RequestMapping(value="/save.html")
+	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveRole(Role role){
 		hibernateDao.saveOrUpdate(role);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	
-	@RequestMapping(value="/delete.html")
+	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delRole(Role role){
 		hibernateDao.del(role);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 }

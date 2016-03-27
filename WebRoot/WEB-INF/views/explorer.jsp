@@ -45,7 +45,7 @@
 			</c:forEach>
 		</ul>
 		
-		<div class="easyui-tabs" id="content-tab" style="width:1200px;height:600px;">
+		<div class="easyui-tabs" id="content-tab" >
 			<div title="欢迎页" >
 				<jsp:include page="../../page/welcome.html"/>
 			</div>

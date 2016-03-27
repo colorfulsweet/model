@@ -15,7 +15,10 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">false</property>
-	
+		<property name="hibernate.connection.provider_class">
+			org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider
+		</property>
+		
 		<!-- 系统表start -->
  		<mapping resource="com/system/bean/User.hbm.xml" />
  		<mapping resource="com/system/bean/Role.hbm.xml" />

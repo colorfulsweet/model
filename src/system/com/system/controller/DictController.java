@@ -12,7 +12,7 @@ import com.system.bean.Dict;
 import com.system.bean.Dict.DictClause;
 import com.system.service.IDictService;
 import com.system.service.dao.IHibernateDao;
-import com.system.util.StatusText;
+import com.system.util.SystemMessage;
 
 @Controller
 @RequestMapping(value="/dict")
@@ -32,31 +32,31 @@ public class DictController {
 		return "WEB-INF/views/dict/dict_clause.jsp";
 	}
 	
-	@RequestMapping(value="/saveClause.html")
+	@RequestMapping(value="/saveClause.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveDictClause(DictClause dictClause){
 		dictService.saveDictClause(dictClause);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	
-	@RequestMapping(value="/delClause.html")
+	@RequestMapping(value="/delClause.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delClause(DictClause dictClause){
 		hibernateDao.del(dictClause);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 	
-	@RequestMapping(value="/save.html")
+	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveDict(Dict dict){
 		hibernateDao.saveOrUpdate(dict);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("success");
 	}
 	
-	@RequestMapping(value="/delete.html")
+	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delDict(Dict dict){
 		hibernateDao.del(dict,true);
-		return StatusText.SUCCESS;
+		return SystemMessage.getMessage("deleteSuccess");
 	}
 }

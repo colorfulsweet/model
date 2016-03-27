@@ -9,8 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.system.tags.Page;
 import com.system.util.DataCache;
@@ -21,6 +22,7 @@ import com.system.util.ReflectUtils;
  * @author 41882
  *
  */
+@Transactional
 @Repository
 public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSupport
 			implements IHibernateDao<T, PK>{
@@ -35,22 +37,22 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	
 	@Override
 	public void save(T item) {
-		this.getSession().save(item);
+		this.getSessionFactory().getCurrentSession().save(item);
 		dataCache.cacheData(item);
 	}
 	@Override
 	public void update(T item) {
-		this.getSession().update(item);
+		this.getSessionFactory().getCurrentSession().update(item);
 		dataCache.cacheData(item);
 	}
 	@Override
 	public void saveOrUpdate(T item) {
-		this.getSession().saveOrUpdate(item);
+		this.getSessionFactory().getCurrentSession().saveOrUpdate(item);
 		dataCache.cacheData(item);
 	}
 	@Override
 	public void del(T item) {
-		this.getSession().delete(item);
+		this.getSessionFactory().getCurrentSession().delete(item);
 		dataCache.removeObject(item);
 	}
 	@SuppressWarnings("unchecked")
@@ -60,7 +62,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 			this.del(item);
 			return;
 		}
-		Session session = this.getSession();
+		Session session = this.getSessionFactory().getCurrentSession();
 		item = (T) session.get(item.getClass(),
 				ReflectUtils.getItemField(item, "id").toString());
 		session.delete(item);
@@ -69,16 +71,16 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> dir(Class<?> cls) {
-		List<T> result = this.getSession().createCriteria(cls).list();
+		List<T> result = this.getSessionFactory().getCurrentSession().createCriteria(cls).list();
 		return result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public void dir(Class<?> cls,Page page){
 		//聚合函数查询记录总数
-		Criteria criteria = this.getSession().createCriteria(cls)
+		Criteria criteria = this.getSessionFactory().getCurrentSession().createCriteria(cls)
 						.setProjection(Projections.rowCount());
-		int count = (Integer) criteria.uniqueResult();
+		long count = (Long) criteria.uniqueResult();
 		//查询当前页记录内容
 		criteria.setProjection(null);
 		List<T> result = criteria.setFirstResult(page.getRowStart())
@@ -96,13 +98,13 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 			return item;
 		}
 		//如果缓存区当中未找到,则进行数据库查询
-		item = (T) this.getSession().get(cls,id);
+		item = (T) this.getSessionFactory().getCurrentSession().get(cls,id);
 		dataCache.cacheData(item);
 		return item;
 	}
 	@Override
 	public List<?> excuteQuery(String hql,Object... params){
-		Query query = this.getSession().createQuery(hql);
+		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
 		if(params != null){
 			for(int index=0 ; index<params.length ; index++){
 				query.setParameter(index, params[index]);
@@ -113,7 +115,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	}
 	@Override
 	public List<?> excuteSQLQuery(String sql,Object... params){
-		Query query = this.getSession().createSQLQuery(sql);
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
 		if(params != null){
 			for(int index=0 ; index<params.length ; index++){
 				query.setParameter(index, params[index]);
@@ -125,7 +127,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	
 	@Override
 	public List<?> excuteQueryName(String queryName, Object... params) {
-		Query query = this.getSession().getNamedQuery(queryName);
+		Query query = this.getSessionFactory().getCurrentSession().getNamedQuery(queryName);
 		if(params != null){
 			for(int index=0 ; index<params.length ; index++){
 				query.setParameter(index, params[index]);
@@ -136,7 +138,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	}
 	@Override
 	public int excuteUpdate(String hql, Object... params) {
-		Query query = this.getSession().createQuery(hql);
+		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
 		if(params != null){
 			for(int index=0 ; index<params.length ; index++){
 				query.setParameter(index, params[index]);

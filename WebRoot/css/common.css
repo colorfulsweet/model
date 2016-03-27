@@ -12,6 +12,7 @@ a{text-decoration:none;color:blue;}
 .top > a{float:right;color:blue;height:100%;width:100px;text-align:center;line-height:50px;}
 .top > a#cancel{background:#FFD306}
 .main{width:100%;}
+.tabs-panels .panel-body{min-height:600px;overflow:auto;}
 
 .btn-header{width:97%;padding:7px 0px;margin:0px auto;}
 .btn-header > button{margin-right:5px;}

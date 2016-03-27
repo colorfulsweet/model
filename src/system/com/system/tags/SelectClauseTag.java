@@ -28,9 +28,6 @@ public class SelectClauseTag extends TagSupport {
 	private Map<String,String> dictMap;
 	
 	private static IHibernateDao<Object,String> hibernateDao;
-	static {
-		hibernateDao = SpringUtils.getBean("hibernateDao");
-	}
 	@Override
 	public int doStartTag() throws JspException {
 		dictMap = bulidDictMap(pageContext,dictCode);
@@ -83,6 +80,9 @@ public class SelectClauseTag extends TagSupport {
 	static Map<String, String> bulidDictMap(
 				PageContext pageContext,
 				String dictCode){
+		if(hibernateDao == null){
+			hibernateDao = SpringUtils.getSpringMVCBean(pageContext, "hibernateDao");
+		}
 		//从pageConext当中获取这个字典的Map对象
 		Map<String, String> dictMap = (Map<String, String>) pageContext.getAttribute(dictCode+"_clause_map");
 		if(dictMap == null){
