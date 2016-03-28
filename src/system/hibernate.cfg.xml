@@ -1,6 +1,6 @@
 <!DOCTYPE hibernate-configuration PUBLIC 
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"> 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"> 
 
 <hibernate-configuration>
 	<session-factory>
@@ -18,6 +18,8 @@
 		<property name="hibernate.connection.provider_class">
 			org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider
 		</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		<property name="hibernate.search.lucene_version">LUCENE_CURRENT</property>
 		
 		<!-- 系统表start -->
  		<mapping resource="com/system/bean/User.hbm.xml" />

@@ -108,6 +108,7 @@ public class DataCache {
 	 */
 	public void clearCache(){
 		dataRefs.clear();
+		cleanQueue();
 	}
 	/**
 	 * 清除已经被回收的软引用对象
