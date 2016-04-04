@@ -5,10 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.system.bean.Dict;
-import com.system.bean.Menu;
-import com.system.bean.Role;
-import com.system.bean.User;
+import com.system.model.Dict;
+import com.system.model.Menu;
+import com.system.model.Role;
+import com.system.model.User;
 import com.system.service.dao.IHibernateDao;
 import com.system.tags.Page;
 

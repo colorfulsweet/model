@@ -22,10 +22,10 @@
 		<property name="hibernate.search.lucene_version">LUCENE_CURRENT</property>
 		
 		<!-- 系统表start -->
- 		<mapping resource="com/system/bean/User.hbm.xml" />
- 		<mapping resource="com/system/bean/Role.hbm.xml" />
-  		<mapping resource="com/system/bean/Menu.hbm.xml" />
-  		<mapping resource="com/system/bean/Dict.hbm.xml" />
+ 		<mapping resource="com/system/model/User.hbm.xml" />
+ 		<mapping resource="com/system/model/Role.hbm.xml" />
+  		<mapping resource="com/system/model/Menu.hbm.xml" />
+  		<mapping resource="com/system/model/Dict.hbm.xml" />
 		<!-- 系统表end -->
 			
 	</session-factory>

@@ -2,8 +2,8 @@ package com.system.service;
 
 import java.util.List;
 
-import com.system.bean.Dict;
-import com.system.bean.Dict.DictClause;
+import com.system.model.Dict;
+import com.system.model.Dict.DictClause;
 
 public interface IDictService {
 	/**

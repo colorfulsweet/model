@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.system.bean.Dict;
-import com.system.bean.Dict.DictClause;
+import com.system.model.Dict;
+import com.system.model.Dict.DictClause;
 import com.system.service.IDictService;
 import com.system.service.dao.IHibernateDao;
 import com.system.util.SystemMessage;

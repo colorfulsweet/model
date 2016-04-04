@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.system.bean.User;
+import com.system.model.User;
 import com.system.service.dao.IHibernateDao;
 import com.system.util.DataCache;
 import com.system.util.ReflectUtils;

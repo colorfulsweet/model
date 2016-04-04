@@ -2,9 +2,9 @@ package com.system.service;
 
 import java.util.List;
 
-import com.system.bean.Menu;
-import com.system.bean.Menu.Submenu;
-import com.system.bean.User;
+import com.system.model.Menu;
+import com.system.model.User;
+import com.system.model.Menu.Submenu;
 
 public interface ISystemService {
 	/**

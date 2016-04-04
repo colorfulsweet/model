@@ -8,10 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.system.bean.Dict;
-import com.system.bean.Menu;
-import com.system.bean.Role;
-import com.system.bean.User;
+import com.system.model.Dict;
+import com.system.model.Menu;
+import com.system.model.Role;
+import com.system.model.User;
 import com.system.service.ISystemService;
 import com.system.service.dao.IHibernateDao;
 

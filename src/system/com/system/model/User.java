@@ -1,4 +1,4 @@
-package com.system.bean;
+package com.system.model;
 
 import java.io.Serializable;
 import java.sql.Blob;

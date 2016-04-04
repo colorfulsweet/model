@@ -207,6 +207,6 @@ $(function(){
 			$css.addTab(target.text(),target.attr("href"));
 		}
 	};
-	$(".submenu a,.link a,.top>.nav").on("click",openMenuTab);
+	$(".submenu a,.link a,.top>.nav .tabNav").on("click",openMenuTab);
 });
 })();

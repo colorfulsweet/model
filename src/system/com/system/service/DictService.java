@@ -8,8 +8,8 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.system.bean.Dict;
-import com.system.bean.Dict.DictClause;
+import com.system.model.Dict;
+import com.system.model.Dict.DictClause;
 
 @Service
 public class DictService extends HibernateDaoSupport implements IDictService {

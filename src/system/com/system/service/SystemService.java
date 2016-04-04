@@ -9,9 +9,9 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.system.bean.Menu;
-import com.system.bean.Menu.Submenu;
-import com.system.bean.User;
+import com.system.model.Menu;
+import com.system.model.User;
+import com.system.model.Menu.Submenu;
 
 @Service
 public class SystemService extends HibernateDaoSupport implements ISystemService {

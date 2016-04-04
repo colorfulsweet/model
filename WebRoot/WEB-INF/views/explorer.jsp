@@ -1,4 +1,4 @@
-<%@ page language="java" import="com.system.bean.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="<%=request.getContextPath() %>" scope="page"/>
 <c:set var="basePath" scope="page">
@@ -23,10 +23,16 @@
 <body>
 	<div class="main">
 		<div class="top">
-			<a href="${basePath}page/logout.html" id="cancel">注销</a>
-			<a href="${basePath}page/personalConfig.html" class="nav">个人设置</a>
-			<span>欢迎你, ${user.realName}</span>
-			<img src="user/getIcon.html" width="50px" height="50px" />
+			<div class="nav">
+				<ul>
+				<li><a href="${basePath}page/personalConfig.html" class="tabNav">个人设置</a></li>
+				<li><a href="${basePath}page/logout.html" id="logout">注销</a></li>
+				</ul>
+			</div>
+			<div class="tip">
+				<img src="user/getIcon.html" class="top_icon" />
+				<p>欢迎你, ${user.realName}</p>
+			</div>
 		</div>
 		<ul id="accordion" class="accordion">
 			<c:forEach items="${menuList}" var="menu">

@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.system.bean.Menu;
-import com.system.bean.Menu.Submenu;
+import com.system.model.Menu;
+import com.system.model.Menu.Submenu;
 import com.system.service.ISystemService;
 import com.system.service.dao.IHibernateDao;
 import com.system.util.SystemMessage;
