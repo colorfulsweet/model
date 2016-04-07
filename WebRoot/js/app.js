@@ -51,13 +51,12 @@ var FuncTools = function(){
 	 */
 	this.ajaxSubmit = function(form){
 		$.post($(form).attr("action"),$(form).serialize(),function(res){
-			var info = JSON.parse(res);
-			$.messager.alert("提示",info["msg"],info["type"],function(){
+			$.messager.alert("提示",res["msg"],res["type"],function(){
 				var $tab = $("#content-tab");
 				var selected = $tab.tabs("getSelected");
 				$tab.tabs("close",$tab.tabs('getTabIndex',selected));
-			},"json");
-		});
+			});
+		},"json");
 		return false;
 	};
 	/**
@@ -68,8 +67,7 @@ var FuncTools = function(){
 	this.delRecord = function(event){
 		var del = function(){
 			$.get($(event.currentTarget).attr("href"),null,function(res){
-				var info = JSON.parse(res);
-				$.messager.alert("提示",info["msg"],info["type"],function(){
+				$.messager.alert("提示",res["msg"],res["type"],function(){
 					$("#content-tab")
 					.tabs("getSelected")
 					.panel("refresh", event.data.url);
@@ -120,8 +118,7 @@ var FuncTools = function(){
 		$form.append(checkedBox.clone());
 		var del = function(){
 			$.post($(event.currentTarget).attr("href"),$form.serialize(),function(res){
-				var info = JSON.parse(res);
-				$.messager.alert("提示",info["msg"],info["type"],function(){
+				$.messager.alert("提示",res["msg"],res["type"],function(){
 					$("#content-tab")
 					.tabs("getSelected")
 					.panel("refresh", event.data.url);
@@ -169,7 +166,7 @@ var FuncTools = function(){
 		    processData: false,
 		    contentType: false,
 		    complete:function(res){
-		    	var info = JSON.parse(res);
+		    	var info = JSON.parse(res.responseText);
 		    	$.messager.alert("提示",info["msg"],info["type"]);
 		    },
 		});
@@ -208,5 +205,9 @@ $(function(){
 		}
 	};
 	$(".submenu a,.link a,.top>.nav .tabNav").on("click",openMenuTab);
+	$(".top_icon").error(function(event){
+		//头像加载失败时显示默认头像
+		event.target.src = "images/default_icon.png";
+	});
 });
 })();

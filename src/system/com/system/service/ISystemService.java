@@ -14,6 +14,12 @@ public interface ISystemService {
 	 */
 	public User checkUser(User user);
 	/**
+	 * 批量删除用户
+	 * @param ids 需要删除用户的ID构成的数组
+	 * @return 受影响的行数 
+	 */
+	public int delUsers(String[] ids);
+	/**
 	 * 获取某个菜单对应的子菜单列表
 	 * @param menu
 	 * @return 子菜单的List集合

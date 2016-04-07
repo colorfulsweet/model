@@ -1,5 +1,6 @@
 package com.system.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.system.model.Menu;
-import com.system.model.User;
 import com.system.model.Menu.Submenu;
+import com.system.model.User;
+import com.system.service.dao.IHibernateDao;
+import com.system.util.DataCache;
 
 @Service
 public class SystemService extends HibernateDaoSupport implements ISystemService {
@@ -20,6 +23,11 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	public void setSessionFactoryOverride(SessionFactory sessionFactory){
 		super.setSessionFactory(sessionFactory);
 	}
+	@Autowired
+	private IHibernateDao<User,String> hibernateDao;
+	
+	@Autowired
+	private DataCache dataCache;
 	
 	@Transactional
 	@Override
@@ -43,7 +51,15 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		}
 		return user;
 	}
-
+	
+	@Override
+	public int delUsers(String[] ids) {
+		String hql = "delete User u where u.id in (:ids)";
+		int result = hibernateDao.excuteUpdate(hql,"ids",Arrays.asList(ids));
+		dataCache.removeAllObjects(User.class, ids);
+		return result;
+	}
+	
 	@Transactional
 	@Override
 	public List<Submenu> getSubmenuList(Menu menu) {

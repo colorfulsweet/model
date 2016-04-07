@@ -78,4 +78,6 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 * @return 受到影响的行数
 	 */
 	public int excuteUpdate(String hql,Object... params);
+	
+	public int excuteUpdate(String hql,String paramName,List<?> params);
 }

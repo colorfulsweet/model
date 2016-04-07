@@ -81,7 +81,7 @@ public class SelectClauseTag extends TagSupport {
 				PageContext pageContext,
 				String dictCode){
 		if(hibernateDao == null){
-			hibernateDao = SpringUtils.getSpringMVCBean(pageContext, "hibernateDao");
+			hibernateDao = SpringUtils.getSpringMVCBean(pageContext.getServletContext(), "hibernateDao");
 		}
 		//从pageConext当中获取这个字典的Map对象
 		Map<String, String> dictMap = (Map<String, String>) pageContext.getAttribute(dictCode+"_clause_map");

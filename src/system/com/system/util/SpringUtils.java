@@ -1,7 +1,6 @@
 package com.system.util;
 
 import javax.servlet.ServletContext;
-import javax.servlet.jsp.PageContext;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -25,11 +24,6 @@ public class SpringUtils implements ApplicationContextAware {
 	
 	public static <T extends Object> T getBean(Class<T> clz){
 		return context.getBean(clz);
-	}
-	
-	public static <T extends Object> T getSpringMVCBean(PageContext pageContext,String beanId){
-		ServletContext context = pageContext.getServletContext();
-		return getSpringMVCBean(context, beanId);
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.model.User;
+import com.system.service.ISystemService;
 import com.system.service.dao.IHibernateDao;
-import com.system.util.DataCache;
 import com.system.util.ReflectUtils;
 import com.system.util.SpringUtils;
 import com.system.util.SystemMessage;
@@ -45,16 +44,18 @@ public class UserController {
 	private IHibernateDao<User,String> hibernateDao;
 	
 	@Autowired
-	private DataCache dataCache;
-	
-	@Autowired
 	private ServletContext context;
 	
+	@Autowired
+	private ISystemService systemService;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	private DiskFileItemFactory factory;
 	/**
 	 * 创建/修改 用户
 	 * @param user
-	 * @return
+	 * @return 执行结果信息JSON
 	 */
 	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
@@ -80,7 +81,7 @@ public class UserController {
 	/**
 	 * 删除用户
 	 * @param user
-	 * @return
+	 * @return 执行结果信息JSON
 	 */
 	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
 	@ResponseBody
@@ -91,28 +92,21 @@ public class UserController {
 	/**
 	 * 批量删除用户
 	 * @param ids
-	 * @return
+	 * @return 执行结果信息JSON
 	 */
 	@RequestMapping(value="/deleteUsers.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String delUsers(@RequestParam(value="userId")String[] ids){
-		if(ids.length == 0){
+		if(ids==null || ids.length==0){
 			return SystemMessage.getMessage("failed");
 		}
-		StringBuilder hql = new StringBuilder("delete User u where u.id in (");
-		for(int i=0 ; i<ids.length ; ++i){
-			hql.append("?,");
-		}
-		hql.setLength(hql.length() - 1);
-		hql.append(")");
-		hibernateDao.excuteUpdate(hql.toString(), Arrays.asList(ids).toArray());
-		dataCache.removeAllObjects(User.class, ids);
+		systemService.delUsers(ids);
 		return SystemMessage.getMessage("success");
 	}
 	/**
 	 * 上传头像
 	 * @param request
-	 * @return "success"
+	 * @return 执行结果信息JSON
 	 */
 	@RequestMapping(value="/uploadIcon.html",method=RequestMethod.POST,produces="text/html;charset=utf-8")
 	@ResponseBody
@@ -121,7 +115,6 @@ public class UserController {
 		if(factory == null){
 			factory = SpringUtils.getBean(DiskFileItemFactory.class);
 		}
-		SessionFactory sessionFactory = SpringUtils.getSpringMVCBean(context, "sessionFactory");
 		Session session = sessionFactory.openSession();
 		LobHelper lobHelper = session.getLobHelper();
 		// 创建解析类的实例
@@ -136,7 +129,7 @@ public class UserController {
 				// isFormField为true，表示这不是文件上传表单域
 				if (!item.isFormField()) {
 					InputStream input = item.getInputStream();
-					user.setIcon(lobHelper.createBlob(input,0));
+					user.setIcon(lobHelper.createBlob(input,-1));
 					hibernateDao.update(user);
 					input.close();
 				}
@@ -156,23 +149,26 @@ public class UserController {
 	 */
 	@RequestMapping(value="/getIcon.html",method=RequestMethod.GET)
 	public void getUserIcon(HttpSession session,HttpServletResponse response){
-		byte[] buf = new byte[2048];
+		User user = (User) session.getAttribute("user");
+		String hql = "select icon from User u where u.id=?";
+		List<?> result = hibernateDao.excuteQuery(hql, user.getId());
+		Blob icon = null;
+		if(result.isEmpty() || (icon=(Blob)result.get(0)) == null){
+			return;
+		}
 		try {
-			User user = (User) session.getAttribute("user");
-			Blob icon = user.getIcon();
-			if(icon != null){
-				InputStream input = icon.getBinaryStream();
-				BufferedInputStream bufferInput = new BufferedInputStream(input);
-				OutputStream output = response.getOutputStream();
-				BufferedOutputStream bufferOutput = new BufferedOutputStream(output);
-				int len = 0;
-				while((len=bufferInput.read(buf)) != -1){
-					bufferOutput.write(buf,0,len);
-				}
-				bufferOutput.flush();
-				bufferOutput.close();
-				bufferInput.close();
+			byte[] buf = new byte[2048];
+			InputStream input = icon.getBinaryStream();
+			BufferedInputStream bufferInput = new BufferedInputStream(input);
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bufferOutput = new BufferedOutputStream(output);
+			int len = 0;
+			while((len=bufferInput.read(buf)) != -1){
+				bufferOutput.write(buf,0,len);
 			}
+			bufferOutput.flush();
+			bufferOutput.close();
+			bufferInput.close();
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}

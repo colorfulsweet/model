@@ -147,4 +147,12 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 		int lines = query.executeUpdate();
 		return lines;
 	}
+
+	@Override
+	public int excuteUpdate(String hql, String paramName, List<?> params) {
+		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
+		query.setParameterList(paramName, params);
+		int lines = query.executeUpdate();
+		return lines;
+	}
 }

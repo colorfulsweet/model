@@ -12,7 +12,7 @@ a{text-decoration:none;color:blue;}
 .top > .nav{color:blue;float:right;width:80%;height:100%;text-align:center;background:url("../images/top_right.png") repeat-x;}
 .top > .nav > ul{list-style-type:none;float:right;}
 .top > .nav > ul > li{float:left;width:100px;height:100%;}
-.top > .nav a {display:block;width:100px;height:30px;line-height:30px;}
+.top > .nav a {display:block;width:100px;height:30px;line-height:30px;font-size:14px;}
 .top > .nav a#logout {background:#FFD306; border-radius:15px;}
 .top > .tip{height:60px; width:20%; min-width:200px; line-height:60px; float:left;background:url("../images/top_left.png") no-repeat;background-size:100% 100%;}
 .top > .tip > p{position:absolute;left:80px; line-height:50px;}
