@@ -81,8 +81,10 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 		if(criteria != null && !criteria.isEmpty()){
 			for(Entry<String, Object> entry : entries){
 				//将查询条件加入到Criteria
-				Criterion criterion = Restrictions.ilike(entry.getKey(), entry.getValue());
-				cta.add(criterion);
+				if(entry.getValue() instanceof String){
+					Criterion criterion = Restrictions.ilike(entry.getKey(), '%'+(String)entry.getValue()+'%');
+					cta.add(criterion);
+				}
 			}
 		}
 		List<T> result = cta.list();
@@ -101,9 +103,9 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 				//将查询条件加入到Criteria
 				Criterion criterion = null;
 				if(entry.getValue() instanceof String){
-					criterion = Restrictions.ilike(entry.getKey(), entry.getValue());
+					criterion = Restrictions.ilike(entry.getKey(), '%'+(String)entry.getValue()+'%');
+					cta.add(criterion);
 				}
-				cta.add(criterion);
 			}
 		}
 		long count = (Long) cta.uniqueResult();

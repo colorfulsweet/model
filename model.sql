@@ -156,4 +156,4 @@ CREATE TABLE `s_user` (
 -- ----------------------------
 -- Records of s_user
 -- ----------------------------
-INSERT INTO `s_user` VALUES ('402880ea52271d6c0152271d6da80001', 'test', '测试', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '2016-01-07 18:06:21', null, null, '', '100');
+INSERT INTO `s_user` VALUES ('402880ea52271d6c0152271d6da80001', 'test', '测试', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', null,'2016-01-07 18:06:21', null, null, '', '100');
