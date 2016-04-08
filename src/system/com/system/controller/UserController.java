@@ -1,11 +1,7 @@
 package com.system.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -150,25 +146,8 @@ public class UserController {
 	@RequestMapping(value="/getIcon.html",method=RequestMethod.GET)
 	public void getUserIcon(HttpSession session,HttpServletResponse response){
 		User user = (User) session.getAttribute("user");
-		String hql = "select icon from User u where u.id=?";
-		List<?> result = hibernateDao.excuteQuery(hql, user.getId());
-		Blob icon = null;
-		if(result.isEmpty() || (icon=(Blob)result.get(0)) == null){
-			return;
-		}
-		try {
-			byte[] buf = new byte[2048];
-			InputStream input = icon.getBinaryStream();
-			BufferedInputStream bufferInput = new BufferedInputStream(input);
-			OutputStream output = response.getOutputStream();
-			BufferedOutputStream bufferOutput = new BufferedOutputStream(output);
-			int len = 0;
-			while((len=bufferInput.read(buf)) != -1){
-				bufferOutput.write(buf,0,len);
-			}
-			bufferOutput.flush();
-			bufferOutput.close();
-			bufferInput.close();
+		try{
+			systemService.outputIcon(user.getId(), response.getOutputStream());
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}

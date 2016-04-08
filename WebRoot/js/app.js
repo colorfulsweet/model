@@ -183,7 +183,7 @@ $(function() {
 		links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown);
 	};
 	Accordion.prototype.dropdown = function(e) {
-		var $el = e.data.el;
+		var $el = e.data.el,
 			$this = $(this),
 			$next = $this.next();
 

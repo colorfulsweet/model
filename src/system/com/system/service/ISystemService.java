@@ -1,5 +1,8 @@
 package com.system.service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.system.model.Menu;
@@ -19,6 +22,12 @@ public interface ISystemService {
 	 * @return 受影响的行数 
 	 */
 	public int delUsers(String[] ids);
+	/**
+	 * 获取用户的头像并从输出流输出
+	 * @param userId 用户ID
+	 * @param output 字节输出流
+	 */
+	public void outputIcon(String userId, OutputStream output) throws IOException, SQLException;
 	/**
 	 * 获取某个菜单对应的子菜单列表
 	 * @param menu

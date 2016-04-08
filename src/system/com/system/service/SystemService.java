@@ -1,5 +1,12 @@
 package com.system.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,6 +65,27 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		int result = hibernateDao.excuteUpdate(hql,"ids",Arrays.asList(ids));
 		dataCache.removeAllObjects(User.class, ids);
 		return result;
+	}
+	
+	@Override
+	public void outputIcon(String userId, OutputStream output) throws IOException, SQLException {
+		String hql = "select icon from User u where u.id=?";
+		List<?> result = hibernateDao.excuteQuery(hql, userId);
+		Blob icon = null;
+		if(result.isEmpty() || (icon=(Blob)result.get(0)) == null){
+			return;
+		}
+		byte[] buf = new byte[2048];
+		InputStream input = icon.getBinaryStream();
+		BufferedInputStream bufferInput = new BufferedInputStream(input);
+		BufferedOutputStream bufferOutput = new BufferedOutputStream(output);
+		int len = 0;
+		while((len=bufferInput.read(buf)) != -1){
+			bufferOutput.write(buf,0,len);
+		}
+		bufferOutput.flush();
+		bufferOutput.close();
+		bufferInput.close();
 	}
 	
 	@Transactional

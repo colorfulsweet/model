@@ -2,12 +2,17 @@ package com.system.service.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -70,20 +75,41 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> dir(Class<?> cls) {
-		List<T> result = this.getSessionFactory().getCurrentSession().createCriteria(cls).list();
+	public List<T> dir(Class<?> cls, Map<String,Object> criteria) {
+		Criteria cta = this.getSessionFactory().getCurrentSession().createCriteria(cls);
+		Set<Entry<String, Object>> entries = criteria.entrySet();
+		if(criteria != null && !criteria.isEmpty()){
+			for(Entry<String, Object> entry : entries){
+				//将查询条件加入到Criteria
+				Criterion criterion = Restrictions.ilike(entry.getKey(), entry.getValue());
+				cta.add(criterion);
+			}
+		}
+		List<T> result = cta.list();
 		return result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public void dir(Class<?> cls,Page page){
+	public void dir(Class<?> cls, Page page, Map<String,Object> criteria){
 		//聚合函数查询记录总数
-		Criteria criteria = this.getSessionFactory().getCurrentSession().createCriteria(cls)
+		Criteria cta = this.getSessionFactory().getCurrentSession().createCriteria(cls)
 						.setProjection(Projections.rowCount());
-		long count = (Long) criteria.uniqueResult();
+		//获取查询条件的列表
+		Set<Entry<String, Object>> entries = criteria.entrySet();
+		if(criteria != null && !criteria.isEmpty()){
+			for(Entry<String, Object> entry : entries){
+				//将查询条件加入到Criteria
+				Criterion criterion = null;
+				if(entry.getValue() instanceof String){
+					criterion = Restrictions.ilike(entry.getKey(), entry.getValue());
+				}
+				cta.add(criterion);
+			}
+		}
+		long count = (Long) cta.uniqueResult();
 		//查询当前页记录内容
-		criteria.setProjection(null);
-		List<T> result = criteria.setFirstResult(page.getRowStart())
+		cta.setProjection(null);
+		List<T> result = cta.setFirstResult(page.getRowStart())
 				.setMaxResults(page.getPageSize())
 				.list();
 		page.setRowCount(count);

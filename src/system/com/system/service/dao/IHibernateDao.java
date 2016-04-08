@@ -2,6 +2,7 @@ package com.system.service.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.system.tags.Page;
 
@@ -35,15 +36,17 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	/**
 	 * 查询全集
 	 * @param cls
+	 * @param criteria 查询条件
 	 * @return
 	 */
-	public List<T> dir(Class<?> cls);
+	public List<T> dir(Class<?> cls, Map<String,Object> criteria);
 	/**
 	 * 分页查询
 	 * @param cls
 	 * @param page
+	 * @param criteria 查询条件
 	 */
-	public void dir(Class<?> cls,Page page);
+	public void dir(Class<?> cls,Page page, Map<String,Object> criteria);
 	/**
 	 * 获取单个实体类
 	 * @param id

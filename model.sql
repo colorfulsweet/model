@@ -142,6 +142,7 @@ CREATE TABLE `s_user` (
   `USER_NAME` varchar(255) DEFAULT NULL COMMENT '用户名',
   `REAL_NAME` varchar(255) DEFAULT NULL COMMENT '昵称',
   `PASSWORD` varchar(64) DEFAULT NULL COMMENT '密码(SHA-256加密)',
+  `ICON` mediumblob DEFAULT NULL COMMENT '用户头像'
   `CREATE_TIME` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `E_MAIL` varchar(255) DEFAULT NULL COMMENT '电子邮箱',
   `TEL` varchar(255) DEFAULT NULL COMMENT '电话号码',
