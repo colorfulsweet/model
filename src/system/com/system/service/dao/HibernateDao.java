@@ -156,7 +156,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	@Override
 	public List<?> excuteQueryName(String queryName, Object... params) {
 		Query query = this.getSessionFactory().getCurrentSession().getNamedQuery(queryName);
-		if(params != null){
+		if(params!=null && params.length!=0){
 			for(int index=0 ; index<params.length ; index++){
 				query.setParameter(index, params[index]);
 			}
