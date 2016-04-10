@@ -1,6 +1,7 @@
 package com.system.service.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -177,9 +178,14 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	}
 
 	@Override
-	public int excuteUpdate(String hql, String paramName, List<?> params) {
+	public int excuteUpdate(String hql, String[] paramNames, Collection<?>... params) {
+		if(paramNames.length != params.length){
+			throw new IllegalArgumentException("参数名称数量与参数值的数量不同");
+		}
 		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
-		query.setParameterList(paramName, params);
+		for(short index=0 ; index<paramNames.length ; index++){
+			query.setParameterList(paramNames[index], params[index]);
+		}
 		int lines = query.executeUpdate();
 		return lines;
 	}
