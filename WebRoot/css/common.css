@@ -21,7 +21,8 @@ a{text-decoration:none;color:blue;}
 .main{width:100%;}
 .tabs-panels .panel-body{min-height:600px;overflow:auto;}
 
-.btn-header{width:97%;padding:7px 0px;margin:0px auto;}
+.tab-search, .btn-header{width:97%;height:auto;padding:7px 0px;margin:0px auto; min-height:15px;}
+.tab-search ul li{float:left;}
 .btn-header > button{margin-right:5px;}
 .image-preview{
     height:200px;

@@ -45,6 +45,27 @@ var FuncTools = function(){
 		event.preventDefault();
 	};
 	/**
+	 * 执行模糊查询
+	 * @param "查询"按钮DOM对象
+	 */
+	this.tabSearch = function(target){
+		var form = $(target).parents("form");
+		$("#content-tab")
+			.tabs("getSelected")
+			.panel("refresh", form.attr("action") + "?" + form.serialize());
+		return false;
+	};
+	/**
+	 * 表单重置
+	 * @param "重置"按钮DOM元素
+	 */
+	this.form_reset = function(target){
+		var inputs = $(target).parents("form").find(":input[type=text]");
+		$.each(inputs, function(index, element){
+			element.value = "";
+		});
+	};
+	/**
 	 * 表单ajax提交
 	 * @param form 表单DOM对象
 	 * @returns {Boolean}

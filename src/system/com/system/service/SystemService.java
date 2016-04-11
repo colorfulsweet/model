@@ -62,7 +62,7 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@Override
 	public int delUsers(String[] ids) {
 		String hql = "delete User u where u.id in (:ids)";
-		int result = hibernateDao.excuteUpdate(hql,"ids",Arrays.asList(ids));
+		int result = hibernateDao.excuteUpdate(hql,new String[]{"ids"},Arrays.asList(ids));
 		dataCache.removeAllObjects(User.class, ids);
 		return result;
 	}

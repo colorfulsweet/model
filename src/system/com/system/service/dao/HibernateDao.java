@@ -1,6 +1,7 @@
 package com.system.service.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -81,7 +83,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 		if(criteria != null && !criteria.isEmpty()){
 			for(Entry<String, Object> entry : entries){
 				//将查询条件加入到Criteria
-				if(entry.getValue() instanceof String){
+				if(entry.getValue() instanceof String && StringHelper.isNotEmpty((String)entry.getValue())){
 					Criterion criterion = Restrictions.ilike(entry.getKey(), '%'+(String)entry.getValue()+'%');
 					cta.add(criterion);
 				}
@@ -102,8 +104,9 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 			for(Entry<String, Object> entry : entries){
 				//将查询条件加入到Criteria
 				Criterion criterion = null;
-				if(entry.getValue() instanceof String){
-					criterion = Restrictions.ilike(entry.getKey(), '%'+(String)entry.getValue()+'%');
+				Object value = entry.getValue();
+				if(entry.getValue() instanceof String && StringHelper.isNotEmpty((String)value)){
+					criterion = Restrictions.ilike(entry.getKey(), "%"+value+"%");
 					cta.add(criterion);
 				}
 			}
@@ -177,9 +180,14 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	}
 
 	@Override
-	public int excuteUpdate(String hql, String paramName, List<?> params) {
+	public int excuteUpdate(String hql, String[] paramNames, Collection<?>... params) {
+		if(paramNames.length != params.length){
+			throw new IllegalArgumentException("参数名称数量与参数值的数量不同");
+		}
 		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
-		query.setParameterList(paramName, params);
+		for(short index=0 ; index<paramNames.length ; index++){
+			query.setParameterList(paramNames[index], params[index]);
+		}
 		int lines = query.executeUpdate();
 		return lines;
 	}

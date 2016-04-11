@@ -1,6 +1,7 @@
 package com.system.service.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -82,5 +83,5 @@ public interface IHibernateDao <T, PK extends Serializable> {
 	 */
 	public int excuteUpdate(String hql,Object... params);
 	
-	public int excuteUpdate(String hql,String paramName,List<?> params);
+	public int excuteUpdate(String hql,String[] paramNames,Collection<?>... params);
 }
