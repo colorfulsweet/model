@@ -57,7 +57,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="${basePath}js/jquery/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="${basePath}js/jquery/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="${basePath}js/easyUI/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${basePath}js/app.js"></script>
 </body>

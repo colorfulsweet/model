@@ -1,5 +1,8 @@
 package com.system.controller;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +120,10 @@ public class PageController {
 	public String addOrUpdateRole(Role role,Model model){
 		if(role.getId() != null){
 			role = (Role) hibernateDao.get(Role.class,role.getId());
+			if(role.getCreateTime() instanceof Timestamp){
+				Timestamp createTime = (Timestamp) role.getCreateTime();
+				role.setCreateTime(new Date(createTime.getTime()));
+			}
 			model.addAttribute("role", role);
 		}
 		return "WEB-INF/views/role/add_role.jsp";

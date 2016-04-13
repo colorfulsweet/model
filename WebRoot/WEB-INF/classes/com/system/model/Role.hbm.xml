@@ -13,12 +13,12 @@
 				<comment>角色名称</comment>
 			</column>
 		</property>
-		<property name="createTime" type="date">
+		<property name="createTime" type="timestamp">
 			<column name="CREATE_TIME" >
 				<comment>创建时间</comment>
 			</column>
 		</property>
-		<set name="menus" table="S_ROLE_MENU" >
+		<set name="menus" table="S_ROLE_MENU" cascade="delete">
 			<key column="ROLE_ID"/>
 			<many-to-many class="Menu" column="MENU_ID" />
 		</set>

@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.hibernate.LobHelper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.common.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +58,7 @@ public class UserController {
 	@ResponseBody
 	public String saveUser(User user){
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
-		if(user!=null && user.getId()!=null && user.getId().length()!=0){
+		if(user!=null && StringHelper.isNotEmpty(user.getId())){
 			//修改
 			User destUser = hibernateDao.get(User.class, user.getId());
 			try {
