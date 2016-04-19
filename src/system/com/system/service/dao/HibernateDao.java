@@ -1,7 +1,12 @@
 package com.system.service.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,9 +38,10 @@ import com.system.util.ReflectUtils;
 @Repository
 public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSupport
 			implements IHibernateDao<T, PK>{
-	
 	@Autowired(required=true)
 	private DataCache dataCache;
+	
+	private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
 	public void setSessionFactoryOverride(SessionFactory sessionFactory){
@@ -79,15 +85,8 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	@Override
 	public List<T> dir(Class<?> cls, Map<String,Object> criteria) {
 		Criteria cta = this.getSessionFactory().getCurrentSession().createCriteria(cls);
-		Set<Entry<String, Object>> entries = criteria.entrySet();
 		if(criteria != null && !criteria.isEmpty()){
-			for(Entry<String, Object> entry : entries){
-				//将查询条件加入到Criteria
-				if(entry.getValue() instanceof String && StringHelper.isNotEmpty((String)entry.getValue())){
-					Criterion criterion = Restrictions.ilike(entry.getKey(), '%'+(String)entry.getValue()+'%');
-					cta.add(criterion);
-				}
-			}
+			criteriaHandle(cls, cta, criteria);
 		}
 		List<T> result = cta.list();
 		return result;
@@ -95,22 +94,13 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	@SuppressWarnings("unchecked")
 	@Override
 	public void dir(Class<?> cls, Page page, Map<String,Object> criteria){
-		//聚合函数查询记录总数
-		Criteria cta = this.getSessionFactory().getCurrentSession().createCriteria(cls)
-						.setProjection(Projections.rowCount());
-		//获取查询条件的列表
-		Set<Entry<String, Object>> entries = criteria.entrySet();
+		//创建查询
+		Criteria cta = this.getSessionFactory().getCurrentSession().createCriteria(cls);
 		if(criteria != null && !criteria.isEmpty()){
-			for(Entry<String, Object> entry : entries){
-				//将查询条件加入到Criteria
-				Criterion criterion = null;
-				Object value = entry.getValue();
-				if(entry.getValue() instanceof String && StringHelper.isNotEmpty((String)value)){
-					criterion = Restrictions.ilike(entry.getKey(), "%"+value+"%");
-					cta.add(criterion);
-				}
-			}
+			criteriaHandle(cls, cta, criteria);
 		}
+		//聚合函数查询记录总数
+		cta.setProjection(Projections.rowCount());
 		long count = (Long) cta.uniqueResult();
 		//查询当前页记录内容
 		cta.setProjection(null);
@@ -119,6 +109,63 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 				.list();
 		page.setRowCount(count);
 		page.setResult(result);
+	}
+	
+	private void criteriaHandle(Class<?> cls, Criteria cta, Map<String,Object> criteria){
+		//获取实体类当中所有的属性列表
+		Field[] fields = cls.getDeclaredFields();
+		Map<String,String> fieldMap = new HashMap<String,String>();
+		for(Field field : fields) {
+			fieldMap.put(field.getName(), field.getType().getName());
+		}
+		//获取查询条件的列表
+		Set<Entry<String, Object>> entries = criteria.entrySet();
+		for(Entry<String, Object> entry : entries){
+			//将查询条件加入到Criteria
+			Criterion criterion = null;
+			String key = entry.getKey();
+			String value = (String) entry.getValue();
+			if(StringHelper.isEmpty(value)){
+				continue;
+			}
+			String fieldName = null;
+			//针对日期时间数据采集字段名称
+			byte dateFlag = 0;
+			if(key.contains("Start")){
+				fieldName = key.substring(0, key.indexOf("Start"));
+				dateFlag = -1;
+			} else if(key.contains("End")){
+				fieldName = key.substring(0, key.indexOf("End"));
+				dateFlag = 1;
+			} else {
+				fieldName = key;
+			}
+			if(!fieldMap.containsKey(fieldName)){
+				continue;
+			}
+			try {
+				switch(fieldMap.get(fieldName)){
+				case "java.lang.String" : 
+					//对于字符串类型, 使用模糊查询
+					criterion = Restrictions.ilike(fieldName, "%"+value+"%");
+					break;
+				case "java.sql.Timestamp" :
+				case "java.util.Date" :
+					//对于日期时间类型的, 使用起止时间进行查询
+					if(dateFlag > 0){
+						criterion = Restrictions.gt(fieldName, dateFormat.parse(value));
+					} else if(dateFlag < 0){
+						criterion = Restrictions.lt(fieldName, dateFormat.parse(value));
+					}
+					break;
+				}
+				if(criterion != null){
+					cta.add(criterion);
+				}
+			} catch (SecurityException | ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	@SuppressWarnings("unchecked")
 	@Override

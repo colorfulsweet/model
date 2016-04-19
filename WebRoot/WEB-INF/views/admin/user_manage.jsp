@@ -6,6 +6,31 @@
 <html>
 <head></head>
 <body>
+<form action="admin/userManage.html" method="post" >
+	<div class="tab-search">
+		<ul>
+			<li>用户名：<input type="text" name="username" value="${username}"/></li>
+			<li>
+			创建时间：
+			<input type="text" class="Wdate" name="createTimeStart" value="${createTimeStart}" id="userCreateTimeStart"
+					onclick="WdatePicker({maxDate:'#F{$dp.$D(\'userCreateTimeEnd\')}'})" />
+			至
+			<input type="text" class="Wdate" name="createTimeEnd" value="${createTimeEnd}" id="userCreateTimeEnd"
+					onclick="WdatePicker({minDate:'#F{$dp.$D(\'userCreateTimeStart\')}'})" />
+			</li>
+		</ul>
+		<ul>
+			<li>昵称：<input type="text" name="realName" value="${realName}"/></li>
+			<li>状态：<cp:dictSelect dictCode="d_userStatus" name="status" value="${status}"/></li>
+			<li>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-search'" onclick="$css.tabSearch(this)">查询</a>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-clear'" onclick="$css.form_reset(this)">重置</a>
+			</li>
+		</ul>
+	</div>
+</form>
 <div class="btn-header">
 	<a href="page/addOrUpdateUser.html" class="easyui-linkbutton addUser" data-options="iconCls:'icon-add'" >创建用户</a>
 	<a href="user/deleteUsers.html" class="easyui-linkbutton delUsers" data-options="iconCls:'icon-remove'" >批量删除</a>

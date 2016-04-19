@@ -16,9 +16,9 @@
 	<meta http-equiv="description" content="主页面">
 	
 	<link rel="stylesheet" type="text/css" href="${basePath}css/common.css"/>
-	<link rel="stylesheet" type="text/css" href="${basePath}css/font-awesome.min.css" />
-	<link rel="stylesheet" type="text/css" href="${basePath}js/easyUI/theme/easyui.css"/>
-	<link rel="stylesheet" type="text/css" href="${basePath}js/easyUI/theme/icon.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}plugin/fonts/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/icon.css"/>
 </head>
 <body>
 	<div class="main">
@@ -58,7 +58,8 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="${basePath}js/jquery/jquery-2.1.4.js"></script>
-	<script type="text/javascript" src="${basePath}js/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}plugin/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}plugin/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${basePath}js/app.js"></script>
 </body>
 </html>

@@ -38,6 +38,10 @@ var FuncTools = function(){
 				pageNow : $(this).attr("page"),
 				pageSize : $(this).nextAll("select").val()
 			};
+		var form = $(this).parents(".pageSplit").prevAll("form");
+		$.each(form.find(":input"), function(index, element){
+			params[element.name] = element.value;
+		});
 		var href = $(this).attr("href");
 		$("#content-tab")
 			.tabs("getSelected")

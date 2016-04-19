@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-validator.Checked=WebRoot/js/jquery/jquery-2.1.4.js,WebRoot/js/easyUI/jquery.easyui.min.js
+validator.Checked=WebRoot/plugin/My97DatePicker,WebRoot/plugin/easyUI/jquery.easyui.min.js
 validator.Unchecked=

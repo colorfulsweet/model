@@ -6,6 +6,20 @@
 <html>
 <head></head>
 <body>
+<form action="admin/dictManage.html" method="post" >
+	<div class="tab-search">
+		<ul>
+			<li>字典编码：<input type="text" name="dictCode" value="${dictCode}"/></li>
+			<li>字典名称：<input type="text" name="dictName" value="${dictName}"/></li>
+			<li>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-search'" onclick="$css.tabSearch(this)">查询</a>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-clear'" onclick="$css.form_reset(this)">重置</a>
+			</li>
+		</ul>
+	</div>
+</form>
 <div class="btn-header">
 	<a href="page/addOrUpdateDict.html" class="easyui-linkbutton addDict" data-options="iconCls:'icon-add'" >添加字典</a>
 </div>

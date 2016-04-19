@@ -13,11 +13,12 @@ public class PageSplitTag extends TagSupport {
 	private static final long serialVersionUID = 7708371317711245049L;
 	private static Logger log = Logger.getLogger(PageSplitTag.class);
 	private Page page;
+	
 	@Override
 	public int doStartTag() throws JspException {
 		JspWriter out = pageContext.getOut();
 		try{
-			if(page == null) {
+			if(page.getResult()==null || page.getResult().isEmpty()) {
 				out.println("没有可以显示的数据");
 				out.flush();
 				return SKIP_BODY;
@@ -81,15 +82,17 @@ public class PageSplitTag extends TagSupport {
 	public int doEndTag() throws JspException {
 		JspWriter out = pageContext.getOut();
 		try {
-			out.println("<select name='pageSize' class='page'>");
-			for(int i=10 ; i<=50 ; i+=10){
-				if(i == page.getPageSize()){
-					out.println("<option value='"+i+"' selected>"+i+"</option>");
-				} else {
-					out.println("<option value='"+i+"'>"+i+"</option>");
+			if(page.getResult()!=null && !page.getResult().isEmpty()) {
+				out.println("<select name='pageSize' class='page'>");
+				for(int i=10 ; i<=50 ; i+=10){
+					if(i == page.getPageSize()){
+						out.println("<option value='"+i+"' selected>"+i+"</option>");
+					} else {
+						out.println("<option value='"+i+"'>"+i+"</option>");
+					}
 				}
+				out.println("</select>");
 			}
-			out.println("</select>");
 		} catch (IOException e){
 			e.printStackTrace();
 			log.error(e.getMessage());

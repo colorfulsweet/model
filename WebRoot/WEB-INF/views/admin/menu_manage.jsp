@@ -5,6 +5,20 @@
 <html>
 <head></head>
 <body>
+<form action="admin/menuManage.html" method="post" >
+	<div class="tab-search">
+		<ul>
+			<li>菜单名称：<input type="text" name="menuName" value="${menuName}"/></li>
+			<li>URL地址：<input type="text" name="url" value="${url}"/></li>
+			<li>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-search'" onclick="$css.tabSearch(this)">查询</a>
+				<a href="javascript:void(0);" class="easyui-linkbutton" 
+						data-options="iconCls:'icon-clear'" onclick="$css.form_reset(this)">重置</a>
+			</li>
+		</ul>
+	</div>
+</form>
 <div class="btn-header">
 	<a href="page/addOrUpdateMenu.html" class="easyui-linkbutton addMenu" data-options="iconCls:'icon-add'" >添加菜单</a>
 </div>

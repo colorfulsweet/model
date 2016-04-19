@@ -39,6 +39,7 @@ public class SelectClauseTag extends TagSupport {
 		try {
 			out.println("<select name=\""+(name==null?dictCode:name)+"\">");
 			Set<Entry<String,String>> entries = dictMap.entrySet();
+			out.println("<option>====请选择====</option>");
 			for(Entry<String,String> entry : entries){
 				out.println("<option value=\"" + entry.getKey() + "\""
 							+ (entry.getKey().equals(value)?"selected":"")
