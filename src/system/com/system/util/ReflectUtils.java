@@ -4,12 +4,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import org.apache.log4j.Logger;
+
 /**
  * 反射实现工具类
  * @author Administrator
  *
  */
 public class ReflectUtils {
+	private static Logger log = Logger.getLogger(ReflectUtils.class);
 	/**
 	 * 将源对象当中的非空属性转移到目标对象当中的对应属性
 	 * (两者必须是相同类型的对象)
@@ -50,7 +53,7 @@ public class ReflectUtils {
 			Method method = clz.getMethod("get" + firstCharToUpper(fieldName));
 			value = (String) method.invoke(item);
 		} catch (Exception e){
-			e.printStackTrace();
+			log.error("反射执行异常!", e);
 		}
 		return value;
 	}

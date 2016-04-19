@@ -64,10 +64,12 @@ var FuncTools = function(){
 	 * @param "重置"按钮DOM元素
 	 */
 	this.form_reset = function(target){
-		var inputs = $(target).parents("form").find(":input[type=text]");
-		$.each(inputs, function(index, element){
+		var form = $(target).parents("form");
+		$.each(form.find(":input[type=text]"), function(index, element){
 			element.value = "";
 		});
+		form.find("select > option").removeAttr("selected");
+		form[0].reset();
 	};
 	/**
 	 * 表单ajax提交

@@ -2,10 +2,13 @@ package com.system.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 public class CharactorUtils {
+	private static Logger log = Logger.getLogger(CharactorUtils.class);
 	private static final String targetEncoding = "UTF-8";
 	private static final String[] encodeNameList = {"UTF-8", "ISO8859-1", "GB2312", "GBK"};
 	public static void charactorHandle(Map<String,Object> map){
@@ -20,7 +23,7 @@ public class CharactorUtils {
 					String paramEncoding = getEncoding((String)value);
 					entry.setValue(new String(((String)value).getBytes(paramEncoding), targetEncoding));
 				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
+					log.error("编码类型转换错误!", e);
 				}
 			}
 		}

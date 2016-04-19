@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.hibernate.LobHelper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,6 +38,7 @@ import com.system.util.SystemMessage;
 @Controller
 @RequestMapping(value="/user")
 public class UserController {
+	private static Logger log = Logger.getLogger(UserController.class);
 	@Autowired
 	private IHibernateDao<User,String> hibernateDao;
 	
@@ -64,7 +66,7 @@ public class UserController {
 			try {
 				ReflectUtils.transferFields(user, destUser);
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error("实体对象属性映射错误!", e);
 				return SystemMessage.getMessage("failed");
 			}
 			hibernateDao.update(destUser);
@@ -133,7 +135,7 @@ public class UserController {
 			}
 			return SystemMessage.getMessage("uploadSuccess");
 		} catch (FileUploadException | IOException e) {
-			e.printStackTrace();
+			log.error("文件上传错误!", e);
 			return SystemMessage.getMessage("uploadFailed");
 		} finally {
 			session.close();
@@ -150,7 +152,7 @@ public class UserController {
 		try{
 			systemService.outputIcon(user.getId(), response.getOutputStream());
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
+			log.error("获取用户头像失败!", e);
 		}
 	}
 }

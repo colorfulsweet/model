@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,6 +39,8 @@ import com.system.util.ReflectUtils;
 @Repository
 public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSupport
 			implements IHibernateDao<T, PK>{
+	private static Logger log = Logger.getLogger(HibernateDao.class);
+	
 	@Autowired(required=true)
 	private DataCache dataCache;
 	
@@ -110,7 +113,12 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 		page.setRowCount(count);
 		page.setResult(result);
 	}
-	
+	/**
+	 * 将查询条件添加到Criteria当中
+	 * @param cls 表示实体类的Class对象
+	 * @param cta 查询基准
+	 * @param criteria 查询条件的字段名与字段值的Map集合
+	 */
 	private void criteriaHandle(Class<?> cls, Criteria cta, Map<String,Object> criteria){
 		//获取实体类当中所有的属性列表
 		Field[] fields = cls.getDeclaredFields();
@@ -158,12 +166,16 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 						criterion = Restrictions.lt(fieldName, dateFormat.parse(value));
 					}
 					break;
+				case "java.lang.Boolean" :
+					criterion = Restrictions.eq(fieldName, Boolean.parseBoolean(value));
+					break;
+				default : log.warn("未知的数据类型!--" + fieldMap.get(fieldName));
 				}
 				if(criterion != null){
 					cta.add(criterion);
 				}
-			} catch (SecurityException | ParseException e) {
-				e.printStackTrace();
+			} catch (ParseException e) {
+				log.error("解析查询条件出错!", e);
 			}
 		}
 	}
