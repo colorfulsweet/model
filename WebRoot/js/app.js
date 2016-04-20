@@ -65,9 +65,7 @@ var FuncTools = function(){
 	 */
 	this.form_reset = function(target){
 		var form = $(target).parents("form");
-		$.each(form.find(":input[type=text]"), function(index, element){
-			element.value = "";
-		});
+		form.find("input[type=text]").attr("value","");
 		form.find("select > option").removeAttr("selected");
 		form[0].reset();
 	};
