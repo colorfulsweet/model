@@ -2,6 +2,10 @@
     <wb-module deploy-name="model">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/system"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/common"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/driver"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/hibernate"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/spring"/>
         <property name="context-root" value="model"/>
         <property name="java-output-path" value="/model/WebRoot/WEB-INF/classes"/>
     </wb-module>
