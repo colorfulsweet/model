@@ -3,11 +3,14 @@ package com.system.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+
+import com.alibaba.fastjson.annotation.JSONType;
 /**
  * 菜单实体类
  * @author 41882
  *
  */
+@JSONType(ignores={"roles"})
 public class Menu implements Serializable {
 	private static final long serialVersionUID = -631139516597849321L;
 	private String id;//主键

@@ -59,10 +59,10 @@
 			<index column="INDEX_"/>
 			<one-to-many class="Menu$Submenu"/>
 		</list>
-		<set name="roles" table="S_ROLE_MENU" >
-			<key column="MENU_ID"/>
-			<many-to-many class="Role" column="ROLE_ID" />
-		</set>
+ 		<set name="roles" table="S_ROLE_MENU" >
+ 			<key column="MENU_ID"/>
+ 			<many-to-many class="Role" column="ROLE_ID" />
+ 		</set>
 	</class>
 	
 </hibernate-mapping>

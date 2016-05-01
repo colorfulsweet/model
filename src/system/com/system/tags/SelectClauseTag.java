@@ -14,7 +14,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.system.model.Dict.DictClause;
 import com.system.service.dao.IHibernateDao;
-import com.system.util.SpringUtils;
+import com.system.util.SpringMVCUtils;
 /**
  * 根据字典项产生一个下拉框
  * @author Administrator
@@ -82,7 +82,7 @@ public class SelectClauseTag extends TagSupport {
 				PageContext pageContext,
 				String dictCode){
 		if(hibernateDao == null){
-			hibernateDao = SpringUtils.getSpringMVCBean(pageContext.getServletContext(), "hibernateDao");
+			hibernateDao = SpringMVCUtils.getSpringMVCBean("hibernateDao");
 		}
 		//从pageConext当中获取这个字典的Map对象
 		Map<String, String> dictMap = (Map<String, String>) pageContext.getAttribute(dictCode+"_clause_map");

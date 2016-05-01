@@ -22,6 +22,12 @@ public class User implements Serializable {
 	private Boolean status;//状态
 	private Role role;//用户角色
 	
+	public User(){}
+	public User(String username,String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
 	public Role getRole() {
 		return role;
 	}

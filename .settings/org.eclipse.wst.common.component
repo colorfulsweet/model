@@ -6,6 +6,8 @@
         <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/driver"/>
         <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/hibernate"/>
         <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/spring"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/webservice"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/WebRoot/WEB-INF/lib/webservice"/>
         <property name="context-root" value="model"/>
         <property name="java-output-path" value="/model/WebRoot/WEB-INF/classes"/>
     </wb-module>

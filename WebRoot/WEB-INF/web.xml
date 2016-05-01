@@ -9,6 +9,24 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
+	<!-- WebService配置 -->
+	<listener>
+		<listener-class>
+		com.sun.xml.ws.transport.http.servlet.WSServletContextListener
+		</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>UserService</servlet-name>
+		<servlet-class>
+			com.sun.xml.ws.transport.http.servlet.WSServlet
+		</servlet-class>
+ 		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserService</servlet-name>
+		<url-pattern>/UserPort</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Spring配置 -->
 	<context-param>
 		<param-name >contextConfigLocation</param-name>

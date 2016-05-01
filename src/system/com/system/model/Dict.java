@@ -3,6 +3,8 @@ package com.system.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONType;
+
 /**
  * 字典实体类
  * @author 41882
@@ -20,6 +22,7 @@ public class Dict implements Serializable {
 	 * @author 41882
 	 *
 	 */
+	@JSONType(ignores={"dict"})
 	public static class DictClause implements Serializable{
 		private static final long serialVersionUID = -8204656814669889726L;
 		private String id;
