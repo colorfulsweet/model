@@ -11,7 +11,7 @@ import com.alibaba.fastjson.annotation.JSONType;
  *
  */
 public class Dict implements Serializable {
-	private static final long serialVersionUID = 8043275942615965410L;
+	private static final long serialVersionUID = -6788795205288727827L;
 	private String id;
 	private String dictCode;//字典编码
 	private String dictName;//字典名称
@@ -24,7 +24,7 @@ public class Dict implements Serializable {
 	 */
 	@JSONType(ignores={"dict"})
 	public static class DictClause implements Serializable{
-		private static final long serialVersionUID = -8204656814669889726L;
+		private static final long serialVersionUID = 292020742117220942L;
 		private String id;
 		private String clauseCode;//字典条目编码
 		private String clauseName;//字典条目名称

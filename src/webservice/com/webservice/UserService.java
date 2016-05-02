@@ -16,22 +16,13 @@ public class UserService {
 	
 	public String checkUser(String username, String password) {
 		User user = new User(username, password);
-		user = getSystemService().checkUser(user);
-		if(user == null) {
-			return null;
-		} else {
-			return JSON.toJSONString(user);
-		}
+		return JSON.toJSONString(getSystemService().checkUser(user));
 	}
 	
 	@SuppressWarnings("unchecked")
 	public String getDictClauseList(String dictCode) {
 		List<DictClause> result = (List<DictClause>) getHibernateDao().excuteQueryName("dictClauseList", dictCode);
-		if(result != null) {
-			return JSON.toJSONString(result);
-		} else {
-			return null;
-		}
+		return JSON.toJSONString(result);
 	}
 	
 	protected IHibernateDao<Object, Serializable> getHibernateDao(){

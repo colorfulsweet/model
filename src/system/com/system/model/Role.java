@@ -3,15 +3,18 @@ package com.system.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
+import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 角色实体类
  * @author 41882
  *
  */
 public class Role implements Serializable {
-	private static final long serialVersionUID = 8474627251848571845L;
+	private static final long serialVersionUID = -6533673733234493181L;
 	private String id;//主键
 	private String roleName;//角色名称
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;//创建时间
 	private Set<Menu> menus;//该角色对应的菜单
 	public String getId() {

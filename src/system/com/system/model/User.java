@@ -3,19 +3,24 @@ package com.system.model;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONType;
 /**
  * 用户实体类
  * @author 41882
  *
  */
+@JSONType(ignores={"icon"})
 public class User implements Serializable {
-	private static final long serialVersionUID = -6746111305410146991L;
+	private static final long serialVersionUID = 1219825686542965398L;
 	
 	private String id;//主键
 	private String username;//用户名
 	private String realName;//昵称
 	private Blob icon;//头像
 	private String password;//密码(SHA256)
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;//创建时间
 	private String email;//邮箱
 	private String tel;//电话

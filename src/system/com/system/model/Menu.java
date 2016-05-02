@@ -12,7 +12,8 @@ import com.alibaba.fastjson.annotation.JSONType;
  */
 @JSONType(ignores={"roles"})
 public class Menu implements Serializable {
-	private static final long serialVersionUID = -631139516597849321L;
+	private static final long serialVersionUID = -6942778633293272000L;
+	
 	private String id;//主键
 	private String menuName;//菜单名称
 	private String url;//URL地址
@@ -26,7 +27,7 @@ public class Menu implements Serializable {
 	 *
 	 */
 	public static class Submenu implements Serializable {
-		private static final long serialVersionUID = 5711913326774633469L;
+		private static final long serialVersionUID = 2119936011887556337L;
 		private String id;
 		private String submenuName;//子菜单名称
 		private String url;//URL地址
