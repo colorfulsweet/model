@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.system.model.Menu;
+import com.system.model.Role;
 import com.system.model.Menu.Submenu;
 import com.system.model.User;
 import com.system.service.dao.IHibernateDao;
@@ -31,7 +32,7 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		super.setSessionFactory(sessionFactory);
 	}
 	@Autowired
-	private IHibernateDao<User,String> hibernateDao;
+	private IHibernateDao<?,String> hibernateDao;
 	
 	@Autowired
 	private DataCache dataCache;
@@ -86,6 +87,27 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		bufferOutput.flush();
 		bufferOutput.close();
 		bufferInput.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Role> getRoleList(User user){
+		List<Role> roleList = (List<Role>) hibernateDao.dir(Role.class, null);
+		String hql = "from User u join fetch u.role where u.id=?";
+		List<User> result = (List<User>) hibernateDao.excuteQuery(hql, user.getId());
+		if(!result.isEmpty()) {
+			user.setRole(result.get(0).getRole());
+		}
+		return roleList;
+	}
+	
+	@Transactional
+	@Override
+	public void saveUserRole(String userId, String roleId) {
+		User user = (User) this.getSessionFactory().getCurrentSession().get(User.class, userId);
+		Role role = new Role();
+		role.setId(roleId);
+		user.setRole(role);
 	}
 	
 	@Transactional

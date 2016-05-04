@@ -60,6 +60,9 @@ public class UserController {
 	@ResponseBody
 	public String saveUser(User user){
 		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
+		if(user.getStatus() == null) {
+			user.setStatus(false);
+		}
 		if(user!=null && StringHelper.isNotEmpty(user.getId())){
 			//修改
 			User destUser = hibernateDao.get(User.class, user.getId());

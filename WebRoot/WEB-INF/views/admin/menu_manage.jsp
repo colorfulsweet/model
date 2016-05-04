@@ -40,7 +40,7 @@
 		<td><span class="fa fa-${menu.icon}"></span>&nbsp;&nbsp;${menu.icon}</td>
 		<td>${menu.remark}</td>
 		<td>
-			<a href="javascript:void(0);" class="fa fa-list-ul" onclick="openSubmenList('${menu.id}')"></a>
+			<a href="javascript:void(0);" class="fa fa-list-ul" onclick="openSubmenuList('${menu.id}')"></a>
 			<span>子菜单</span>
 			<a href="page/addOrUpdateMenu.html?id=${menu.id}" class="editMneu fa fa-edit"></a>
 			<span>编辑</span>
@@ -62,7 +62,7 @@ $(function(){
 	.on("click","a.editMneu",{tabName:"编辑菜单"},$css.editRecord);
 	$("a.addMenu").on("click",{tabName:"添加菜单"},$css.editRecord);
 });
-function openSubmenList(menuId){
+function openSubmenuList(menuId){
 	var save = function(e){
 		//e中的currentTarget对象是点击触发对象
 		if($css.newLineFlag){

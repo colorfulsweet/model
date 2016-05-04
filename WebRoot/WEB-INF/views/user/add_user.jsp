@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head></head>
@@ -8,27 +9,39 @@
 		<input type="hidden" name="id" value="${user_.id}" />
 		<table class="zebra">
 			<tr>
-				<th style="width:30%;">用户名</th>
-				<td style="width:70%;"><input type="text" name="username" value="${user_.username }"/></td>
+				<th style="width:20%;">用户名</th>
+				<td style="width:80%;"><input type="text" name="username" value="${user_.username }"/></td>
 			</tr>
 			<tr>
-				<th style="width:30%;">密码</th>
-				<td style="width:70%;"><input type="password" name="password" /></td>
+				<th style="width:20%;">密码</th>
+				<td style="width:80%;"><input type="password" name="password" /></td>
 			</tr>
 			<tr>
-				<th style="width:30%;">昵称</th>
-				<td style="width:70%;"><input type="text" name="realName" value="${user_.realName }"/></td>
+				<th style="width:20%;">昵称</th>
+				<td style="width:80%;"><input type="text" name="realName" value="${user_.realName }"/></td>
 			</tr>
 			<tr>
-				<th style="width:30%;">是否启用</th>
-				<td style="width:70%;">
-					<input type="radio" name="status" value="true" />启用
-					<input type="radio" name="status" value="false" />禁用
+				<th style="width:20%;">电子邮箱</th>
+				<td style="width:80%;"><input type="text" name="email" value="${user_.email }"/></td>
+			</tr>
+			<tr>
+				<th style="width:20%;">电话号码</th>
+				<td style="width:80%;"><input type="text" name="tel" value="${user_.tel }"/></td>
+			</tr>
+			<tr>
+				<th style="width:20%;">是否启用</th>
+				<td style="width:80%;">
+					<div class="slideCheckbox">  
+						<input type="checkbox" value="true" name="status" id="slideCheckbox"
+								<c:if test="${user_.status==null || user_.status}">checked</c:if>
+						/>
+						<label for="slideCheckbox"></label>
+					</div>
 				</td>
 			</tr>
 			<tr>
-				<th style="width:30%;"></th>
-				<td style="width:70%;"><input type="submit" value="保存" /></td>
+				<th style="width:20%;"></th>
+				<td style="width:80%;"><input type="submit" value="保存" /></td>
 			</tr>
 		</table>
 	</form>

@@ -41,11 +41,11 @@
 		<th style="width:5%;">序号</th>
 		<th style="width:8%;">用户名</th>
 		<th style="width:8%;">昵称</th>
-		<th style="width:18%;">创建时间</th>
-		<th style="width:18%;">电子邮箱</th>
-		<th style="width:18%;">电话号码</th>
+		<th style="width:15%;">创建时间</th>
+		<th style="width:15%;">电子邮箱</th>
+		<th style="width:15%;">电话号码</th>
 		<th style="width:10%;">状态</th>
-		<th style="width:10%;">操作</th>
+		<th style="width:19%;">操作</th>
 	</tr>
 	<% int i=0; %>
 	<c:forEach var="user" items="${page.result}" >
@@ -59,6 +59,8 @@
 		<td>${user.tel}</td>
 		<td><cp:dictType dictCode="d_userStatus" clauseCode="${user.status}"/></td>
 		<td>
+			<a href="javascript:void(0);" class="user_role fa fa-user" onclick="openUserRole('${user.id}')"></a>
+			<span>角色配置</span>
 			<a href="page/addOrUpdateUser.html?id=${user.id}" class="editUser fa fa-edit" ></a>
 			<span>编辑</span>
 			<a href="user/delete.html?id=${user.id}" class="delUser fa fa-trash" ></a>
@@ -83,6 +85,33 @@ $(function(){
 	$("a.addUser").on("click",{tabName:"创建用户"},$css.editRecord);
 	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},$css.delAllRecord);
 });
+function openUserRole(userId){
+	var save = function(){
+		var $form = $("form#user_role");
+		$.post($form.attr("action"),$form.serializeArray(),function(res){
+			$.messager.alert("提示",res["msg"],res["type"],function(){
+				$("#userRole").dialog("close");
+			});
+		},"json");
+	};
+	$("#userRole").dialog({
+	    title: "配置用户角色",
+		width: 600,
+		height: 400,
+		closed: false,
+		cache: false,
+		href: "role/roleList.html?id="+userId,
+		buttons:[{
+			text:"保存",
+			handler:save,
+			iconCls:"icon-save"
+		},{
+			text:"取消",
+			handler:function(){$("#userRole").dialog("close");},
+			iconCls:"icon-cancel"
+		}]
+	});
+}
 </script>
 </body>
 </html>

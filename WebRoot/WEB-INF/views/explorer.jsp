@@ -16,6 +16,7 @@
 	<meta http-equiv="description" content="主页面">
 	
 	<link rel="stylesheet" type="text/css" href="${basePath}css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}css/checkbox.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/fonts/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/easyui.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/icon.css"/>
