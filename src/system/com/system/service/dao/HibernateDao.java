@@ -161,9 +161,9 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 				case "java.util.Date" :
 					//对于日期时间类型的, 使用起止时间进行查询
 					if(dateFlag > 0){
-						criterion = Restrictions.gt(fieldName, dateFormat.parse(value));
-					} else if(dateFlag < 0){
 						criterion = Restrictions.lt(fieldName, dateFormat.parse(value));
+					} else if(dateFlag < 0){
+						criterion = Restrictions.gt(fieldName, dateFormat.parse(value));
 					}
 					break;
 				case "java.lang.Boolean" :

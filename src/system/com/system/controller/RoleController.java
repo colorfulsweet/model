@@ -28,8 +28,8 @@ public class RoleController {
 	@Autowired
 	private ISystemService systemService;
 	
-	private static final String datePettern = "yyyy-MM-dd HH:mm:ss";
-	private static SimpleDateFormat dateFormat;
+	private final String datePettern = "yyyy-MM-dd HH:mm:ss";
+	private SimpleDateFormat dateFormat;
 	
 	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody

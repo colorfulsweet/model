@@ -12,22 +12,23 @@
 	<link rel="stylesheet" type="text/css" href="${basePath}css/login.css" />
 </head>
 <body>
-<div class="container">
-	<section id="content">
-		<form action="${basePath}page/login.html" method="post" >
-			<h1>统一权限管理系统</h1>
-			<div>
-				<input type="text" placeholder="用户名" required="required" id="username" name="username" value="test" />
-			</div>
-			<div>
-				<input type="password" placeholder="密码" required="required" id="password" name="password" value="123"/>
-			</div>
-			<div id="info" style="text-align:left;padding-left:20px;color:red;">${info}</div>
-			<div>
-				<input type="submit" value="登陆" />
-			</div>
-		</form>
-	</section>
-</div>
+<form action="${basePath}page/login.html" method="post">
+	<div class="panel-lite">
+		<div class="thumbur">
+			<div class="icon-lock"></div>
+		</div>
+		<h4>统一权限管理系统</h4>
+		<div class="form-group">
+			<input type="text" class="form-control" required="required" name="username" />
+			<label class="form-label">用户名</label>
+		</div>
+		<div class="form-group">
+			<input type="password" class="form-control" required="required" name="password" />
+			<label class="form-label">密　码</label>
+		</div>
+		<div id="info" >${info} &nbsp;</div>
+		<button class="floating-btn" type="submit"><i class="icon-arrow"></i></button>
+	</div>
+</form>
 </body>
 </html>
