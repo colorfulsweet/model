@@ -2,15 +2,39 @@
 
 <!DOCTYPE HTML>
 <html>
-<head></head>
+<head>
+<style type="text/css">
+.image-preview{
+    height:200px;
+    width:200px;
+    border: 1px solid #ccc;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    float:left;
+}
+#file-info {
+	float:left;
+	position:relative;
+	width:300px;
+	height:100px;
+	left:20px;
+	top:50px;
+}
+</style>
+</head>
 <body>
 <form action="user/uploadIcon.html" method="post" 
 		enctype="multipart/form-data" onsubmit="return $css.uploadFile(this)">
-	<div class="image-preview" id="user_icon"></div>
-	<input type="file" name="attach" id="image-file"
-		accept="image/jpeg,image/png,image/gif" />
-	<p id="file-info"></p>
-	<input type="submit" value="提交" />
+	<div style="height:210px">
+		<div class="image-preview" id="user_icon"></div>
+		<div id="file-info"></div>
+	</div>
+	<div>
+		<input type="file" name="attach" id="image-file"
+			accept="image/jpeg,image/png,image/gif" />
+		<input type="submit" class="btn orange bigrounded" value="保存头像" />
+	</div>
 </form>
 <script type="text/javascript">
 (function() {

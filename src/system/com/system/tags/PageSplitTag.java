@@ -61,7 +61,7 @@ public class PageSplitTag extends TagSupport {
 			}
 			if(page.getPageNow() == page.getPageCount()){
 				//判断当前页是否是最后一页
-				out.println("<span class='page'>尾页</span>");
+				out.println("<span class='page_btn'>尾页</span>");
 			} else {
 				out.println(
 						"<a class='page_btn next' href='" + page.getLinkUrl() +"' "

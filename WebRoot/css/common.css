@@ -3,6 +3,8 @@
 @import url("accordion.css");
 /*分页按钮样式*/
 @import url("page.css");
+/*按钮样式*/
+@import url("btn.css");
 
 *{ margin:0;padding:0;}
 body {font-family:'微软雅黑';background:#CCC}
@@ -28,14 +30,7 @@ input[type=text],input[type=password],select{height:26px;border:1px solid #CCC;b
 .tab-search input[type=text],.tab-search select{width:190px;}
 
 .btn-header > button{margin-right:5px;}
-.image-preview{
-    height:200px;
-    width:200px;
-    border: 1px solid #ccc;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-}
+
 a.fa{font-size:16px;}
 /*a.fa + span{display:none;}*/
 span.comment{cursor:pointer;color:gray;}

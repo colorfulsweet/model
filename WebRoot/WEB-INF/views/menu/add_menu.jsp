@@ -28,8 +28,8 @@
 				<td><textarea name="remark">${menu.remark}</textarea></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td><input type="submit" value="保存" /></td>
+				<th></th>
+				<td><input type="submit" class="btn green medium" value="保存" /></td>
 			</tr>
 		</table>
 	</form>

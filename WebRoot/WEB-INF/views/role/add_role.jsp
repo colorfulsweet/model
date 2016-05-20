@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<th style="width:30%;"></th>
-				<td style="width:70%;"><input type="submit" value="保存" /></td>
+				<td style="width:70%;"><input type="submit" class="btn green medium" value="保存" /></td>
 			</tr>
 		</table>
 	</form>
