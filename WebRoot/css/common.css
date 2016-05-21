@@ -10,6 +10,7 @@
 body {font-family:'微软雅黑';background:#CCC}
 a{text-decoration:none;color:blue;}
 input[type=text],input[type=password],select{height:26px;border:1px solid #CCC;background-color:#FFF;}
+textarea{resize:none;width:85%;height:65px;}
 
 .top{height:60px;width:100%;}
 .top > .nav{color:blue;float:right;width:80%;height:100%;text-align:center;background:url("../images/top_right.png") repeat-x;}

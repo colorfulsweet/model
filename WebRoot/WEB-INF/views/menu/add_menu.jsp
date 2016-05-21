@@ -28,6 +28,10 @@
 				<td><textarea name="remark">${menu.remark}</textarea></td>
 			</tr>
 			<tr>
+				<th>菜单序号</th>
+				<td><input type="text" name="index" value="${menu.index}" /></td>
+			</tr>
+			<tr>
 				<th></th>
 				<td><input type="submit" class="btn green medium" value="保存" /></td>
 			</tr>

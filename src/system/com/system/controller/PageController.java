@@ -2,6 +2,8 @@ package com.system.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -45,6 +47,9 @@ public class PageController {
 	public String login(User user,Model model,HttpSession session){
 		user = systemService.checkUser(user);
 		if(user != null && user.getStatus()){
+			//对菜单列表按照INDEX进行排序
+			Set<Menu> menuSet = new TreeSet<Menu>(user.getRole().getMenus());
+			user.getRole().setMenus(menuSet);
 			session.setAttribute("user", user);
 			session.setAttribute("menuList", user.getRole().getMenus());
 			return "redirect:../index.jsp";

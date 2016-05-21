@@ -24,6 +24,7 @@
 </style>
 </head>
 <body>
+<div style="padding:20px;">
 <form action="user/uploadIcon.html" method="post" 
 		enctype="multipart/form-data" onsubmit="return $css.uploadFile(this)">
 	<div style="height:210px">
@@ -36,6 +37,7 @@
 		<input type="submit" class="btn orange bigrounded" value="保存头像" />
 	</div>
 </form>
+</div>
 <script type="text/javascript">
 (function() {
 	//文件上传 表单元素

@@ -75,7 +75,14 @@ var FuncTools = function(){
 	 * @returns {Boolean}
 	 */
 	this.ajaxSubmit = function(form){
-		$.post($(form).attr("action"),$(form).serialize(),function(res){
+		var params = $(form).serializeArray();
+		for(var index=params.length-1 ; index>=0 ; index--) {
+			//将为空的字段从提交参数中移除(空串或者undefined)
+			if(!params[index].value) {
+				params.splice(index,1);
+			}
+		}
+		$.post($(form).attr("action"),params,function(res){
 			$.messager.alert("提示",res["msg"],res["type"],function(){
 				var $tab = $("#content-tab");
 				var selected = $tab.tabs("getSelected");

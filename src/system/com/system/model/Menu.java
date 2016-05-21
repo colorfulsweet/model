@@ -11,14 +11,15 @@ import com.alibaba.fastjson.annotation.JSONType;
  *
  */
 @JSONType(ignores={"roles"})
-public class Menu implements Serializable {
-	private static final long serialVersionUID = -6942778633293272000L;
+public class Menu implements Serializable,Comparable<Menu> {
+	private static final long serialVersionUID = -2750501428057074001L;
 	
 	private String id;//主键
 	private String menuName;//菜单名称
 	private String url;//URL地址
 	private String icon;//图标编码
 	private String remark;//备注
+	private int index;
 	private List<Submenu> childrenMenu;//子菜单
 	private Set<Role> roles;//该菜单对应的角色
 	/**
@@ -111,5 +112,21 @@ public class Menu implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public int getIndex(){
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	@Override
+	public int compareTo(Menu obj) {
+		if(this.index > obj.index) {
+			return 1;
+		} else if(this.index < obj.index) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 }
