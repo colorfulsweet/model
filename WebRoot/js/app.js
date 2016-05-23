@@ -75,13 +75,10 @@ var FuncTools = function(){
 	 * @returns {Boolean}
 	 */
 	this.ajaxSubmit = function(form){
-		var params = $(form).serializeArray();
-		for(var index=params.length-1 ; index>=0 ; index--) {
+		var params = _.filter($(form).serializeArray(),function(arg){
 			//将为空的字段从提交参数中移除(空串或者undefined)
-			if(!params[index].value) {
-				params.splice(index,1);
-			}
-		}
+			return arg.value;
+		});
 		$.post($(form).attr("action"),params,function(res){
 			$.messager.alert("提示",res["msg"],res["type"],function(){
 				var $tab = $("#content-tab");

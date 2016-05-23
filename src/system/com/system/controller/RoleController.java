@@ -63,6 +63,14 @@ public class RoleController {
 		return SystemMessage.getMessage("success");
 	}
 	
+	@RequestMapping(value="/saveRoleMenu.html",produces="text/html;charset=utf-8")
+	@ResponseBody
+	public String saveRoleMenu() {
+		//TODO 保存角色与菜单的关联
+		
+		return SystemMessage.getMessage("success");
+	}
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder){
 		if(dateFormat == null){

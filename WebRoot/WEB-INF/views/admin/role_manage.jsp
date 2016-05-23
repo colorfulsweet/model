@@ -41,6 +41,8 @@
 		<td>${role.roleName}</td>
 		<td><fmt:formatDate value="${role.createTime}" type="date" pattern="yyyy年MM月dd日 HH:mm"/></td>
 		<td>
+			<a href="javascript:void(0);" class="role-menu fa fa-location-arrow"  roleid="${role.id}"></a>
+			<span>权限配置</span>
 			<a href="page/addOrUpdateRole.html?id=${role.id}" class="editRole fa fa-edit" ></a>
 			<span>编辑</span>
 			<a href="role/delete.html?id=${role.id}" class="delRole fa fa-trash" ></a>
@@ -53,6 +55,7 @@
 <div class="pageSplit">
 	<cp:pageSplit page="${page}" />
 </div>
+<div id="roleMenu"></div>
 <script>
 $(function(){
 	$("#roleList").next(".pageSplit").find("a.page_btn").on("click",$css.jumpPage);
@@ -60,6 +63,35 @@ $(function(){
 	$("#roleList")
 	.on("click","a.delRole",{url:"admin/roleManage.html"},$css.delRecord)
 	.on("click","a.editRole",{tabName:"编辑角色"},$css.editRecord);
+	var openRoleMenu = function(event){
+		var roleId = $(event.currentTarget).attr("roleid");
+		var save = function(){
+			var $form = $("form#role_menu");
+			$.post($form.attr("action"),$form.serializeArray(),function(res){
+				$.messager.alert("提示",res["msg"],res["type"],function(){
+					$("#userRole").dialog("close");
+				});
+			},"json");
+		};
+		$("#roleMenu").dialog({
+		    title: "配置角色权限",
+			width: 600,
+			height: 400,
+			closed: false,
+			cache: false,
+			href: "menu/menuList.html?id="+roleId,
+			buttons:[{
+				text:"保存",
+				handler:save,
+				iconCls:"icon-save"
+			},{
+				text:"取消",
+				handler:function(){$("#roleMenu").dialog("close");},
+				iconCls:"icon-cancel"
+			}]
+		});
+	};
+	$("#roleList").on("click","a.role-menu",openRoleMenu);
 });
 </script>
 </body>

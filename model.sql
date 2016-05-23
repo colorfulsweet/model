@@ -66,7 +66,7 @@ CREATE TABLE `s_menu` (
   `URL` varchar(255) DEFAULT NULL COMMENT 'URL地址',
   `ICON` varchar(50) DEFAULT NULL COMMENT '图标编码',
   `REMARK` text COMMENT '备注',
-  `INDEX` int(11) DEFAULT NULL COMMENT '菜单序号(菜单栏中的显示顺序)',
+  `MENU_INDEX` int(11) DEFAULT NULL COMMENT '菜单序号(菜单栏中的显示顺序)',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -36,6 +36,12 @@ public interface ISystemService {
 	 */
 	public List<Role> getRoleList(User user);
 	/**
+	 * 获取菜单列表, 以及指定角色所对应的菜单
+	 * @param role
+	 * @return 系统中所有的菜单集合
+	 */
+	public List<Menu> getMenuList(Role role);
+	/**
 	 * 保存用户与角色的关系
 	 * @param userId 用户ID
 	 * @param roleId 角色ID

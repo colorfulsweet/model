@@ -54,7 +54,7 @@
 			</column>
 		</property>
 		<property name="index" type="integer">
-			<column name="INDEX">
+			<column name="MENU_INDEX">
 				<comment>菜单序号(菜单栏中的显示顺序)</comment>
 			</column>
 		</property>

@@ -101,6 +101,13 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		return roleList;
 	}
 	
+	@Override
+	public List<Menu> getMenuList(Role role) {
+		//TODO 执行查询获得菜单列表
+		
+		return null;
+	}
+	
 	@Transactional
 	@Override
 	public void saveUserRole(String userId, String roleId) {

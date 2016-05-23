@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.system.model.Menu;
 import com.system.model.Menu.Submenu;
+import com.system.model.Role;
 import com.system.service.ISystemService;
 import com.system.service.dao.IHibernateDao;
 import com.system.util.SystemMessage;
@@ -58,5 +59,13 @@ public class MenuController {
 	public String delSubmenu(Submenu submenu){
 		hibernateDao.del(submenu);
 		return SystemMessage.getMessage("deleteSuccess");
+	}
+	
+	@RequestMapping(value="/menuList.html")
+	public String getRoleList(Role role, Model model){
+		List<Menu> menuList = systemService.getMenuList(role);
+		model.addAttribute("role", role);
+		model.addAttribute("_menuList", menuList);
+		return "WEB-INF/views/role/role_menu.jsp";
 	}
 }

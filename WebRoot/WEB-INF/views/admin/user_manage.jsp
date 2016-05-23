@@ -59,7 +59,7 @@
 		<td>${user.tel}</td>
 		<td><cp:dictType dictCode="d_userStatus" clauseCode="${user.status}"/></td>
 		<td>
-			<a href="javascript:void(0);" class="user_role fa fa-user" onclick="openUserRole('${user.id}')"></a>
+			<a href="javascript:void(0);" userid="${user.id}" class="user_role fa fa-user" ></a>
 			<span>角色配置</span>
 			<a href="page/addOrUpdateUser.html?id=${user.id}" class="editUser fa fa-edit" ></a>
 			<span>编辑</span>
@@ -84,34 +84,36 @@ $(function(){
 	.on("change",".all:checkbox",$css.selectAll);
 	$("a.addUser").on("click",{tabName:"创建用户"},$css.editRecord);
 	$("a.delUsers").on("click",{tableId:"userList",url:"admin/userManage.html"},$css.delAllRecord);
-});
-function openUserRole(userId){
-	var save = function(){
-		var $form = $("form#user_role");
-		$.post($form.attr("action"),$form.serializeArray(),function(res){
-			$.messager.alert("提示",res["msg"],res["type"],function(){
-				$("#userRole").dialog("close");
-			});
-		},"json");
+	var openUserRole = function(event){
+		var userId = $(event.currentTarget).attr("userid");
+		var save = function(){
+			var $form = $("form#user_role");
+			$.post($form.attr("action"),$form.serializeArray(),function(res){
+				$.messager.alert("提示",res["msg"],res["type"],function(){
+					$("#userRole").dialog("close");
+				});
+			},"json");
+		};
+		$("#userRole").dialog({
+		    title: "配置用户角色",
+			width: 600,
+			height: 400,
+			closed: false,
+			cache: false,
+			href: "role/roleList.html?id="+userId,
+			buttons:[{
+				text:"保存",
+				handler:save,
+				iconCls:"icon-save"
+			},{
+				text:"取消",
+				handler:function(){$("#userRole").dialog("close");},
+				iconCls:"icon-cancel"
+			}]
+		});
 	};
-	$("#userRole").dialog({
-	    title: "配置用户角色",
-		width: 600,
-		height: 400,
-		closed: false,
-		cache: false,
-		href: "role/roleList.html?id="+userId,
-		buttons:[{
-			text:"保存",
-			handler:save,
-			iconCls:"icon-save"
-		},{
-			text:"取消",
-			handler:function(){$("#userRole").dialog("close");},
-			iconCls:"icon-cancel"
-		}]
-	});
-}
+	$("#userList").on("click","a.user_role",openUserRole);
+});
 </script>
 </body>
 </html>

@@ -40,7 +40,7 @@
 		<td><span class="fa fa-${menu.icon}"></span>&nbsp;&nbsp;${menu.icon}</td>
 		<td>${menu.remark}</td>
 		<td>
-			<a href="javascript:void(0);" class="fa fa-list-ul" onclick="openSubmenuList('${menu.id}')"></a>
+			<a href="javascript:void(0);" class="submenu-list fa fa-list-ul"  menuid="${menu.id}"></a>
 			<span>子菜单</span>
 			<a href="page/addOrUpdateMenu.html?id=${menu.id}" class="editMneu fa fa-edit"></a>
 			<span>编辑</span>
@@ -61,51 +61,53 @@ $(function(){
 	.on("click","a.delMenu",{url:"admin/menuManage.html"},$css.delRecord)
 	.on("click","a.editMneu",{tabName:"编辑菜单"},$css.editRecord);
 	$("a.addMenu").on("click",{tabName:"添加菜单"},$css.editRecord);
-});
-function openSubmenuList(menuId){
-	var save = function(e){
-		//e中的currentTarget对象是点击触发对象
-		if($css.newLineFlag){
-			//只有在新增了一行以后,保存与编辑才有效
-			return;
-		}
-		var $form = $("form#submenus");
-		$.post($form.attr("action"),$form.serializeArray(),function(res){
-			var edit_tr = $form.find("tr:last");
-			var new_tr = edit_tr.clone();
-			new_tr.find(":input").each(function(index,element){
-				$(element).replaceWith(element.value);
+	var openSubmenuList = function(event){
+		var menuId = $(event.currentTarget).attr("menuid");
+		var save = function(e){
+			//e中的currentTarget对象是点击触发对象
+			if($css.newLineFlag){
+				//只有在新增了一行以后,保存与编辑才有效
+				return;
+			}
+			var $form = $("form#submenus");
+			$.post($form.attr("action"),$form.serializeArray(),function(res){
+				var edit_tr = $form.find("tr:last");
+				var new_tr = edit_tr.clone();
+				new_tr.find(":input").each(function(index,element){
+					$(element).replaceWith(element.value);
+				});
+				edit_tr.before(new_tr);
+				$css.addLine(edit_tr.find("span.comment"));
 			});
-			edit_tr.before(new_tr);
-			$css.addLine(edit_tr.find("span.comment"));
+		};
+		var cancel = function(e){
+			if($css.newLineFlag){
+				//只有在新增了一行以后,保存与编辑才有效
+				return;
+			}
+			var $form = $("form#submenus");
+			$css.addLine($form.find("tr:last span.comment"));
+		};
+		$("#subMenu").dialog({
+		    title: "配置子菜单",
+			width: 600,
+			height: 400,
+			closed: false,
+			cache: false,
+			href: "menu/submenuList.html?id="+menuId,
+			buttons:[{
+				text:"保存",
+				handler:save,
+				iconCls:"icon-save"
+			},{
+				text:"取消",
+				handler:cancel,
+				iconCls:"icon-cancel"
+			}]
 		});
 	};
-	var cancel = function(e){
-		if($css.newLineFlag){
-			//只有在新增了一行以后,保存与编辑才有效
-			return;
-		}
-		var $form = $("form#submenus");
-		$css.addLine($form.find("tr:last span.comment"));
-	};
-	$("#subMenu").dialog({
-	    title: "配置子菜单",
-		width: 600,
-		height: 400,
-		closed: false,
-		cache: false,
-		href: "menu/submenuList.html?id="+menuId,
-		buttons:[{
-			text:"保存",
-			handler:save,
-			iconCls:"icon-save"
-		},{
-			text:"取消",
-			handler:cancel,
-			iconCls:"icon-cancel"
-		}]
-	});
-}
+	$("#menuList").on("click","a.submenu-list",openSubmenuList)
+});
 </script>
 </body>
 </html>
