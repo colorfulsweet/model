@@ -66,10 +66,9 @@
 
 /* .squaredCheckbox */
 .squaredCheckbox {
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
   position: relative;
-  margin: 20px auto;
   background: #fcfff4;
   background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
@@ -79,11 +78,11 @@
   box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
 }
 .squaredCheckbox label {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 2px;
+  left: 2px;
   cursor: pointer;
   background: -moz-linear-gradient(top, #222222 0%, #45484d 100%);
   background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
@@ -94,8 +93,8 @@
 }
 .squaredCheckbox label:after {
   content: '';
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   position: absolute;
   top: 2px;
   left: 2px;

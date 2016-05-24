@@ -101,11 +101,12 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		return roleList;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Menu> getMenuList(Role role) {
-		//TODO 执行查询获得菜单列表
-		
-		return null;
+		String hql = "from Menu m join fetch m.roles";
+		List<Menu> result = (List<Menu>) hibernateDao.excuteQuery(hql);
+		return result;
 	}
 	
 	@Transactional

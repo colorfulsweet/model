@@ -6,13 +6,22 @@
 <table class="bordered" id="menuList" >
 	<tr>
 		<th style="width:10%;"></th>
-		<th style="width:45%;">菜单名称</th>
-		<th style="width:45%;">备注</th>
+		<th style="width:35%;">菜单名称</th>
+		<th style="width:20%;">图标</th>
+		<th style="width:35%;">备注</th>
 	</tr>
 	<c:forEach var="menu" items="${_menuList}" >
 	<tr>
-		<td><input type="checkbox" name="menuId" value="${menu.id}" /></td>
+		<td>
+		<div class="squaredCheckbox">
+			<input type="checkbox" name="menuId" id="${menu.id}" value="${menu.id}"
+				<c:if test="${menu.roles.contains(role)}">checked="true"</c:if>
+			 />
+			<label for="${menu.id}"></label>
+		</div>
+		</td>
 		<td>${menu.menuName}</td>
+		<td><span class="fa fa-${menu.icon}"></span>&nbsp;&nbsp;${menu.icon}</td>
 		<td>${menu.remark}</td>
 	</tr>
 	</c:forEach>

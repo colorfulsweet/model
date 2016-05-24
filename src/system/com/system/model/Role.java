@@ -44,4 +44,28 @@ public class Role implements Serializable {
 	public void setMenus(Set<Menu> menus) {
 		this.menus = menus;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Role)){
+			return false;
+		}
+		if(this == obj) {
+			return true;
+		}
+		Role r = (Role) obj;
+		if(this.id!=null && this.id.equals(r.id)){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public int hashCode(){
+		if(id == null){
+			return 0;
+		} else {
+			return id.hashCode();
+		}
+	}
 }
