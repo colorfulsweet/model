@@ -32,14 +32,16 @@
 </div>
 <table class="bordered" id="roleList" >
 	<tr>
-		<th style="width:8%;">角色名称</th>
-		<th style="width:18%;">创建时间</th>
-		<th style="width:8%;">操作</th>
+		<th style="width:20%;">角色名称</th>
+		<th style="width:25%;">创建时间</th>
+		<th style="width:35%;">备注</th>
+		<th style="width:20%;">操作</th>
 	</tr>
 	<c:forEach var="role" items="${page.result}" >
 	<tr>
 		<td>${role.roleName}</td>
 		<td><fmt:formatDate value="${role.createTime}" type="date" pattern="yyyy年MM月dd日 HH:mm"/></td>
+		<td>${role.remark}</td>
 		<td>
 			<a href="javascript:void(0);" class="role-menu fa fa-location-arrow"  roleid="${role.id}"></a>
 			<span>权限配置</span>

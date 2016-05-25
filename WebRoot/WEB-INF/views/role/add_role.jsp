@@ -14,6 +14,10 @@
 				<td style="width:70%;"><input type="text" name="roleName" value="${role.roleName }"/></td>
 			</tr>
 			<tr>
+				<th style="width:30%;">备注</th>
+				<td style="width:70%;"><textarea name="remark" >${role.remark}</textarea></td>
+			</tr>
+			<tr>
 				<th style="width:30%;"></th>
 				<td style="width:70%;"><input type="submit" class="btn green medium" value="保存" /></td>
 			</tr>

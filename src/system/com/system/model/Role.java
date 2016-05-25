@@ -16,6 +16,7 @@ public class Role implements Serializable {
 	private String roleName;//角色名称
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;//创建时间
+	private String remark;//备注
 	private Set<Menu> menus;//该角色对应的菜单
 	public String getId() {
 		return id;
@@ -43,5 +44,11 @@ public class Role implements Serializable {
 	}
 	public void setMenus(Set<Menu> menus) {
 		this.menus = menus;
+	}
+	public String getRemark(){
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

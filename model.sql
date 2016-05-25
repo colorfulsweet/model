@@ -84,13 +84,14 @@ CREATE TABLE `s_role` (
   `ID` varchar(32) NOT NULL,
   `ROLE_NAME` varchar(255) DEFAULT NULL COMMENT '角色名称',
   `CREATE_TIME` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `REMARK` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of s_role
 -- ----------------------------
-INSERT INTO `s_role` VALUES ('402881eb54ce97220154ceab271f000a', '系统管理员', '2016-01-07 14:20:05');
+INSERT INTO `s_role` VALUES ('402881eb54ce97220154ceab271f000a', '系统管理员', '2016-01-07 14:20:05','系统权限管理配置功能');
 
 -- ----------------------------
 -- Table structure for `s_role_menu`
