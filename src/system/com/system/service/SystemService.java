@@ -76,17 +76,17 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		if(result.isEmpty() || (icon=(Blob)result.get(0)) == null){
 			return;
 		}
-		byte[] buf = new byte[2048];
 		InputStream input = icon.getBinaryStream();
-		BufferedInputStream bufferInput = new BufferedInputStream(input);
-		BufferedOutputStream bufferOutput = new BufferedOutputStream(output);
-		int len = 0;
-		while((len=bufferInput.read(buf)) != -1){
-			bufferOutput.write(buf,0,len);
+		try(BufferedInputStream bufferInput = new BufferedInputStream(input);
+			BufferedOutputStream bufferOutput = new BufferedOutputStream(output)){
+			//try-with-resources可以对多个资源进行管理
+			byte[] buf = new byte[2048];
+			int len = 0;
+			while((len=bufferInput.read(buf)) != -1){
+				bufferOutput.write(buf,0,len);
+			}
+			bufferOutput.flush();
 		}
-		bufferOutput.flush();
-		bufferOutput.close();
-		bufferInput.close();
 	}
 	
 	@SuppressWarnings("unchecked")

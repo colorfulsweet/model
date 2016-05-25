@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.system.model">
+	<class name="Dept" table="S_DEPT">
+		<id name="id" type="string">
+			<column name="ID" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="deptCode" type="string">
+			<column name="DEPT_CODE" length="50">
+				<comment>部门编码</comment>
+			</column>
+		</property>
+		<property name="deptName" type="string">
+			<column name="DEPT_NAME" length="100">
+				<comment>部门名称</comment>
+			</column>
+		</property>
+		<property name="remark" type="string">
+			<column name="REMARK" length="500">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<many-to-one name="parentDept" column="PARENT_ID"/>
+		<list name="childDept">
+			<key column="PARENT_ID"/>
+			<index column="DEPT_INDEX"/>
+			<one-to-many class="Dept"/>
+		</list>
+	</class>
+</hibernate-mapping>

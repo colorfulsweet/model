@@ -130,10 +130,11 @@ public class UserController {
 			for (FileItem item : items) {
 				// isFormField为true，表示这不是文件上传表单域
 				if (!item.isFormField()) {
-					InputStream input = item.getInputStream();
-					user.setIcon(lobHelper.createBlob(input,-1));
-					hibernateDao.update(user);
-					input.close();
+					try(InputStream input = item.getInputStream()){
+						//try-with-resources语法,自动调用资源的close方法
+						user.setIcon(lobHelper.createBlob(input,-1));
+						hibernateDao.update(user);
+					}
 				}
 			}
 			return SystemMessage.getMessage("uploadSuccess");
