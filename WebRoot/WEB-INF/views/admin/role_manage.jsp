@@ -71,7 +71,7 @@ $(function(){
 			var $form = $("form#role_menu");
 			$.post($form.attr("action"),$form.serializeArray(),function(res){
 				$.messager.alert("提示",res["msg"],res["type"],function(){
-					$("#userRole").dialog("close");
+					$("#roleMenu").dialog("close");
 				});
 			},"json");
 		};

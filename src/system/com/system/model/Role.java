@@ -45,10 +45,36 @@ public class Role implements Serializable {
 	public void setMenus(Set<Menu> menus) {
 		this.menus = menus;
 	}
+<<<<<<< HEAD
 	public String getRemark(){
 		return remark;
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+=======
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Role)){
+			return false;
+		}
+		if(this == obj) {
+			return true;
+		}
+		Role r = (Role) obj;
+		if(this.id!=null && this.id.equals(r.id)){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public int hashCode(){
+		if(id == null){
+			return 0;
+		} else {
+			return id.hashCode();
+		}
+>>>>>>> c5890e9a99e319086cffb23f2af8e9ce90a11f03
 	}
 }

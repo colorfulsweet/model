@@ -2,7 +2,9 @@ package com.system.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.system.model.Menu;
 import com.system.model.Role;
 import com.system.model.User;
 import com.system.service.ISystemService;
@@ -65,9 +68,16 @@ public class RoleController {
 	
 	@RequestMapping(value="/saveRoleMenu.html",produces="text/html;charset=utf-8")
 	@ResponseBody
-	public String saveRoleMenu() {
-		//TODO 保存角色与菜单的关联
-		
+	public String saveRoleMenu(String roleId, String[] menuId) {
+		Role role = (Role) hibernateDao.get(Role.class, roleId);
+		Set<Menu> menus = new HashSet<Menu>();
+		for(String id : menuId) {
+			Menu menu = new Menu();
+			menu.setId(id);
+			menus.add(menu);
+		}
+		role.setMenus(menus);
+		hibernateDao.update(role);
 		return SystemMessage.getMessage("success");
 	}
 	
