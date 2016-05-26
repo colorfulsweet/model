@@ -23,8 +23,13 @@
 				<comment>备注</comment>
 			</column>
 		</property>
-		<many-to-one name="parentDept" column="PARENT_ID"/>
-		<list name="childDept">
+		<property name="hasChild" type="boolean">
+			<column name="HAS_CHILD" >
+				<comment>是否包含子部门</comment>
+			</column>
+		</property>
+		<many-to-one name="parentDept" column="PARENT_ID" />
+		<list name="childDept" lazy="false">
 			<key column="PARENT_ID"/>
 			<index column="DEPT_INDEX"/>
 			<one-to-many class="Dept"/>

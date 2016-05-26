@@ -26,6 +26,7 @@
  		<mapping resource="com/system/model/Role.hbm.xml" />
   		<mapping resource="com/system/model/Menu.hbm.xml" />
   		<mapping resource="com/system/model/Dict.hbm.xml" />
+  		<mapping resource="com/system/model/Dept.hbm.xml" />
 		<!-- 系统表end -->
 			
 	</session-factory>

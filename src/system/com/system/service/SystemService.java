@@ -104,7 +104,7 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Menu> getMenuList(Role role) {
-		String hql = "from Menu m join fetch m.roles";
+		String hql = "from Menu m left join fetch m.roles";
 		List<Menu> result = (List<Menu>) hibernateDao.excuteQuery(hql);
 		return result;
 	}

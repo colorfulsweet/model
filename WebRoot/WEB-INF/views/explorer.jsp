@@ -59,7 +59,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="${basePath}js/jquery/jquery-2.1.4.js"></script>
-	<script type="text/javascript" src="${basePath}js/underscore/underscore-1.8.3.js"></script>
 	<script type="text/javascript" src="${basePath}plugin/easyUI/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${basePath}plugin/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${basePath}js/app.js"></script>

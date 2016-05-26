@@ -167,6 +167,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 					}
 					break;
 				case "java.lang.Boolean" :
+				case "boolean" :
 					criterion = Restrictions.eq(fieldName, Boolean.parseBoolean(value));
 					break;
 				default : log.warn("未知的数据类型!--" + fieldMap.get(fieldName));

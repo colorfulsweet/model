@@ -75,7 +75,7 @@ var FuncTools = function(){
 	 * @returns {Boolean}
 	 */
 	this.ajaxSubmit = function(form){
-		var params = _.filter($(form).serializeArray(),function(arg){
+		var params = $.grep($(form).serializeArray(),function(arg){
 			//将为空的字段从提交参数中移除(空串或者undefined)
 			return arg.value;
 		});
@@ -227,13 +227,13 @@ $(function() {
 $(function(){
 	var openMenuTab = function(e){
 		e.preventDefault();//阻止默认事件
-		var target = $(e.target);
-		var href = target.attr("href");
-		if(href!==undefined && href.length != 0){
+		var current = $(e.target);
+		var target = current.hasClass("link") ? current.find("a:first") : current;
+		if(target.attr("href")){
 			$css.addTab(target.text(),target.attr("href"));
 		}
 	};
-	$(".submenu a,.link a,.top>.nav .tabNav").on("click",openMenuTab);
+	$(".submenu a,.link,.top>.nav .tabNav").on("click",openMenuTab);
 	$(".top_icon").error(function(event){
 		//头像加载失败时显示默认头像
 		event.target.src = "images/default_icon.png";

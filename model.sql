@@ -10,10 +10,37 @@ Target Server Type    : MYSQL
 Target Server Version : 50168
 File Encoding         : 65001
 
-Date: 2016-05-21 20:24:10
+Date: 2016-05-27 00:11:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `s_dept`
+-- ----------------------------
+DROP TABLE IF EXISTS `s_dept`;
+CREATE TABLE `s_dept` (
+  `ID` varchar(32) NOT NULL,
+  `DEPT_CODE` varchar(50) DEFAULT NULL COMMENT '部门编号',
+  `DEPT_NAME` varchar(100) DEFAULT NULL COMMENT '部门名称',
+  `REMARK` varchar(500) DEFAULT NULL COMMENT '备注',
+  `HAS_CHILD` bit(1) DEFAULT NULL COMMENT '是否包含子部门',
+  `PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父节点ID',
+  `DEPT_INDEX` int(11) DEFAULT NULL COMMENT '排序编号',
+  PRIMARY KEY (`ID`),
+  KEY `ID` (`ID`),
+  KEY `FK_1001` (`PARENT_ID`),
+  CONSTRAINT `FK_1001` FOREIGN KEY (`PARENT_ID`) REFERENCES `s_dept` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of s_dept
+-- ----------------------------
+INSERT INTO `s_dept` VALUES ('100', 'DP001', '测试部门1', null, '', null, '10');
+INSERT INTO `s_dept` VALUES ('101', 'DP002', '子部门1', null, '', '100', '0');
+INSERT INTO `s_dept` VALUES ('102', 'DP003', '子部门2', null, '', '100', '1');
+INSERT INTO `s_dept` VALUES ('103', 'DP004', '测试部门2', null, '', null, '20');
+INSERT INTO `s_dept` VALUES ('104', 'DP005', '子部门3', null, '', '103', '0');
 
 -- ----------------------------
 -- Table structure for `s_dict`
@@ -30,7 +57,7 @@ CREATE TABLE `s_dict` (
 -- ----------------------------
 -- Records of s_dict
 -- ----------------------------
-INSERT INTO `s_dict` VALUES ('402881eb54ce97220154cea1f0920000', 'd_gender', '性别', null);
+INSERT INTO `s_dict` VALUES ('402881eb54ce97220154cea1f0920000', 'd_gender', '性别', '');
 INSERT INTO `s_dict` VALUES ('40289ff152b6c0870152b6ca76940001', 'd_userStatus', '用户状态', '表示该用户当前是否可用');
 
 -- ----------------------------
@@ -73,6 +100,7 @@ CREATE TABLE `s_menu` (
 -- ----------------------------
 -- Records of s_menu
 -- ----------------------------
+INSERT INTO `s_menu` VALUES ('40283f8154ed1f860154ed22ebde0000', '组织机构', 'admin/deptManage.html', 'arrows-h', '组织机构树维护', '30');
 INSERT INTO `s_menu` VALUES ('402881eb54ce97220154cea47f530003', '字典管理', null, 'book', null, '10');
 INSERT INTO `s_menu` VALUES ('402881eb54ce97220154cea4917c0004', '系统管理', null, 'cog', null, '20');
 
@@ -84,14 +112,14 @@ CREATE TABLE `s_role` (
   `ID` varchar(32) NOT NULL,
   `ROLE_NAME` varchar(255) DEFAULT NULL COMMENT '角色名称',
   `CREATE_TIME` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `REMARK` varchar(500) DEFAULT NULL COMMENT '备注',
+  `REMARK` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of s_role
 -- ----------------------------
-INSERT INTO `s_role` VALUES ('402881eb54ce97220154ceab271f000a', '系统管理员', '2016-01-07 14:20:05','系统权限管理配置功能');
+INSERT INTO `s_role` VALUES ('402881eb54ce97220154ceab271f000a', '系统管理员', '2016-01-07 14:20:05', '系统权限管理配置功能');
 
 -- ----------------------------
 -- Table structure for `s_role_menu`
@@ -110,6 +138,7 @@ CREATE TABLE `s_role_menu` (
 -- ----------------------------
 -- Records of s_role_menu
 -- ----------------------------
+INSERT INTO `s_role_menu` VALUES ('402881eb54ce97220154ceab271f000a', '40283f8154ed1f860154ed22ebde0000');
 INSERT INTO `s_role_menu` VALUES ('402881eb54ce97220154ceab271f000a', '402881eb54ce97220154cea47f530003');
 INSERT INTO `s_role_menu` VALUES ('402881eb54ce97220154ceab271f000a', '402881eb54ce97220154cea4917c0004');
 

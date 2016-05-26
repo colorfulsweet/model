@@ -87,4 +87,9 @@ public class AdminController {
 		return "/WEB-INF/views/admin/dict_manage.jsp";
 	}
 	
+	@RequestMapping(value="/deptManage.html")
+	public String deptManage(Model model){
+		return "/WEB-INF/views/admin/dept_manage.jsp";
+	}
+	
 }
