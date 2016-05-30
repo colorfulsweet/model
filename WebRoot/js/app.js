@@ -54,9 +54,13 @@ var FuncTools = function(){
 	 */
 	this.tabSearch = function(target){
 		var form = $(target).parents("form");
+		var params = $.grep(form.serializeArray(),function(arg){
+			return arg.value;
+		});
+		var paramStr = $.param(params);
 		$("#content-tab")
 			.tabs("getSelected")
-			.panel("refresh", form.attr("action") + "?" + form.serialize());
+			.panel("refresh", form.attr("action") + "?" + paramStr);
 		return false;
 	};
 	/**

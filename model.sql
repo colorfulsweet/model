@@ -24,7 +24,6 @@ CREATE TABLE `s_dept` (
   `DEPT_CODE` varchar(50) DEFAULT NULL COMMENT '部门编号',
   `DEPT_NAME` varchar(100) DEFAULT NULL COMMENT '部门名称',
   `REMARK` varchar(500) DEFAULT NULL COMMENT '备注',
-  `HAS_CHILD` bit(1) DEFAULT NULL COMMENT '是否包含子部门',
   `PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父节点ID',
   `DEPT_INDEX` int(11) DEFAULT NULL COMMENT '排序编号',
   PRIMARY KEY (`ID`),
@@ -36,11 +35,11 @@ CREATE TABLE `s_dept` (
 -- ----------------------------
 -- Records of s_dept
 -- ----------------------------
-INSERT INTO `s_dept` VALUES ('100', 'DP001', '测试部门1', null, '', null, '10');
-INSERT INTO `s_dept` VALUES ('101', 'DP002', '子部门1', null, '', '100', '0');
-INSERT INTO `s_dept` VALUES ('102', 'DP003', '子部门2', null, '', '100', '1');
-INSERT INTO `s_dept` VALUES ('103', 'DP004', '测试部门2', null, '', null, '20');
-INSERT INTO `s_dept` VALUES ('104', 'DP005', '子部门3', null, '', '103', '0');
+INSERT INTO `s_dept` VALUES ('100', 'DP001', '测试部门1', null,  null, '10');
+INSERT INTO `s_dept` VALUES ('101', 'DP002', '子部门1', null,  '100', '0');
+INSERT INTO `s_dept` VALUES ('102', 'DP003', '子部门2', null, '100', '1');
+INSERT INTO `s_dept` VALUES ('103', 'DP004', '测试部门2', null,  null, '20');
+INSERT INTO `s_dept` VALUES ('104', 'DP005', '子部门3', null, '103', '0');
 
 -- ----------------------------
 -- Table structure for `s_dict`
@@ -100,7 +99,7 @@ CREATE TABLE `s_menu` (
 -- ----------------------------
 -- Records of s_menu
 -- ----------------------------
-INSERT INTO `s_menu` VALUES ('40283f8154ed1f860154ed22ebde0000', '组织机构', 'admin/deptManage.html', 'arrows-h', '组织机构树维护', '30');
+INSERT INTO `s_menu` VALUES ('40283f8154ed1f860154ed22ebde0000', '组织机构', 'admin/deptManage.html', 'institution', '组织机构树维护', '30');
 INSERT INTO `s_menu` VALUES ('402881eb54ce97220154cea47f530003', '字典管理', null, 'book', null, '10');
 INSERT INTO `s_menu` VALUES ('402881eb54ce97220154cea4917c0004', '系统管理', null, 'cog', null, '20');
 

@@ -1,6 +1,6 @@
 package com.system.controller;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -23,10 +24,12 @@ public class DeptController {
 	@RequestMapping(value="/getDeptTree.html",
 			method=RequestMethod.POST,produces="text/html;charset=utf-8")
 	@ResponseBody
-	public String getDeptTreeJson(){
-		Map<String,Object> criteria = new HashMap<String,Object>();
-		criteria.put("hasChild", "true");
+	public String getDeptTreeJson(@RequestParam Map<String,Object> criteria){
+		if(!criteria.containsKey("parentId")){
+			criteria.put("parentId", null);
+		}
 		List<Dept> result = hibernateDao.dir(Dept.class, criteria);
+		Collections.sort(result);
 		return JSON.toJSON(result).toString();
 	}
 }

@@ -10,20 +10,20 @@ import com.alibaba.fastjson.annotation.JSONType;
  * @author 41882
  *
  */
-@JSONType(ignores={"deptCode","remark","hasChild","parentDept"})
-public class Dept implements Serializable {
-	private static final long serialVersionUID = -7095783350569319857L;
+@JSONType(ignores={"hasChild","parentDept","childDept"})
+public class Dept implements Serializable,Comparable<Dept> {
+	private static final long serialVersionUID = -4450844426367095228L;
 	
 	private String id;
 	private String deptCode;//部门编码
 	@JSONField(name="text")
 	private String deptName;//部门名称
 	private String remark;
-	private boolean hasChild;//是否包含子部门
+	private String parentId;
+	private int deptIndex;
 	//对应上级部门(多对一)
 	private Dept parentDept;
 	//对应下级部门(一对多)
-	@JSONField(name="children")
 	private List<Dept> childDept;
 	
 	public String getId() {
@@ -62,10 +62,21 @@ public class Dept implements Serializable {
 	public void setChildDept(List<Dept> childDept) {
 		this.childDept = childDept;
 	}
-	public boolean getHasChild(){
-		return hasChild;
+	public int getDeptIndex() {
+		return deptIndex;
 	}
-	public void setHasChild(boolean hasChild) {
-		this.hasChild = hasChild;
+	public void setDeptIndex(int deptIndex) {
+		this.deptIndex = deptIndex;
+	}
+	
+	@Override
+	public int compareTo(Dept target) {
+		return this.deptIndex - target.deptIndex;
+	}
+	public String getParentId() {
+		return parentId;
+	}
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }

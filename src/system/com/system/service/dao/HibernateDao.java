@@ -20,7 +20,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -133,9 +132,7 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 			Criterion criterion = null;
 			String key = entry.getKey();
 			String value = (String) entry.getValue();
-			if(StringHelper.isEmpty(value)){
-				continue;
-			}
+			
 			String fieldName = null;
 			//针对日期时间数据采集字段名称
 			byte dateFlag = 0;
@@ -149,6 +146,11 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 				fieldName = key;
 			}
 			if(!fieldMap.containsKey(fieldName)){
+				continue;
+			}
+			if(value == null){
+				criterion = Restrictions.isNull(fieldName);
+				cta.add(criterion);
 				continue;
 			}
 			try {
