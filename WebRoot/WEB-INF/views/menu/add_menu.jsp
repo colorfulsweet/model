@@ -18,9 +18,8 @@
 			<tr>
 				<th>图标</th>
 				<td>
-					<input type="text" name="icon" value="${menu.icon}" readonly="readonly" style="width:100px;"/>
-					<span class="fa fa-${menu.icon}"></span>
-					<%@ include file="icon_list.jsp" %>
+					<input type="text" name="icon" v-model="icon_code" value="${menu.icon}" />
+					<span class="fa fa-{{icon_code}}"></span>
 				</td>
 			</tr>
 			<tr>
@@ -38,11 +37,12 @@
 		</table>
 	</form>
 </div>
-<script type="text/javascript">
-$(function(){
-	$(".addMenuForm input[name=icon]").on("focus blur",function(e){
-		$(".addMenuForm .iconList").slideToggle("normal");
+<script>
+(function(){
+	new Vue({
+		el : ".addMenuForm",
+		data : {icon_code : null}
 	});
-});
+})();
 </script>
 </body>

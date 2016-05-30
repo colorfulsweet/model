@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.system.model.Dict.DictClause;
 import com.system.model.User;
 import com.system.service.ISystemService;
@@ -16,13 +17,13 @@ public class UserService {
 	
 	public String checkUser(String username, String password) {
 		User user = new User(username, password);
-		return JSON.toJSONString(getSystemService().checkUser(user));
+		return JSON.toJSONString(getSystemService().checkUser(user), SerializerFeature.WriteMapNullValue);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public String getDictClauseList(String dictCode) {
 		List<DictClause> result = (List<DictClause>) getHibernateDao().excuteQueryName("dictClauseList", dictCode);
-		return JSON.toJSONString(result);
+		return JSON.toJSONString(result, SerializerFeature.WriteMapNullValue);
 	}
 	
 	protected IHibernateDao<Object, Serializable> getHibernateDao(){

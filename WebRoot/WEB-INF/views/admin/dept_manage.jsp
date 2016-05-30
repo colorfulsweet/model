@@ -1,6 +1,30 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<div style="width:200px;height:60%;border:1px solid #ccc;">
-	<ul id="deptTree" class="easyui-tree" ></ul>
+<div class="tree-box">
+	<ul id="deptTree" ></ul>
+</div>
+<div style="float:left;width:60%;">
+	<form class="addDeptForm" method="post" action="dept/save.html" onSubmit="return $css.ajaxSubmit(this)">
+		<input type="hidden" name="id" value="{{id}}" />
+		<table class="zebra">
+			<tr>
+				<th style="width:20%;">部门编码</th>
+				<td style="width:80%;"><input type="text" name="deptCode" v-model="deptCode"/></td>
+			</tr>
+			<tr>
+				<th style="width:20%;">部门名称</th>
+				<td style="width:80%;"><input type="text" name="deptName" v-model="text"/></td>
+			</tr>
+			<tr>
+				<th style="width:20%;">备注</th>
+				<td style="width:80%;"><textarea name="remark" >{{remark}}</textarea></td>
+			</tr>
+			<tr>
+				<th style="width:20%;">序号</th>
+				<td style="width:80%;"><input type="text" name="deptIndex" v-model="deptIndex"/></td>
+			</tr>
+		</table>
+	</form>
+
 </div>
 <script>
 $(function(){
@@ -18,16 +42,21 @@ $(function(){
 			});
 		},"json");
 	};
+	var deptData = new $css.ModelData(".addDeptForm");
+	new Vue({
+		el:".addDeptForm",
+		data : deptData
+	});
 	$("#deptTree").tree({
 		animate:true,
 		lines:true,
 		url:url,
 		onClick:function(node){
+			_.extend(deptData, node);
 			if(node && !node.loaded){
 				appendNode(node);
 			}
 		}
 	});
 });
-
 </script>

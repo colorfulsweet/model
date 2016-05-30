@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.system.model.Dept;
 import com.system.service.dao.IHibernateDao;
+import com.system.util.SystemMessage;
 
 @Controller
 @RequestMapping(value="/dept")
@@ -30,6 +32,20 @@ public class DeptController {
 		}
 		List<Dept> result = hibernateDao.dir(Dept.class, criteria);
 		Collections.sort(result);
-		return JSON.toJSON(result).toString();
+		return JSON.toJSONString(result, SerializerFeature.WriteMapNullValue);
+	}
+	
+	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
+	@ResponseBody
+	public String saveDept(Dept dept) {
+		hibernateDao.saveOrUpdate(dept);
+		return SystemMessage.getMessage("success");
+	}
+	
+	@RequestMapping(value="/delete.html",produces="text/html;charset=utf-8")
+	@ResponseBody
+	public String deleteDept(Dept dept) {
+		hibernateDao.del(dept);
+		return SystemMessage.getMessage("success");
 	}
 }

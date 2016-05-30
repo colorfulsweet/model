@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-validator.Checked=WebRoot/plugin/My97DatePicker,WebRoot/js/jquery/jquery-2.1.4.js,WebRoot/plugin/easyUI,WebRoot/js/underscore/underscore-1.8.3.js
+validator.Checked=WebRoot/plugin/My97DatePicker,WebRoot/js/jquery/jquery-2.1.4.js,WebRoot/plugin/easyUI,WebRoot/js/vue/vue.min.js,WebRoot/js/underscore/underscore-1.8.3.js,WebRoot/js/vue/vue.js
 validator.Unchecked=

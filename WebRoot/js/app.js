@@ -205,6 +205,23 @@ var FuncTools = function(){
 		});
 		return false;
 	};
+	/**
+	 * 根据页面中的DOM元素中所有的表单元素
+	 * 构建一个ViewModel的初始数据对象
+	 * 其中的键是v-model属性的值, 值为null
+	 * @param selector String类型的css选择器 | DOM对象 | jQuery对象
+	 */
+	this.ModelData = function(selector) {
+		var inputs = $(selector).find(":input");
+		var traverse = _.bind(function(index, element){
+			var key = $(element).attr("v-model");
+			if(!key) {
+				key = $(element).prop("name");
+			}
+			this[key] = null;
+		}, this);
+		$.each(inputs,traverse);
+	};
 };
 window.$css = new FuncTools();
 $(function() {
