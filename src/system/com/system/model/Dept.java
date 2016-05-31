@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.annotation.JSONType;
+import com.system.service.annotation.CriteriaField;
+import com.system.service.annotation.CriteriaType;
 /**
  * 组织机构类
  * @author 41882
@@ -16,9 +18,12 @@ public class Dept implements Serializable,Comparable<Dept> {
 	
 	private String id;
 	private String deptCode;//部门编码
+	
 	@JSONField(name="text")
 	private String deptName;//部门名称
 	private String remark;
+	
+	@CriteriaField(CriteriaType.EQ)
 	private String parentId;
 	private int deptIndex;
 	//对应上级部门(多对一)

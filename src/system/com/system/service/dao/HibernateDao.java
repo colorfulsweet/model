@@ -25,6 +25,7 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.system.service.annotation.CriteriaField;
 import com.system.tags.Page;
 import com.system.util.DataCache;
 import com.system.util.ReflectUtils;
@@ -121,9 +122,9 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 	private void criteriaHandle(Class<?> cls, Criteria cta, Map<String,Object> criteria){
 		//获取实体类当中所有的属性列表
 		Field[] fields = cls.getDeclaredFields();
-		Map<String,String> fieldMap = new HashMap<String,String>();
+		Map<String,Field> fieldMap = new HashMap<String,Field>();
 		for(Field field : fields) {
-			fieldMap.put(field.getName(), field.getType().getName());
+			fieldMap.put(field.getName(), field);
 		}
 		//获取查询条件的列表
 		Set<Entry<String, Object>> entries = criteria.entrySet();
@@ -150,38 +151,56 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 			}
 			if(value == null){
 				criterion = Restrictions.isNull(fieldName);
-				cta.add(criterion);
-				continue;
+			} else {
+				criterion = createCriterion(fieldMap.get(fieldName), value, dateFlag);
 			}
-			try {
-				switch(fieldMap.get(fieldName)){
-				case "java.lang.String" : 
-					//对于字符串类型, 使用模糊查询
-					criterion = Restrictions.ilike(fieldName, "%"+value+"%");
-					break;
-				case "java.sql.Timestamp" :
-				case "java.util.Date" :
-					//对于日期时间类型的, 使用起止时间进行查询
-					if(dateFlag > 0){
-						criterion = Restrictions.lt(fieldName, dateFormat.parse(value));
-					} else if(dateFlag < 0){
-						criterion = Restrictions.gt(fieldName, dateFormat.parse(value));
-					}
-					break;
-				case "java.lang.Boolean" :
-				case "boolean" :
-					criterion = Restrictions.eq(fieldName, Boolean.parseBoolean(value));
-					break;
-				default : log.warn("未知的数据类型!--" + fieldMap.get(fieldName));
-				}
-				if(criterion != null){
-					cta.add(criterion);
-				}
-			} catch (ParseException e) {
-				log.error("解析查询条件出错!", e);
+			if(criterion != null){
+				cta.add(criterion);
 			}
 		}
 	}
+	private Criterion createCriterion(Field field, String value, byte dateFlag){
+		Criterion criterion = null;
+		String fieldName = field.getName();
+		if(field.isAnnotationPresent(CriteriaField.class)){
+			CriteriaField cf = field.getAnnotation(CriteriaField.class);
+			switch(cf.value()){
+				case EQ : criterion = Restrictions.eq(fieldName, value);break;
+				case GT : criterion = Restrictions.gt(fieldName, value);break;
+				case LT : criterion = Restrictions.lt(fieldName, value);break;
+				case LIKE : criterion = Restrictions.like(fieldName, '%'+value+'%');break;
+				case I_LIKE : criterion = Restrictions.ilike(fieldName, '%'+value+'%');break;
+			}
+			return criterion;
+		}
+		try {
+			switch(field.getType().getName()){
+			case "java.lang.String" :
+				criterion = Restrictions.like(fieldName, '%'+value+'%');
+				break;
+			case "java.sql.Timestamp" :
+			case "java.util.Date" :
+				//对于日期时间类型的, 使用起止时间进行查询
+				if(dateFlag > 0){
+					criterion = Restrictions.lt(fieldName, dateFormat.parse(value));
+				} else if(dateFlag < 0){
+					criterion = Restrictions.gt(fieldName, dateFormat.parse(value));
+				}
+				break;
+			case "java.lang.Boolean" :
+			case "boolean" :
+				criterion = Restrictions.eq(fieldName, Boolean.parseBoolean(value));
+				break;
+			default : log.warn("未知的数据类型!--" + field.getType().getName());
+			}
+			
+		} catch (ParseException e) {
+			log.error("解析查询条件出错!", e);
+		}
+		return criterion;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public T get(Class<?> cls,PK id) {
