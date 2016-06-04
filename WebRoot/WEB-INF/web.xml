@@ -9,6 +9,10 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
+	<listener>
+		<listener-class>com.system.listener.AppConfigLoader</listener-class>
+	</listener>
+
 	<!-- Session超时时间60分钟 -->
 	<session-config>
 		<session-timeout>60</session-timeout>

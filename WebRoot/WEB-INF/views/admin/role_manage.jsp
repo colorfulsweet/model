@@ -43,12 +43,15 @@
 		<td><fmt:formatDate value="${role.createTime}" type="date" pattern="yyyy年MM月dd日 HH:mm"/></td>
 		<td>${role.remark}</td>
 		<td>
-			<a href="javascript:void(0);" class="role-menu fa fa-location-arrow"  roleid="${role.id}"></a>
-			<span>权限配置</span>
-			<a href="page/addOrUpdateRole.html?id=${role.id}" class="editRole fa fa-edit" ></a>
-			<span>编辑</span>
-			<a href="role/delete.html?id=${role.id}" class="delRole fa fa-trash" ></a>
-			<span>删除</span>
+			<a href="javascript:void(0);" class="role-menu fa fa-location-arrow"  roleid="${role.id}">
+				<span>权限配置</span>
+			</a>
+			<a href="page/addOrUpdateRole.html?id=${role.id}" class="editRole fa fa-edit" >
+				<span>编辑</span>
+			</a>
+			<a href="role/delete.html?id=${role.id}" class="delRole fa fa-trash" >
+				<span>删除</span>
+			</a>
 		</td>
 	</tr>
 	</c:forEach>

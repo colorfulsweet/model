@@ -40,12 +40,15 @@
 		<td><span class="fa fa-${menu.icon}"></span>&nbsp;&nbsp;${menu.icon}</td>
 		<td>${menu.remark}</td>
 		<td>
-			<a href="javascript:void(0);" class="submenu-list fa fa-list-ul"  menuid="${menu.id}"></a>
-			<span>子菜单</span>
-			<a href="page/addOrUpdateMenu.html?id=${menu.id}" class="editMneu fa fa-edit"></a>
-			<span>编辑</span>
-			<a href="menu/delete.html?id=${menu.id}" class="delMenu fa fa-trash"></a>
-			<span>删除</span>
+			<a href="javascript:void(0);" class="submenu-list fa fa-list-ul"  menuid="${menu.id}">
+				<span>子菜单</span>
+			</a>
+			<a href="page/addOrUpdateMenu.html?id=${menu.id}" class="editMneu fa fa-edit">
+				<span>编辑</span>
+			</a>
+			<a href="menu/delete.html?id=${menu.id}" class="delMenu fa fa-trash">
+				<span>删除</span>
+			</a>
 		</td>
 	</tr>
 	</c:forEach>

@@ -8,22 +8,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>统一权限管理系统</title>
+	<title>${app_name}</title>
 
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">		
 	<meta http-equiv="description" content="主页面">
-	
+	<link rel="shortcut icon" type="image/x-icon" href="${basePath}${icon_path}" media="screen" />
 	<link rel="stylesheet" type="text/css" href="${basePath}css/common.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath}css/checkbox.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/fonts/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/easyui.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath}plugin/easyUI/theme/icon.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}css/mdialog.css"/>
 </head>
 <body>
-	<div class="main">
-		<div class="top">
+	<div style="width:100%;">
+		<div id="top">
 			<div class="nav">
 				<ul>
 				<li><a href="${basePath}page/personalConfig.html" class="tabNav">个人设置</a></li>
@@ -31,10 +32,12 @@
 				</ul>
 			</div>
 			<div class="tip">
-				<img src="user/getIcon.html" class="top_icon" />
+				<img src="user/getIcon.html" id="top_icon" />
 				<p>欢迎你, ${user.realName}</p>
 			</div>
 		</div>
+		<div id="main-panel">
+		<div id="accordion-panel">
 		<ul id="accordion" class="accordion">
 			<c:forEach items="${menuList}" var="menu">
 			<li>
@@ -51,11 +54,12 @@
 			</li>
 			</c:forEach>
 		</ul>
-		
+		</div>
 		<div class="easyui-tabs" id="content-tab" >
 			<div title="欢迎页" >
 				<jsp:include page="../../page/welcome.html"/>
 			</div>
+		</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="${basePath}js/jquery/jquery-2.1.4.js"></script>
@@ -63,6 +67,7 @@
 	<script type="text/javascript" src="${basePath}js/underscore/underscore-1.8.3.js"></script>
 	<script type="text/javascript" src="${basePath}plugin/easyUI/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${basePath}plugin/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="${basePath}js/mdialog.js"></script>
 	<script type="text/javascript" src="${basePath}js/app.js"></script>
 </body>
 </html>

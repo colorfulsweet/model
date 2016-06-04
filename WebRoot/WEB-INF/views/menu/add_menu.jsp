@@ -4,16 +4,14 @@
 <head></head>
 <body>
 <div style="padding:10px;">
-	<form class="addMenuForm" method="post" action="menu/save.html" onSubmit="return $css.ajaxSubmit(this)">
+	<form class="addMenuForm" method="post" action="menu/save.html" onSubmit="return $css.ajaxSubmit(this,'admin/menuManage.html')">
 		<input type="hidden" name="id" value="${menu.id}" />
-		<table class="zebra">
+		<table class="table-input">
 			<tr>
-				<th style="width:30%;">菜单名称</th>
-				<td style="width:70%;"><input type="text" name="menuName" value="${menu.menuName}"/></td>
-			</tr>
-			<tr>
-				<th>URL地址</th>
-				<td><input type="text" name="url" value="${menu.url}" /></td>
+				<th style="width:15%;">菜单名称</th>
+				<td style="width:35%;"><input type="text" name="menuName" value="${menu.menuName}" required="required"/></td>
+				<th style="width:15%;">URL地址</th>
+				<td style="width:35%;"><input type="text" name="url" value="${menu.url}" /></td>
 			</tr>
 			<tr>
 				<th>图标</th>
@@ -21,20 +19,17 @@
 					<input type="text" name="icon" v-model="icon_code" value="${menu.icon}" />
 					<span class="fa fa-{{icon_code}}"></span>
 				</td>
+				<th>菜单序号</th>
+				<td><input type="text" name="index" value="${menu.index}" required="required"/></td>
 			</tr>
 			<tr>
 				<th>备注</th>
-				<td><textarea name="remark">${menu.remark}</textarea></td>
-			</tr>
-			<tr>
-				<th>菜单序号</th>
-				<td><input type="text" name="index" value="${menu.index}" /></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><input type="submit" class="btn green medium" value="保存" /></td>
+				<td colspan="3"><textarea name="remark">${menu.remark}</textarea></td>
 			</tr>
 		</table>
+		<div class="btn-box">
+			<input type="submit" class="btn green medium" value="保存" />
+		</div>
 	</form>
 </div>
 <script>

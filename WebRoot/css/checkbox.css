@@ -17,6 +17,7 @@
   content: 'OFF';
   color: #FFF;
   position: absolute;
+  top:0;
   right: 10px;
   z-index: 0;
   font: 12px/23px Arial, sans-serif;
@@ -27,6 +28,7 @@
   content: 'ON';
   color: #00bf00;
   position: absolute;
+  top:0;
   left: 10px;
   z-index: 0;
   font: 12px/23px Arial, sans-serif;

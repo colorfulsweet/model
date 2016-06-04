@@ -2,6 +2,8 @@ package com.system.service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,6 +11,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.SessionFactory;
@@ -37,19 +41,20 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 	@Autowired
 	private DataCache dataCache;
 	
+	@Autowired
+	private ServletContext context;
+	
 	@Transactional
 	@Override
 	public User checkUser(User user) {
-		
-		String hql = "from User u "
-				+ "join fetch u.role "
-				+ "join fetch u.role.menus "
-				+ "where u.username=? and u.password=? ";
-		List<?> result = this.getSessionFactory().getCurrentSession().createQuery(hql)
-				.setParameter(0, user.getUsername())
-				.setParameter(1, DigestUtils.sha256Hex(user.getPassword())).list();
+		List<?> result = this.getSessionFactory().getCurrentSession().getNamedQuery("checkUser")
+				.setParameter("username", user.getUsername())
+				.setParameter("password", DigestUtils.sha256Hex(user.getPassword())).list();
 		if(!result.isEmpty()){
 			user = (User) result.get(0);
+			if(user.getRole()== null || user.getRole().getMenus()==null){
+				return user;
+			}
 			for(Menu menu : user.getRole().getMenus()){
 				//移除子菜单项目当中的null
 				menu.getChildrenMenu().remove(null);
@@ -73,10 +78,13 @@ public class SystemService extends HibernateDaoSupport implements ISystemService
 		String hql = "select icon from User u where u.id=?";
 		List<?> result = hibernateDao.excuteQuery(hql, userId);
 		Blob icon = null;
+		InputStream input = null;
 		if(result.isEmpty() || (icon=(Blob)result.get(0)) == null){
-			return;
+			String imagesFloder = context.getRealPath("images");
+			input = new FileInputStream(imagesFloder + File.separator + "default_icon.png");
+		} else {
+			input = icon.getBinaryStream();
 		}
-		InputStream input = icon.getBinaryStream();
 		try(BufferedInputStream bufferInput = new BufferedInputStream(input);
 			BufferedOutputStream bufferOutput = new BufferedOutputStream(output)){
 			//try-with-resources可以对多个资源进行管理

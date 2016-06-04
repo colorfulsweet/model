@@ -25,7 +25,12 @@ var FuncTools = function(){
 			data:params,
 			success: callback,
 			error:function(res){
-				$.messager.alert("提示","加载页面失败!","warning");
+				new $.TipBox({
+					type:"error",
+					str:"加载页面失败",
+					hasBtn:true,
+					hasMask:true
+				});
 			}
 		});
 	};
@@ -76,19 +81,27 @@ var FuncTools = function(){
 	/**
 	 * 表单ajax提交
 	 * @param form 表单DOM对象
+	 * @param refreshUrl 刷新tab页面的URL地址
+	 * @param notClose 是否不关闭当前的tab页
 	 * @returns {Boolean}
 	 */
-	this.ajaxSubmit = function(form){
+	this.ajaxSubmit = function(form, refreshUrl,notClose){
 		var params = $.grep($(form).serializeArray(),function(arg){
 			//将为空的字段从提交参数中移除(空串或者undefined)
 			return arg.value;
 		});
 		$.post($(form).attr("action"),params,function(res){
-			$.messager.alert("提示",res["msg"],res["type"],function(){
+			res.callBack = function(){
 				var $tab = $("#content-tab");
 				var selected = $tab.tabs("getSelected");
-				$tab.tabs("close",$tab.tabs('getTabIndex',selected));
-			});
+				if(!notClose){
+					$tab.tabs("close",$tab.tabs('getTabIndex',selected));
+				}
+				if(refreshUrl){
+					$("#content-tab").tabs("getSelected").panel("refresh", refreshUrl);
+				}
+			};
+			new $.TipBox(res);
 		},"json");
 		return false;
 	};
@@ -100,11 +113,10 @@ var FuncTools = function(){
 	this.delRecord = function(event){
 		var del = function(){
 			$.get($(event.currentTarget).attr("href"),null,function(res){
-				$.messager.alert("提示",res["msg"],res["type"],function(){
-					$("#content-tab")
-					.tabs("getSelected")
-					.panel("refresh", event.data.url);
-				});
+				res.callBack = function(){
+					$("#content-tab").tabs("getSelected").panel("refresh", event.data.url);
+				};
+				new $.TipBox(res);
 			},"json");
 		};
 		$.messager.confirm("操作确认","确认删除吗?",function(result){
@@ -146,16 +158,16 @@ var FuncTools = function(){
 	 */
 	this.delAllRecord = function(event){
 		var tableId = event.data.tableId;
+		var refreshUrl = event.data.url;
 		var checkedBox = $("#"+tableId).find(":checkbox:checked[class!=all]");
-		var $form = $("<form></form>");
+		var $form = $("<form></form>").prop("action",refreshUrl);
 		$form.append(checkedBox.clone());
 		var del = function(){
 			$.post($(event.currentTarget).attr("href"),$form.serialize(),function(res){
-				$.messager.alert("提示",res["msg"],res["type"],function(){
-					$("#content-tab")
-					.tabs("getSelected")
-					.panel("refresh", event.data.url);
-				});
+				res.callBack = function(){
+					$("#content-tab").tabs("getSelected").panel("refresh", refreshUrl);
+				};
+				new $.TipBox(res);
 			},"json");
 		};
 		$.messager.confirm("操作确认","确认批量删除吗?",function(result){
@@ -200,7 +212,7 @@ var FuncTools = function(){
 		    contentType: false,
 		    complete:function(res){
 		    	var info = JSON.parse(res.responseText);
-		    	$.messager.alert("提示",info["msg"],info["type"]);
+		    	new $.TipBox(info);
 		    },
 		});
 		return false;
@@ -254,10 +266,23 @@ $(function(){
 			$css.addTab(target.text(),target.attr("href"));
 		}
 	};
-	$(".submenu a,.link,.top>.nav .tabNav").on("click",openMenuTab);
+	$(".submenu a,.link,#top>.nav .tabNav").on("click",openMenuTab);
 	$(".top_icon").error(function(event){
 		//头像加载失败时显示默认头像
 		event.target.src = "images/default_icon.png";
 	});
 });
+//顶部条的高度
+var topHeight = parseInt($("#top").css("height"));
+//手风琴菜单栏的宽度
+var accordionWidth = parseInt($("#accordion-panel").css("width"));
+var layoutInit = function(){
+	$("#main-panel").css("height",(document.body.clientHeight - topHeight )+"px");
+	$("#content-tab").tabs({
+		width:(document.body.clientWidth - accordionWidth)+"px",
+		height:(document.body.clientHeight - topHeight)+"px"
+	});
+};
+layoutInit();
+$(window).resize(layoutInit);
 })();

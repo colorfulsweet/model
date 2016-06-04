@@ -51,4 +51,10 @@
 		<many-to-one name="role" column="ROLE_ID" />
 		<!-- 用户与角色的多对一关联映射 -->
 	</class>
+	<query name="checkUser">
+		<![CDATA[from User u 
+				left join fetch u.role 
+				left join fetch u.role.menus
+				where u.username=:username and u.password=:password ]]>
+	</query>
 </hibernate-mapping>

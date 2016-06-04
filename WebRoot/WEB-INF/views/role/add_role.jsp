@@ -5,23 +5,22 @@
 <head></head>
 <body>
 <div style="padding:10px;">
-	<form class="addRoleForm" method="post" action="role/save.html" onSubmit="return $css.ajaxSubmit(this)">
+	<form class="addRoleForm" method="post" action="role/save.html" onSubmit="return $css.ajaxSubmit(this,'admin/roleManage.html')">
 		<input type="hidden" name="id" value="${role.id}" />
 		<input type="hidden" name="createTime" value="<fmt:formatDate value="${role.createTime}" type="date" pattern="yyyy-MM-dd HH:mm:ss"/>" />
-		<table class="zebra">
+		<table class="table-input">
 			<tr>
-				<th style="width:30%;">角色名称</th>
-				<td style="width:70%;"><input type="text" name="roleName" value="${role.roleName }"/></td>
+				<th style="width:15%;">角色名称</th>
+				<td style="width:85%;"><input type="text" name="roleName" value="${role.roleName }" required="required"/></td>
 			</tr>
 			<tr>
-				<th style="width:30%;">备注</th>
-				<td style="width:70%;"><textarea name="remark" >${role.remark}</textarea></td>
-			</tr>
-			<tr>
-				<th style="width:30%;"></th>
-				<td style="width:70%;"><input type="submit" class="btn green medium" value="保存" /></td>
+				<th>备注</th>
+				<td><textarea name="remark" >${role.remark}</textarea></td>
 			</tr>
 		</table>
+		<div class="btn-box">
+			<input type="submit" class="btn green medium" value="保存" />
+		</div>
 	</form>
 </div>
 </body>

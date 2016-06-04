@@ -14,8 +14,9 @@
 		<td>${dictClause.clauseCode}</td>
 		<td>${dictClause.clauseName}</td>
 		<td>
-			<a href="dict/delClause.html?id=${dictClause.id}" class="delClause fa fa-trash" ></a>
-			<span>删除</span>
+			<a href="dict/delClause.html?id=${dictClause.id}" class="delClause fa fa-trash" >
+				<span>删除</span>
+			</a>
 		</td>
 	</tr>
 	</c:forEach>

@@ -165,11 +165,17 @@ public class HibernateDao<T, PK extends Serializable> extends HibernateDaoSuppor
 		if(field.isAnnotationPresent(CriteriaField.class)){
 			CriteriaField cf = field.getAnnotation(CriteriaField.class);
 			switch(cf.value()){
-				case EQ : criterion = Restrictions.eq(fieldName, value);break;
-				case GT : criterion = Restrictions.gt(fieldName, value);break;
-				case LT : criterion = Restrictions.lt(fieldName, value);break;
-				case LIKE : criterion = Restrictions.like(fieldName, '%'+value+'%');break;
-				case I_LIKE : criterion = Restrictions.ilike(fieldName, '%'+value+'%');break;
+				case EQ : criterion = Restrictions.eq(fieldName, value);
+						break;
+				case GT : criterion = Restrictions.gt(fieldName, value);
+						break;
+				case LT : criterion = Restrictions.lt(fieldName, value);
+						break;
+				case LIKE : criterion = Restrictions.like(fieldName, '%'+value+'%');
+						break;
+				case I_LIKE : criterion = Restrictions.ilike(fieldName, '%'+value+'%');
+						break;
+				default:
 			}
 			return criterion;
 		}

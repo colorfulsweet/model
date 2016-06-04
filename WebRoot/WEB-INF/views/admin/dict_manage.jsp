@@ -39,12 +39,15 @@
 		<td>${dict.dictName}</td>
 		<td>${dict.remark}</td>
 		<td >
-			<a href="javascript:void(0);" dictid="${dict.id}" class="dict_clause fa fa-bars"></a>
-			<span>字典项</span>
-			<a href="page/addOrUpdateDict.html?id=${dict.id}" class="editDict fa fa-edit"></a>
-			<span>编辑</span>
-			<a href="dict/delete.html?id=${dict.id}" class="delDict fa fa-trash" ></a>
-			<span>删除</span>
+			<a href="javascript:void(0);" dictid="${dict.id}" class="dict_clause fa fa-bars">
+				<span>字典项</span>
+			</a>
+			<a href="page/addOrUpdateDict.html?id=${dict.id}" class="editDict fa fa-edit">
+				<span>编辑</span>
+			</a>
+			<a href="dict/delete.html?id=${dict.id}" class="delDict fa fa-trash" >
+				<span>删除</span>
+			</a>
 		</td>
 	</tr>
 	</c:forEach>

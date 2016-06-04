@@ -83,7 +83,7 @@ public class PageSplitTag extends TagSupport {
 		JspWriter out = pageContext.getOut();
 		try {
 			if(page.getResult()!=null && !page.getResult().isEmpty()) {
-				out.println("<select name='pageSize' class='page'>");
+				out.println("<select name='pageSize' style='width:60px;'>");
 				for(int i=10 ; i<=50 ; i+=10){
 					if(i == page.getPageSize()){
 						out.println("<option value='"+i+"' selected>"+i+"</option>");

@@ -30,8 +30,12 @@ public class PageController {
 	private IHibernateDao<Object, String> hibernateDao;
 	
 	@RequestMapping(value="/index.html")
-	public String toIndex() {
-		return "WEB-INF/views/explorer.jsp";
+	public String toIndex(HttpSession session) {
+		if(session.getAttribute("user") == null) {
+			return "WEB-INF/views/login.jsp";
+		} else {
+			return "WEB-INF/views/explorer.jsp";
+		}
 	}
 	@RequestMapping(value="/welcome.html")
 	public String toWelcome() {
@@ -48,10 +52,13 @@ public class PageController {
 		user = systemService.checkUser(user);
 		if(user != null && user.getStatus()){
 			//对菜单列表按照INDEX进行排序
-			Set<Menu> menuSet = new TreeSet<Menu>(user.getRole().getMenus());
-			user.getRole().setMenus(menuSet);
 			session.setAttribute("user", user);
-			session.setAttribute("menuList", user.getRole().getMenus());
+			//排除当前用户没有角色 或者当前角色无任何权限的情况
+			if(user.getRole()!=null && user.getRole().getMenus()!=null){
+				Set<Menu> menuSet = new TreeSet<Menu>(user.getRole().getMenus());
+				user.getRole().setMenus(menuSet);
+				session.setAttribute("menuList", user.getRole().getMenus());
+			}
 			return "redirect:../index.jsp";
 		} else {
 			if(user == null){

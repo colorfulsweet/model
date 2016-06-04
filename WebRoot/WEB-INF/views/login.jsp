@@ -8,27 +8,37 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>统一权限管理系统-登陆</title>
+	<title>${app_name}-登陆</title>
+	<link rel="shortcut icon" type="image/x-icon" href="${basePath}${icon_path}" media="screen" />
 	<link rel="stylesheet" type="text/css" href="${basePath}css/login.css" />
 </head>
 <body>
-<form action="${basePath}page/login.html" method="post">
-	<div class="panel-lite">
-		<div class="thumbur">
-			<div class="icon-lock"></div>
+<div class="htmleaf-container">
+	<div class="wrapper">
+		<div class="container">
+			<h1>${app_name}</h1>
+			
+			<form action="${basePath}page/login.html" method="post" >
+				<input type="text" name="username" placeholder="用户名" required="required"/>
+				<input type="password" name="password" placeholder="密码" required="required"/>
+				<div id="info" >${info} &nbsp;</div>
+				<button type="submit" id="login-button">登陆</button>
+			</form>
 		</div>
-		<h4>统一权限管理系统</h4>
-		<div class="form-group">
-			<input type="text" class="form-control" required="required" name="username" />
-			<label class="form-label">用户名</label>
-		</div>
-		<div class="form-group">
-			<input type="password" class="form-control" required="required" name="password" />
-			<label class="form-label">密　码</label>
-		</div>
-		<div id="info" >${info} &nbsp;</div>
-		<button class="floating-btn" type="submit"><i class="icon-arrow"></i></button>
+		
+		<ul class="bg-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
 	</div>
-</form>
+</div>
 </body>
 </html>

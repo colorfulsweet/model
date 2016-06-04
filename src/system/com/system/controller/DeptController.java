@@ -38,6 +38,10 @@ public class DeptController {
 	@RequestMapping(value="/save.html",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String saveDept(Dept dept) {
+		if(dept.getParentId() != null){
+			dept.setParentDept(new Dept());
+			dept.getParentDept().setId(dept.getParentId());
+		}
 		hibernateDao.saveOrUpdate(dept);
 		return SystemMessage.getMessage("success");
 	}

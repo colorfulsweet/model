@@ -2,24 +2,24 @@ package com.system.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
+/**
+ * 验证登陆状态的拦截器
+ * @author 结发受长生
+ *
+ */
 public class LoginInterceptor implements HandlerInterceptor {
+	private final String TIMEOUT_PAGE = "/WEB-INF/error_pages/timeout.jsp";
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response,
 			Object obj) throws Exception {
-		if("/page/login.html".equals(request.getServletPath())){
-			//如果是登陆请求 , 则直接给予放行
-			return true;
-		}
-		HttpSession session = request.getSession();
-		if(session.getAttribute("user") == null){
-			//如果用户未登录 ,则终止该请求 ,并将请求转发到登陆页面
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+		if(request.getSession().getAttribute("user") == null){
+			//如果用户未登录或登陆已超时 ,则终止该请求 ,并将请求转发到登陆超时页面
+			request.getRequestDispatcher(TIMEOUT_PAGE).forward(request, response);
 			return false;
 		}
 		return true;

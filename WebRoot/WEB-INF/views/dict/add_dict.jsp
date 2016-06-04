@@ -4,26 +4,23 @@
 <head></head>
 <body>
 <div style="padding:10px;">
-	<form class="addDictForm" method="post" action="dict/save.html" onSubmit="return $css.ajaxSubmit(this)">
+	<form class="addDictForm" method="post" action="dict/save.html" onSubmit="return $css.ajaxSubmit(this,'admin/dictManage.html')">
 		<input type="hidden" name="id" value="${dict.id}" />
-		<table class="zebra">
+		<table class="table-input">
 			<tr>
-				<th style="width:30%;">字典编码</th>
-				<td style="width:70%;"><input type="text" name="dictCode" value="${dict.dictCode}" /></td>
+				<th style="width:15%;">字典编码</th>
+				<td style="width:35%;"><input type="text" name="dictCode" value="${dict.dictCode}" required="required"/></td>
+				<th style="width:15%;">字典名称</th>
+				<td style="width:35%;"><input type="text" name="dictName" value="${dict.dictName}" required="required"/></td>
 			</tr>
 			<tr>
-				<th style="width:30%;">字典名称</th>
-				<td style="width:70%;"><input type="text" name="dictName" value="${dict.dictName}" /></td>
-			</tr>
-			<tr>
-				<th style="width:30%;">备注</th>
-				<td style="width:70%;"><textarea name="remark" >${dict.remark}</textarea></td>
-			</tr>
-			<tr>
-				<th style="width:30%;"></th>
-				<td style="width:70%;"><input class="btn green medium" type="submit" value="保存" /></td>
+				<th>备注</th>
+				<td colspan="3"><textarea name="remark" >${dict.remark}</textarea></td>
 			</tr>
 		</table>
+		<div class="btn-box">
+		<input class="btn green medium" type="submit" value="保存" />
+		</div>
 	</form>
 </div>
 </body>
